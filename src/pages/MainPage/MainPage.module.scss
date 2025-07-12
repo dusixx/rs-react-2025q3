@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.search-bar {
+  width: 70%;
+  margin-bottom: 14px;
+
+  @media (width<=500px) {
+    width: 100%;
+  }
+}
