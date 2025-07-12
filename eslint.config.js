@@ -55,6 +55,14 @@ export default tseslint.config(
           endOfLine: 'auto',
         },
       ],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_[^_].*$|^_$',
+          varsIgnorePattern: '^_[^_].*$|^_$',
+          caughtErrorsIgnorePattern: '^_[^_].*$|^_$',
+        },
+      ],
       '@typescript-eslint/no-misused-spread': 'off',
       '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'never' }],
       '@typescript-eslint/consistent-type-imports': 'error',
@@ -64,8 +72,6 @@ export default tseslint.config(
         'error',
         { accessibility: 'explicit', overrides: { constructors: 'off' } },
       ],
-      '@typescript-eslint/member-ordering': 'error',
-      'class-methods-use-this': 'error',
     },
     settings: {
       react: {
