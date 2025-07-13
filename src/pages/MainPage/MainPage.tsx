@@ -37,7 +37,6 @@ export default class MainPage extends Component<object, MainPageState> {
   }
 
   private handleQuery = (query: string): void => {
-    console.log(query);
     setPersistedQuery(query);
     this.setState({
       query,
