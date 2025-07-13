@@ -41,6 +41,7 @@ export default class MainPage extends Component<object, MainPageState> {
     this.setState({
       query,
       ...INITIAL_STATE,
+      isLoading: true,
     });
     void getCharactersByName(query)
       .then(infos => {
@@ -76,22 +77,26 @@ export default class MainPage extends Component<object, MainPageState> {
         </pre>
       );
     return (
-      <div className={styles.wrapper}>
-        <SearchBar
-          className={styles.searchBar}
-          placeholder={QUERY_PLACEHOLDER}
-          onQuery={this.handleQuery}
-          onChange={this.handleChange}
-          value={this.state.query}
-        />
-        {this.state.isLoading ? (
-          <div className={styles.loader}>
-            <BeatLoader {...LOADER_PROPS} />
-          </div>
-        ) : (
-          searchResults
-        )}
-      </div>
+      <>
+        <section className={styles.section}>
+          <SearchBar
+            className={styles.searchBar}
+            placeholder={QUERY_PLACEHOLDER}
+            onQuery={this.handleQuery}
+            onChange={this.handleChange}
+            value={this.state.query}
+          />
+        </section>
+        <section className={styles.section}>
+          {this.state.isLoading ? (
+            <div className={styles.loader}>
+              <BeatLoader {...LOADER_PROPS} />
+            </div>
+          ) : (
+            searchResults
+          )}
+        </section>
+      </>
     );
   }
 }

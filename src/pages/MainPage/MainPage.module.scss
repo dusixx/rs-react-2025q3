@@ -1,9 +1,11 @@
-.wrapper {
+.section {
   display: flex;
   flex-direction: column;
   gap: 20px;
   align-items: center;
   justify-content: center;
+
+  width: 100%;
 }
 
 .loader {
@@ -14,7 +16,7 @@
 
 .search-bar {
   width: 70%;
-  margin-bottom: 16px;
+  margin-bottom: 30px;
   @media (width<=768px) {
     width: 90%;
   }
