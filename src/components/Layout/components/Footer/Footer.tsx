@@ -2,6 +2,8 @@ import type { ReactNode } from 'react';
 import { Component } from 'react';
 import styles from './Footer.module.scss';
 
+const COPYRIGHT = '© 2025 RS School';
+
 export class Footer extends Component {
   public render(): ReactNode {
     return (
@@ -13,7 +15,7 @@ export class Footer extends Component {
           rel='noopener noreferrer nofollow'
         >
           <img src='/rss-logo.svg' alt='rss logo' width={30} />
-          <span>© 2025 RS School</span>
+          <span>{COPYRIGHT}</span>
         </a>
       </footer>
     );
