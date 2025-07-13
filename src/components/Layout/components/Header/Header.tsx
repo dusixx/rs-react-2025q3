@@ -5,15 +5,18 @@ import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
 
-const LOGO_SRC = '/logo.png';
-const LOGO_ALT = 'rick and morty logo';
+const IMAGE_PROPS = {
+  src: '/logo.png',
+  alt: 'rick and morty logo',
+  width: 32,
+};
 
 export class Header extends Component {
   public render(): ReactNode {
     return (
       <header className={styles.header}>
         <NavLink className={styles.logo} to={RoutePath.Home}>
-          <img src={LOGO_SRC} alt={LOGO_ALT} width={32} />
+          <img {...IMAGE_PROPS} />
           <div data-logo-text>
             <span>R&M Character</span>
             <b>Finder</b>
