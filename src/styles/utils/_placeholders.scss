@@ -1,7 +1,9 @@
 @use './mixins' as mix;
 
-%section-wrapper {
+%wrapper {
   width: 100%;
+  min-width: 380px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -66,9 +68,8 @@
 }
 
 %text-input {
-  padding: 10px;
-  padding-left: 12px;
-  border: 1px solid rgb(200 200 200);
+  padding: 12px;
+  border: 1px solid rgb(212 212 212);
   border-radius: var(--border-radius);
 
   font-family: inherit;
@@ -80,7 +81,7 @@
 
   &::placeholder {
     font-size: 13px;
-    opacity: 0.6;
+    opacity: 0.5;
   }
 }
 
