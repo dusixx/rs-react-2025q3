@@ -1,7 +1,7 @@
-import { isError, isString } from '@utils/index.ts';
 import type { ErrorInfo } from 'react';
 import { Component, type ReactNode } from 'react';
 import type { ErrorFallbackProps } from './components/ErrorFallback/ErrorFallback.tsx';
+import { getErrorInstance } from './ErrorBoundary.utils.tsx';
 
 type ErrorBoundaryProps = {
   FallbackComponent?: typeof Component<ErrorFallbackProps>;
@@ -22,16 +22,16 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       error: undefined,
     };
   }
-  public static getDerivedStateFromError(error: unknown): ErrorBoundaryState {
-    return {
-      error: isError(error) ? error : isString(error) ? Error(error) : undefined,
-      hasError: true,
-    };
-  }
+
   public componentDidCatch(error: unknown, errorInfo: ErrorInfo): void {
-    this.setState({ errorInfo });
-    console.debug(error, errorInfo);
+    this.setState({
+      hasError: true,
+      error: getErrorInstance(error),
+      errorInfo,
+    });
+    console.log(error, errorInfo);
   }
+
   private resetError = (): void => {
     this.setState({
       hasError: false,

@@ -3,7 +3,7 @@ import { Component } from 'react';
 import styles from './ErrorButton.module.scss';
 
 const ERROR_BTN_TEXT = 'error button';
-const FAKE_ERROR_MESSAGE = 'Fake critical error';
+const FAKE_ERROR_MESSAGE = 'You broke everything!';
 
 type ErrorButtonState = {
   error?: Error;

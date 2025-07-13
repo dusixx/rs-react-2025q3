@@ -22,12 +22,3 @@
   flex-direction: column;
   gap: 2px;
 }
-
-.error-btn {
-  @extend %btn-primary;
-
-  border: 1px solid var(--color-violet-light);
-  color: var(--color-violet-light);
-  text-transform: capitalize;
-  background-color: transparent;
-}

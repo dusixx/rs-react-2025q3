@@ -24,7 +24,7 @@ export class ErrorFallback extends Component<ErrorFallbackProps> {
     const { error, errorInfo } = this.props;
     const errInfo = (
       <>
-        <div className={styles['error-heading']}>
+        <div className={styles.errorHeading}>
           <IconCloseCircleOutline {...ICON_PROPS} />
           <b>{`Error: ${error.message}`}</b>
         </div>
