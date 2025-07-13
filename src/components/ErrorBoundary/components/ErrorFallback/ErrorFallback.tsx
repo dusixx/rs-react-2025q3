@@ -28,7 +28,7 @@ export class ErrorFallback extends Component<ErrorFallbackProps> {
           <IconCloseCircleOutline {...ICON_PROPS} />
           <b>{`Error: ${error.message}`}</b>
         </div>
-        <div>{errorInfo?.componentStack}</div>
+        <div data-stack>{errorInfo?.componentStack}</div>
       </>
     );
     return (

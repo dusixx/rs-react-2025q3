@@ -1,13 +1,12 @@
 import { RoutePath } from '@common/constants.ts';
 import { Layout } from '@components/Layout/Layout.tsx';
-import type { JSX } from 'react';
-import { lazy, PureComponent } from 'react';
+import MainPage from '@pages/MainPage/MainPage.tsx';
+import type { ReactNode } from 'react';
+import { Component } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-const MainPage = lazy(() => import('@pages/MainPage/MainPage.tsx'));
-
-export class App extends PureComponent {
-  public render(): JSX.Element {
+export class App extends Component {
+  public render(): ReactNode {
     return (
       <Routes>
         <Route path={RoutePath.Home} element={<Layout />}>
