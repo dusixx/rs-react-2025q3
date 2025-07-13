@@ -1,10 +1,11 @@
+import { TOASTS_PROPS } from '@common/constants.ts';
+import { ErrorBoundary, ErrorFallback } from '@components/ErrorBoundary/index.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { App } from './App.tsx';
-import './index.css';
-import './styles/reset.scss';
+import { App } from './components/App/App.tsx';
+import './styles/global.scss';
 
 const ROOT_SELECTOR = '#root';
 
@@ -12,9 +13,10 @@ const ROOT_SELECTOR = '#root';
 createRoot(document.querySelector(ROOT_SELECTOR)!).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <App />
+      </ErrorBoundary>
     </BrowserRouter>
-
-    <ToastContainer autoClose={1500} position='top-center' hideProgressBar={true} />
+    <ToastContainer {...TOASTS_PROPS} />
   </StrictMode>,
 );
