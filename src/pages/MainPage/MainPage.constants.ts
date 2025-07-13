@@ -1,0 +1,15 @@
+export const QUERY_PLACEHOLDER = 'Input name (eg. "rick") or smth like "11" to see the error...';
+export const LOADER_VISIBILITY_DURATION = 500;
+export const LOADER_PROPS = {
+  color: 'var(--color-violet)',
+  size: 14,
+};
+export const ERROR_ICON_PROPS = {
+  size: 16,
+  color: 'var(--color-accent)',
+};
+export const INITIAL_STATE = {
+  results: [],
+  isLoading: false,
+  errorMessage: '',
+};
