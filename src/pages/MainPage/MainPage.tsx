@@ -37,6 +37,7 @@ export default class MainPage extends Component<object, MainPageState> {
   }
 
   private handleQuery = (query: string): void => {
+    console.log(query);
     setPersistedQuery(query);
     this.setState({
       query,
@@ -80,6 +81,7 @@ export default class MainPage extends Component<object, MainPageState> {
       <>
         <section className={styles.section}>
           <SearchBar
+            trimTrailingSpaces
             className={styles.searchBar}
             placeholder={QUERY_PLACEHOLDER}
             onQuery={this.handleQuery}

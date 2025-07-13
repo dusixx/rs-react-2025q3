@@ -11,6 +11,7 @@ type InputAttributes = Pick<
 >;
 
 type SearchBarProps = InputAttributes & {
+  trimTrailingSpaces?: boolean;
   onChange?: (value: string) => void;
   onQuery?: (value: string) => void;
 };
@@ -34,7 +35,14 @@ export class SearchBar extends Component<SearchBarProps> {
   };
 
   private handleSubmit = (event: SyntheticEvent): void => {
-    this.props.onQuery?.(this.state.value.toString());
+    const { trimTrailingSpaces } = this.props;
+    const { value: val } = this.state;
+    const value = trimTrailingSpaces ? val.toString().trim() : val.toString();
+
+    if (trimTrailingSpaces) {
+      this.setState({ value });
+    }
+    this.props.onQuery?.(value);
     event.preventDefault();
   };
 
