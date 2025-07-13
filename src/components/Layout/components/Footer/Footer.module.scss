@@ -1,0 +1,17 @@
+.footer,
+.link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer {
+  margin-top: auto;
+  padding: 34px;
+}
+
+.link {
+  gap: 10px;
+  width: 100%;
+}
