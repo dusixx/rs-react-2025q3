@@ -2,7 +2,6 @@ import type { CharacterInfo } from './types.ts';
 import { isLikeCharacterInfos, isLikeError, isLikeSearchResults } from './utils.ts';
 
 const BASE_URL = 'https://rickandmortyapi.com/api/';
-
 const ERR_SOMETHING_WRONG = 'Something went wrong';
 
 export const getCharactersByName = async (name: string): Promise<CharacterInfo[]> => {
