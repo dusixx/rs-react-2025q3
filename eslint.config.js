@@ -2,7 +2,7 @@ import js from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
-// plugins
+
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginReactCompiler from 'eslint-plugin-react-compiler';
