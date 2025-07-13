@@ -1,0 +1,33 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+  padding: 24px 0;
+}
+
+.logo {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  font-size: 12px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+[data-logo-text] {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.error-btn {
+  @extend %btn-primary;
+
+  border: 1px solid var(--color-violet-light);
+  color: var(--color-violet-light);
+  text-transform: capitalize;
+  background-color: transparent;
+}
