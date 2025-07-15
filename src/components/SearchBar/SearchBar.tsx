@@ -1,69 +1,51 @@
 import { IconClose, IconSearch } from '@common/constants.ts';
+import type { ChangeEvent } from 'react';
 import { Component, type JSX, type ReactNode, type SyntheticEvent } from 'react';
 import styles from './SearchBar.module.scss';
 
 const ICON_SIZE = 20;
 const INITIAL_VALUE = '';
 
-type InputAttributes = Pick<
-  JSX.IntrinsicElements['input'],
-  'value' | 'className' | 'placeholder' | 'style'
->;
+type InputAttributes = Pick<JSX.IntrinsicElements['input'], 'value' | 'className' | 'placeholder'>;
 
 type SearchBarProps = InputAttributes & {
-  trimTrailingSpaces?: boolean;
   onChange?: (value: string) => void;
   onQuery?: (value: string) => void;
 };
 
 export class SearchBar extends Component<SearchBarProps> {
   public state = {
-    value: this.props.value ?? INITIAL_VALUE,
+    value: this.props.value?.toString() ?? INITIAL_VALUE,
   };
 
-  private handleChange = ({ target }: SyntheticEvent): void => {
-    if (target instanceof HTMLInputElement) {
-      this.props.onChange?.(target.value);
-      this.setState({ value: target.value });
-    }
-  };
-
-  private handleFocus = ({ target }: SyntheticEvent): void => {
-    if (target instanceof HTMLInputElement) {
-      target.select();
-    }
+  private handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>): void => {
+    this.props.onChange?.(value);
+    this.setState({ value });
   };
 
   private handleSubmit = (event: SyntheticEvent): void => {
-    const { trimTrailingSpaces } = this.props;
-    const { value: val } = this.state;
-    const value = trimTrailingSpaces ? val.toString().trim() : val.toString();
-
-    if (trimTrailingSpaces) {
-      this.setState({ value });
-    }
+    const value = this.state.value.trim();
+    this.setState({ value });
     this.props.onQuery?.(value);
     event.preventDefault();
   };
 
   private handleClearClick = (): void => {
-    this.setState({ value: '' });
-    this.props.onChange?.('');
+    this.setState({ value: INITIAL_VALUE });
+    this.props.onChange?.(INITIAL_VALUE);
   };
 
   public render(): ReactNode {
-    const { className, style, placeholder } = this.props;
+    const { className, placeholder } = this.props;
 
     return (
-      <div className={className} style={style}>
+      <div className={className}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
           <input
             className={styles.input}
-            type='text'
-            onFocus={this.handleFocus}
             value={this.state.value}
-            onChange={this.handleChange}
             placeholder={placeholder}
+            onChange={this.handleChange}
           />
           {this.state.value && (
             <button className={styles.clearBtn} type='button' onClick={this.handleClearClick}>

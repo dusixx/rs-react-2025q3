@@ -1,4 +1,4 @@
-import { IconCloseCircleOutline } from '@common/constants.ts';
+import { ERR_SOMETHING_WRONG, IconCloseCircleOutline } from '@common/constants.ts';
 import { CardList } from '@components/CardList/CardList.tsx';
 import { SearchBar } from '@components/SearchBar/SearchBar.tsx';
 import { getCharactersByName } from '@services/api.ts';
@@ -12,9 +12,11 @@ import {
   LOADER_PROPS,
   LOADER_VISIBILITY_DURATION,
   QUERY_PLACEHOLDER,
-} from './MainPage.constants.ts';
+  getErrorMessage,
+  getPersistedQuery,
+  setPersistedQuery,
+} from './index.ts';
 import styles from './MainPage.module.scss';
-import { getErrorMessage, getPersistedQuery, setPersistedQuery } from './MainPage.utils.ts';
 
 export type MainPageState = {
   query: string;
@@ -23,14 +25,11 @@ export type MainPageState = {
   errorMessage: string;
 };
 
-export default class MainPage extends Component<object, MainPageState> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      query: getPersistedQuery(),
-      ...INITIAL_STATE,
-    };
-  }
+export default class MainPage extends Component {
+  public state: MainPageState = {
+    query: getPersistedQuery(),
+    ...INITIAL_STATE,
+  };
 
   public componentDidMount(): void {
     this.handleQuery(this.state.query);
@@ -49,7 +48,7 @@ export default class MainPage extends Component<object, MainPageState> {
       })
       .catch((error: unknown) => {
         this.setState({
-          errorMessage: getErrorMessage(error),
+          errorMessage: getErrorMessage(error, ERR_SOMETHING_WRONG),
         });
       })
       .finally(() => {
@@ -66,21 +65,19 @@ export default class MainPage extends Component<object, MainPageState> {
   };
 
   public render(): ReactNode {
-    const { errorMessage } = this.state;
-    const searchResults =
-      errorMessage.length === 0 ? (
-        <CardList infos={this.state.results} />
-      ) : (
-        <pre className={styles.errorInfo}>
-          <IconCloseCircleOutline {...ERROR_ICON_PROPS} />
-          <b>Error: {errorMessage}</b>
-        </pre>
-      );
+    const { errorMessage, results } = this.state;
+    const searchResults = !errorMessage ? (
+      <CardList infos={results} />
+    ) : (
+      <pre className={styles.errorInfo}>
+        <IconCloseCircleOutline {...ERROR_ICON_PROPS} />
+        <b>Error: {errorMessage}</b>
+      </pre>
+    );
     return (
       <>
         <section className={styles.section}>
           <SearchBar
-            trimTrailingSpaces
             className={styles.searchBar}
             placeholder={QUERY_PLACEHOLDER}
             onQuery={this.handleQuery}

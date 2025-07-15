@@ -1,7 +1,7 @@
+import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
 import type { ErrorInfo } from 'react';
 import { Component, type ReactNode } from 'react';
-import type { ErrorFallbackProps } from './components/ErrorFallback/ErrorFallback.tsx';
-import { getErrorInstance } from './ErrorBoundary.utils.tsx';
+import { getErrorInstance, type ErrorFallbackProps } from './index.ts';
 
 type ErrorBoundaryProps = {
   FallbackComponent?: typeof Component<ErrorFallbackProps>;
@@ -9,24 +9,16 @@ type ErrorBoundaryProps = {
 };
 
 type ErrorBoundaryState = {
-  hasError: boolean;
   error?: Error;
   errorInfo?: ErrorInfo;
 };
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-    this.state = {
-      hasError: false,
-      error: undefined,
-    };
-  }
+export class ErrorBoundary extends Component<ErrorBoundaryProps> {
+  public state: ErrorBoundaryState = {};
 
   public componentDidCatch(error: unknown, errorInfo: ErrorInfo): void {
     this.setState({
-      hasError: true,
-      error: getErrorInstance(error),
+      error: getErrorInstance(error) ?? Error(ERR_SOMETHING_WRONG),
       errorInfo,
     });
     console.log(error, errorInfo);
@@ -34,7 +26,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   private resetError = (): void => {
     this.setState({
-      hasError: false,
       error: undefined,
       errorInfo: undefined,
     });
@@ -42,16 +33,18 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
   public render(): ReactNode {
     const { FallbackComponent, children } = this.props;
-    const { hasError, error, errorInfo } = this.state;
+    const { error, errorInfo } = this.state;
 
-    if (hasError && error) {
-      return FallbackComponent ? (
-        <FallbackComponent
-          error={error}
-          errorInfo={errorInfo}
-          resetErrorBoundary={this.resetError}
-        />
-      ) : null;
+    if (error) {
+      return (
+        FallbackComponent && (
+          <FallbackComponent
+            error={error}
+            errorInfo={errorInfo}
+            resetErrorBoundary={this.resetError}
+          />
+        )
+      );
     }
     return children;
   }

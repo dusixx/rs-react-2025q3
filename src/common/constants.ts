@@ -22,3 +22,5 @@ export const TOASTS_PROPS: ToastContainerProps = {
   position: 'top-center',
   hideProgressBar: true,
 };
+
+export const ERR_SOMETHING_WRONG = 'Something went wrong';

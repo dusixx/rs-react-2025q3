@@ -1,24 +1,19 @@
+import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
 import type { ReactNode } from 'react';
 import { Component } from 'react';
 import styles from './ErrorButton.module.scss';
 
 const ERROR_BTN_TEXT = 'error button';
-const FAKE_ERROR_MESSAGE = 'You broke everything!';
 
 type ErrorButtonState = {
   error?: Error;
 };
 
-export class ErrorButton extends Component<object, ErrorButtonState> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      error: undefined,
-    };
-  }
+export class ErrorButton extends Component {
+  public state: ErrorButtonState = {};
 
-  private handleErrorBtnClick = (): void => {
-    this.setState({ error: new Error(FAKE_ERROR_MESSAGE) });
+  private handleClick = (): void => {
+    this.setState({ error: new Error(ERR_SOMETHING_WRONG) });
   };
 
   public render(): ReactNode {
@@ -26,7 +21,7 @@ export class ErrorButton extends Component<object, ErrorButtonState> {
       throw this.state.error;
     }
     return (
-      <button className={styles.errorBtn} onClick={this.handleErrorBtnClick}>
+      <button className={styles.errorBtn} onClick={this.handleClick}>
         {ERROR_BTN_TEXT}
       </button>
     );

@@ -32,8 +32,5 @@ export const areStringsEqual = (
   str2: string,
   { ignoreCase = true, locales }: { ignoreCase: boolean; locales: string },
 ): boolean => {
-  const result = ignoreCase
-    ? str1.localeCompare(str2, locales, { sensitivity: 'base' })
-    : str1.localeCompare(str2);
-  return result === 0;
+  return str1.localeCompare(str2, locales, ignoreCase ? { sensitivity: 'base' } : undefined) === 0;
 };

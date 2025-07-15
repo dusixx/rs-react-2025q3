@@ -11,7 +11,7 @@ export type CharacterInfo = {
   };
 };
 
-export type SearchResults = {
+export type SearchResult = {
   info: object;
   results: unknown[];
 };

@@ -16,25 +16,19 @@ export type ErrorFallbackProps = {
 };
 
 export class ErrorFallback extends Component<ErrorFallbackProps> {
-  private resetError = (): void => {
-    this.props.resetErrorBoundary();
-  };
-
   public render(): ReactNode {
-    const { error, errorInfo } = this.props;
-    const errInfo = (
-      <>
-        <div className={styles.errorHeading}>
-          <IconCloseCircleOutline {...ICON_PROPS} />
-          <b>{`Error: ${error.message}`}</b>
-        </div>
-        <div data-stack>{errorInfo?.componentStack}</div>
-      </>
-    );
+    const { error, errorInfo, resetErrorBoundary } = this.props;
+
     return (
       <div className={styles.wrapper}>
-        <pre className={styles.errorInfo}>{errInfo}</pre>
-        <button className={styles.resetBtn} onClick={this.resetError}>
+        <pre className={styles.errorInfo}>
+          <div className={styles.errorHeading}>
+            <IconCloseCircleOutline {...ICON_PROPS} />
+            <b>{`Error: ${error.message}`}</b>
+          </div>
+          {errorInfo?.componentStack}
+        </pre>
+        <button className={styles.resetBtn} onClick={resetErrorBoundary}>
           {RESET_BTN_TEXT}
         </button>
       </div>
