@@ -5,11 +5,9 @@ import { getCharactersByName } from '@services/api.ts';
 import type { CharacterInfo } from '@services/types.ts';
 import type { ReactNode } from 'react';
 import { Component } from 'react';
-import { BeatLoader } from 'react-spinners';
 import {
   ERROR_ICON_PROPS,
   INITIAL_STATE,
-  LOADER_PROPS,
   LOADER_VISIBILITY_DURATION,
   QUERY_PLACEHOLDER,
   getErrorMessage,
@@ -88,7 +86,7 @@ export default class MainPage extends Component {
         <section className={styles.section}>
           {this.state.isLoading ? (
             <div className={styles.loader}>
-              <BeatLoader {...LOADER_PROPS} />
+              <img style={{ opacity: 0.5 }} src='/spinner.gif' alt='spinner' width={40} />
             </div>
           ) : (
             searchResults
