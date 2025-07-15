@@ -1,7 +1,6 @@
 import { IoIosFemale, IoIosMale, IoMdCloseCircle, IoMdCloseCircleOutline } from 'react-icons/io';
 import { IoClose, IoLocationSharp, IoMaleFemaleOutline } from 'react-icons/io5';
 import { RiSearchLine } from 'react-icons/ri';
-import type { ToastContainerProps } from 'react-toastify';
 
 export const IconClose = IoClose;
 export const IconCloseCircle = IoMdCloseCircle;
@@ -16,11 +15,5 @@ export enum RoutePath {
   Home = '/',
   Error = '*',
 }
-
-export const TOASTS_PROPS: ToastContainerProps = {
-  autoClose: 1000,
-  position: 'top-center',
-  hideProgressBar: true,
-};
 
 export const ERR_SOMETHING_WRONG = 'Something went wrong';

@@ -1,5 +1,3 @@
-import { toast } from 'react-toastify';
-
 export const isObject = (obj: unknown): obj is object => {
   return obj != null && typeof obj === 'object';
 };
@@ -17,14 +15,6 @@ export const hasOwnKeys = <K extends string>(
   ...keys: K[]
 ): obj is object & { [key in K]: unknown } => {
   return isObject(obj) && keys.every(key => Object.prototype.hasOwnProperty.call(obj, key));
-};
-
-export const showErrorToast = (stringOrError: unknown): void => {
-  if (isError(stringOrError)) {
-    toast.error(stringOrError.message);
-  } else if (isString(stringOrError) && stringOrError) {
-    toast.error(stringOrError);
-  }
 };
 
 export const areStringsEqual = (

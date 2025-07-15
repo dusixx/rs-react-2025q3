@@ -1,9 +1,7 @@
-import { TOASTS_PROPS } from '@common/constants.ts';
 import { ErrorBoundary, ErrorFallback } from '@components/ErrorBoundary/index.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { App } from './App.tsx';
 import './styles/global.scss';
 
@@ -17,6 +15,5 @@ createRoot(document.querySelector(ROOT_SELECTOR)!).render(
         <App />
       </ErrorBoundary>
     </BrowserRouter>
-    <ToastContainer {...TOASTS_PROPS} />
   </StrictMode>,
 );
