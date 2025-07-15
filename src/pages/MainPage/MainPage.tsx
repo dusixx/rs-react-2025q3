@@ -10,6 +10,7 @@ import {
   INITIAL_STATE,
   LOADER_VISIBILITY_DURATION,
   QUERY_PLACEHOLDER,
+  SPINNER_PROPS,
   getErrorMessage,
   getPersistedQuery,
   setPersistedQuery,
@@ -86,7 +87,7 @@ export default class MainPage extends Component {
         <section className={styles.section}>
           {this.state.isLoading ? (
             <div className={styles.loader}>
-              <img style={{ opacity: 0.5 }} src='/spinner.gif' alt='spinner' width={40} />
+              <img {...SPINNER_PROPS} />
             </div>
           ) : (
             searchResults
