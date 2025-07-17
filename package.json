@@ -16,7 +16,7 @@
     "stylelint:fix": "stylelint \"**/*.{css,scss}\" --fix",
     "lint:fix-all": "(npm run stylelint:fix) || true && npm run lint:fix",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage"
   },
   "husky": {
     "hooks": {
