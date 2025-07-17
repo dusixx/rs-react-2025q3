@@ -18,7 +18,7 @@ export const clickButton = (btn: HTMLElement): void => {
   }
 };
 
-export const getNestedChildById = <T extends HTMLElement = HTMLElement>(
+export const getNestedChildByKey = <T extends HTMLElement = HTMLElement>(
   rootIdName: TestIdName,
   ...nestedIdNames: TestIdName[]
 ): T => {
@@ -27,16 +27,16 @@ export const getNestedChildById = <T extends HTMLElement = HTMLElement>(
   }, screen.getByTestId<T>(TestId[rootIdName]));
 };
 
-export const queryNestedChildById = (
-  ...args: Parameters<typeof getNestedChildById>
-): ReturnType<typeof getNestedChildById> | null => {
+export const queryNestedChildByKey = (
+  ...args: Parameters<typeof getNestedChildByKey>
+): ReturnType<typeof getNestedChildByKey> | null => {
   try {
-    return getNestedChildById(...args);
+    return getNestedChildByKey(...args);
   } catch {
     return null;
   }
 };
 
-export const getElementsByIds = <T extends HTMLElement[]>(...ids: TestIdName[]): T => {
+export const getElementsByKeys = <T extends HTMLElement[]>(...ids: TestIdName[]): T => {
   return ids.map(id => screen.getByTestId(TestId[id])) as T;
 };
