@@ -1,6 +1,7 @@
 import { IconClose, IconSearch } from '@common/constants.ts';
 import type { ChangeEvent } from 'react';
 import { Component, type JSX, type ReactNode, type SyntheticEvent } from 'react';
+import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchBar.module.scss';
 
 const ICON_SIZE = 20;
@@ -42,18 +43,29 @@ export class SearchBar extends Component<SearchBarProps> {
       <div className={className}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
           <input
+            data-testid={TestId.SearchBarInput}
             className={styles.input}
             value={this.state.value}
             placeholder={placeholder}
             onChange={this.handleChange}
           />
           {this.state.value && (
-            <button className={styles.clearBtn} type='button' onClick={this.handleClearClick}>
-              <IconClose size={ICON_SIZE} />
+            <button
+              data-testid={TestId.SearchBarClear}
+              className={styles.clearBtn}
+              type='button'
+              onClick={this.handleClearClick}
+            >
+              <IconClose data-testid={TestId.SearchBarClearIcon} size={ICON_SIZE} />
             </button>
           )}
-          <button className={styles.btn} type='submit' disabled={!this.state.value}>
-            <IconSearch size={ICON_SIZE} />
+          <button
+            data-testid={TestId.SearchBarBtn}
+            className={styles.btn}
+            type='submit'
+            disabled={!this.state.value}
+          >
+            <IconSearch data-testid={TestId.SearchBarBtnIcon} size={ICON_SIZE} />
           </button>
         </form>
       </div>
