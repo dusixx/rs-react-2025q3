@@ -1,6 +1,7 @@
 import { IconCloseCircleOutline } from '@common/constants.ts';
 import type { ErrorInfo, ReactNode } from 'react';
 import { Component } from 'react';
+import { TestId } from 'src/test-utils/constants.ts';
 import styles from './ErrorFallback.module.scss';
 
 const RESET_BTN_TEXT = 'Reset error';
@@ -20,7 +21,7 @@ export class ErrorFallback extends Component<ErrorFallbackProps> {
     const { error, errorInfo, resetErrorBoundary } = this.props;
 
     return (
-      <div className={styles.wrapper}>
+      <div data-testid={TestId.ErrorFallback} className={styles.wrapper}>
         <pre className={styles.errorInfo}>
           <div className={styles.errorHeading}>
             <IconCloseCircleOutline {...ICON_PROPS} />
@@ -28,7 +29,11 @@ export class ErrorFallback extends Component<ErrorFallbackProps> {
           </div>
           {errorInfo?.componentStack}
         </pre>
-        <button className={styles.resetBtn} onClick={resetErrorBoundary}>
+        <button
+          data-testid={TestId.ErrorFallbackResetBtn}
+          className={styles.resetBtn}
+          onClick={resetErrorBoundary}
+        >
           {RESET_BTN_TEXT}
         </button>
       </div>

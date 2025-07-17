@@ -24,7 +24,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps> {
     console.log(error, errorInfo);
   }
 
-  private resetError = (): void => {
+  protected resetError = (): void => {
     this.setState({
       error: undefined,
       errorInfo: undefined,
