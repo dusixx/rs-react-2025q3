@@ -40,7 +40,7 @@ export class SearchBar extends Component<SearchBarProps> {
     const { className, placeholder } = this.props;
 
     return (
-      <div className={className}>
+      <div data-testid={TestId.SearchBar} className={className}>
         <form className={styles.form} onSubmit={this.handleSubmit}>
           <input
             data-testid={TestId.SearchBarInput}
