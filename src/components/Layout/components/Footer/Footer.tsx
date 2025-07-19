@@ -1,15 +1,15 @@
 import type { ReactNode } from 'react';
 import { Component } from 'react';
+import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Footer.module.scss';
 
-const COPYRIGHT = '© 2025 RS School';
-
-const LINK_PROPS = {
+export const COPYRIGHT = '© 2025 RS School';
+export const LINK_PROPS = {
   href: 'https://rs.school/courses/reactjs',
   target: '_blank',
   rel: 'noopener noreferrer nofollow',
 };
-const IMAGE_PROPS = {
+export const IMAGE_PROPS = {
   src: '/rss-logo.svg',
   alt: 'rss logo',
   width: 30,
@@ -17,9 +17,9 @@ const IMAGE_PROPS = {
 export class Footer extends Component {
   public render(): ReactNode {
     return (
-      <footer className={styles.footer}>
-        <a className={styles.link} {...LINK_PROPS}>
-          <img {...IMAGE_PROPS} />
+      <footer data-testid={TestId.Footer} className={styles.footer}>
+        <a data-testid={TestId.FooterLink} className={styles.link} {...LINK_PROPS}>
+          <img data-testid={TestId.FooterLogo} {...IMAGE_PROPS} />
           <span>{COPYRIGHT}</span>
         </a>
       </footer>
