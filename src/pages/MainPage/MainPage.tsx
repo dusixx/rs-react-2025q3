@@ -3,15 +3,16 @@ import { CardList } from '@components/CardList/CardList.tsx';
 import { SearchBar } from '@components/SearchBar/SearchBar.tsx';
 import { getCharactersByName } from '@services/api.ts';
 import type { CharacterInfo } from '@services/types.ts';
+import { getErrorMessage } from '@utils/index.ts';
 import type { ReactNode } from 'react';
 import { Component } from 'react';
+import { TestId } from 'src/test-utils/constants.ts';
 import {
   ERROR_ICON_PROPS,
   INITIAL_STATE,
   LOADER_VISIBILITY_DURATION,
   QUERY_PLACEHOLDER,
   SPINNER_PROPS,
-  getErrorMessage,
   getPersistedQuery,
   setPersistedQuery,
 } from './index.ts';
@@ -68,13 +69,13 @@ export default class MainPage extends Component {
     const searchResults = !errorMessage ? (
       <CardList infos={results} />
     ) : (
-      <pre className={styles.errorInfo}>
-        <IconCloseCircleOutline {...ERROR_ICON_PROPS} />
-        <b>Error: {errorMessage}</b>
+      <pre data-testid={TestId.SearchError} className={styles.errorInfo}>
+        <IconCloseCircleOutline data-testid={TestId.SearchErrorIcon} {...ERROR_ICON_PROPS} />
+        <b data-testid={TestId.SearchErrorMessage}>Error: {errorMessage}</b>
       </pre>
     );
     return (
-      <>
+      <div data-testid={TestId.MainPage}>
         <section className={styles.section}>
           <SearchBar
             className={styles.searchBar}
@@ -86,14 +87,14 @@ export default class MainPage extends Component {
         </section>
         <section className={styles.section}>
           {this.state.isLoading ? (
-            <div className={styles.loader}>
+            <div data-testid={TestId.Loader} className={styles.loader}>
               <img {...SPINNER_PROPS} />
             </div>
           ) : (
             searchResults
           )}
         </section>
-      </>
+      </div>
     );
   }
 }

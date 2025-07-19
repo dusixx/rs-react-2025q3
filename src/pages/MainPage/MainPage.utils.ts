@@ -1,4 +1,3 @@
-import { isError, isString } from '@utils/index.ts';
 import { LS_KEY_LAST_QUERY } from './MainPage.constants.ts';
 
 export const getPersistedQuery = (): string => {
@@ -7,8 +6,4 @@ export const getPersistedQuery = (): string => {
 
 export const setPersistedQuery = (query: string): void => {
   localStorage.setItem(LS_KEY_LAST_QUERY, query);
-};
-
-export const getErrorMessage = (error: unknown, defaultMessage: string = ''): string => {
-  return isString(error) ? error : isError(error) ? error.message : defaultMessage;
 };
