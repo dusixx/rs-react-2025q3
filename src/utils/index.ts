@@ -1,3 +1,5 @@
+import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
+
 export const isObject = (obj: unknown): obj is object => {
   return obj != null && typeof obj === 'object';
 };
@@ -39,8 +41,11 @@ export const chooseOneRandomly = <T>(...values: T[]): T => {
   return values[rndInt(0, values.length - 1)];
 };
 
-export const getErrorInstance = (error: unknown): Error | undefined => {
-  return isError(error) ? error : isString(error) ? Error(error) : undefined;
+export const getErrorInstance = (
+  error: unknown,
+  defaultMessage = ERR_SOMETHING_WRONG,
+): Error | undefined => {
+  return isError(error) ? error : isString(error) ? Error(error) : Error(defaultMessage);
 };
 
 export const getErrorMessage = (error: unknown, defaultMessage: string = ''): string => {

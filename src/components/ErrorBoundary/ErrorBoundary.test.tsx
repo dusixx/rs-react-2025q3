@@ -1,11 +1,17 @@
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
-import type { ErrorBoundaryState } from '@components/ErrorBoundary/index.ts';
-import { ErrorBoundary, ErrorFallback } from '@components/ErrorBoundary/index.ts';
+import {
+  ErrorBoundary,
+  ErrorFallback,
+  type ErrorBoundaryState,
+} from '@components/ErrorBoundary/index.ts';
 import { render } from '@testing-library/react';
+import { getErrorInstance } from '@utils/index.ts';
 import {
   clickElement,
   componentDidCatchMock,
   ErrorBoundaryMock,
+  FAKE_VALUE,
   getNestedChild,
   ProblematicChildMock,
   queryNestedChild,
@@ -14,12 +20,17 @@ import {
 } from 'src/test-utils/index.ts';
 import { vi } from 'vitest';
 
-const ERRORINFO_PROPERTY = 'componentStack';
-const ERROR_INSTANCE = Error(ERR_SOMETHING_WRONG);
 const STATE_TO_RESET: ErrorBoundaryState = {
   error: undefined,
   errorInfo: undefined,
 };
+vi.mock('@utils/index.ts', async importOriginal => {
+  const actual = await importOriginal<typeof import('@utils/index.ts')>();
+  return {
+    ...actual,
+    getErrorInstance: vi.fn(() => Error(FAKE_VALUE)),
+  };
+});
 
 describe('ErrorBoundary', () => {
   it(`Renders child if no errors where thrown`, () => {
@@ -49,9 +60,13 @@ describe('ErrorBoundary', () => {
         <ProblematicChildMock throwError />
       </ErrorBoundary>,
     );
-    expect(componentDidCatchMock).toHaveBeenCalled();
-    expect(consoleLogMock.mock.calls[0][0]).toEqual(ERROR_INSTANCE);
-    expect(consoleLogMock.mock.calls[0][1]).toHaveProperty(ERRORINFO_PROPERTY);
+    const args = componentDidCatchMock.mock.calls[0];
+    expect(setStateMock).toHaveBeenCalledWith({
+      error: Error(FAKE_VALUE),
+      errorInfo: args[1],
+    });
+    expect(getErrorInstance).toHaveBeenCalled();
+    expect(consoleLogMock).toHaveBeenCalledWith(Error(ERR_SOMETHING_WRONG), args[1]);
   });
 
   it(`Resets error on button click`, () => {

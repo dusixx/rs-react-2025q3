@@ -1,4 +1,3 @@
-import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
 import { getErrorInstance } from '@utils/index.ts';
 import type { ErrorInfo } from 'react';
 import { Component, type ReactNode } from 'react';
@@ -19,7 +18,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps> {
 
   public componentDidCatch(error: unknown, errorInfo: ErrorInfo): void {
     this.setState({
-      error: getErrorInstance(error) ?? Error(ERR_SOMETHING_WRONG),
+      error: getErrorInstance(error),
       errorInfo,
     });
     console.log(error, errorInfo);
