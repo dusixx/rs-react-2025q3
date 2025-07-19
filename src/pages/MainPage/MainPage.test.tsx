@@ -24,12 +24,9 @@ const store = {
 const mockedApi = vi.hoisted(() => {
   return {
     getCharactersByNameMock: vi.fn(async (query?: string): Promise<CharacterInfo[]> => {
-      if (!query) {
-        return Promise.resolve(getCharacterInfosMock(ITEMS_PER_PAGE));
-      }
       return query === INVALID_QUERY
         ? Promise.reject(Error(ERR_NOT_FOUND))
-        : Promise.resolve(getCharacterInfosMock(ITEMS_COUNT));
+        : Promise.resolve(getCharacterInfosMock(query ? ITEMS_COUNT : ITEMS_PER_PAGE));
     }),
     getPersistedQueryMock: vi.fn(() => store.query),
     setPersistedQueryMock: vi.fn((value: string) => {
