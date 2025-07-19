@@ -55,9 +55,13 @@ export default defineConfig({
       exclude: [
         'src/**/*.test.{js,jsx,ts,tsx}',
         'src/**/*.spec.{js,jsx,ts,tsx}',
+        'src/**/*.utils.{js,jsx,ts,tsx}',
         'src/index.{js,jsx,ts,tsx}',
         'src/setupTests.{js,ts}',
         'src/**/*.d.ts',
+        '**/utils.{js,ts}',
+        'src/utils',
+        'src/main.{ts,tsx,js,jsx}',
       ],
       thresholds: {
         global: {
