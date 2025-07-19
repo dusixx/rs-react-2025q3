@@ -5,4 +5,10 @@ import { afterEach, vi } from 'vitest';
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
+  vi.runOnlyPendingTimers();
+  vi.useRealTimers();
+});
+
+beforeEach(() => {
+  vi.useFakeTimers({ shouldAdvanceTime: true });
 });

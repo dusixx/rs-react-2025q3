@@ -1,14 +1,13 @@
 import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary.tsx';
-import type { ErrorInfo } from 'react';
 import { vi } from 'vitest';
 
 export const resetErrorMock = vi.fn();
-export const componentDidCatchMock = vi.fn();
+export const componentDidCatchMock = vi.spyOn(ErrorBoundary.prototype, 'componentDidCatch');
+export const setStateMock = vi.spyOn(ErrorBoundary.prototype, 'setState');
 
 export class ErrorBoundaryMock extends ErrorBoundary {
-  public override componentDidCatch(error: unknown, errorInfo: ErrorInfo): void {
-    super.componentDidCatch(error, errorInfo);
-    componentDidCatchMock();
+  protected override resetError(): void {
+    resetErrorMock();
+    super.resetError();
   }
-  protected override resetError = resetErrorMock;
 }

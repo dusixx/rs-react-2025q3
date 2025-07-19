@@ -6,32 +6,29 @@ import { TestId } from './constants.ts';
 export type TestIdName = keyof typeof TestId;
 export type TestIdValue = (typeof TestId)[TestIdName];
 
-export const changeInput = (input: HTMLElement, value: string): void => {
-  if (input instanceof HTMLInputElement) {
-    fireEvent.change(input, { target: { value } });
-  }
+export const changeInput = (input: HTMLElement, value: string): boolean => {
+  return fireEvent.change(input, { target: { value } });
 };
 
-export const clickButton = (btn: HTMLElement): void => {
-  if (btn instanceof HTMLButtonElement) {
-    fireEvent.click(btn);
-  }
+export const clickElement = (el: HTMLElement): boolean => {
+  return fireEvent.click(el);
 };
 
-export const getNestedChildByKey = <T extends HTMLElement = HTMLElement>(
-  rootIdName: TestIdName,
-  ...nestedIdNames: TestIdName[]
+export const getNestedChild = <T extends HTMLElement = HTMLElement>(
+  root: TestIdName | HTMLElement,
+  ...children: TestIdName[]
 ): T => {
-  return nestedIdNames.reduce<T>((element, id) => {
-    return within(element).getByTestId<T>(TestId[id]);
-  }, screen.getByTestId<T>(TestId[rootIdName]));
+  const initial = root instanceof HTMLElement ? (root as T) : screen.getByTestId<T>(TestId[root]);
+  return children.reduce<T>((element, child) => {
+    return within(element).getByTestId<T>(TestId[child]);
+  }, initial);
 };
 
-export const queryNestedChildByKey = (
-  ...args: Parameters<typeof getNestedChildByKey>
-): ReturnType<typeof getNestedChildByKey> | null => {
+export const queryNestedChild = (
+  ...args: Parameters<typeof getNestedChild>
+): ReturnType<typeof getNestedChild> | null => {
   try {
-    return getNestedChildByKey(...args);
+    return getNestedChild(...args);
   } catch {
     return null;
   }
