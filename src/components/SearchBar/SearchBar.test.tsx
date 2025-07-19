@@ -27,9 +27,11 @@ describe('SearchBar', () => {
   });
 
   it(`Renders empty search input on clear click`, () => {
-    render(<SearchBar value={FAKE_VALUE} />);
+    const handleChangeMock = vi.fn();
+    render(<SearchBar value={FAKE_VALUE} onChange={handleChangeMock} />);
     clickElement(getNestedChild('SearchBarClear'));
     expect(getNestedChild('SearchBarInput')).toHaveValue('');
+    expect(handleChangeMock).toHaveBeenCalledWith('');
   });
 
   it(`Renders search input placeholder`, () => {

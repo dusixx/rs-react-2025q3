@@ -79,6 +79,16 @@ describe('MainPage', () => {
     expect(getCharactersByName).toHaveBeenCalledWith(FAKE_VALUE);
   });
 
+  it(`Calls API with correct parameters`, async () => {
+    await act(() => render(<MainPage />));
+
+    await act(() => {
+      return changeInput(getNestedChild('SearchBarInput'), '');
+    });
+    expect(setPersistedQuery).toHaveBeenCalledWith('');
+    expect(getCharactersByName).toHaveBeenCalledWith('');
+  });
+
   it(`Handles successful API responses`, async () => {
     setPersistedQuery(VALID_QUERY);
     await act(() => render(<MainPage />));
