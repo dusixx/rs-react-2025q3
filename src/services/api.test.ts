@@ -15,6 +15,13 @@ const fetchData = async (): Promise<ReturnType<typeof getCharactersByName> | str
     return getErrorMessage(error, ERR_SOMETHING_WRONG);
   }
 };
+const createResolvedValue = (result: unknown, once: boolean = true): void => {
+  vi.mocked(global.fetch)[once ? 'mockResolvedValueOnce' : 'mockResolvedValue']({
+    json() {
+      return result;
+    },
+  } as Response);
+};
 
 describe('api', () => {
   vi.stubGlobal('fetch', vi.fn());
@@ -26,36 +33,22 @@ describe('api', () => {
   });
 
   it(`Handles invalid search results`, async () => {
-    vi.mocked(global.fetch).mockResolvedValueOnce({
-      json() {
-        return [];
-      },
-    } as unknown as Response);
+    createResolvedValue([]);
     const result = await fetchData();
     expect(result).toBe(ERR_SOMETHING_WRONG);
   });
 
   it(`Handles no search results (404)`, async () => {
-    vi.mocked(global.fetch).mockResolvedValueOnce({
-      json() {
-        return {
-          error: ERR_NO_RESULTS,
-        };
-      },
-    } as unknown as Response);
+    createResolvedValue({ error: ERR_NO_RESULTS });
     const result = await fetchData();
     expect(result).toBe(ERR_NO_RESULTS);
   });
 
   it(`Handles search results`, async () => {
-    vi.mocked(global.fetch).mockResolvedValueOnce({
-      json() {
-        return {
-          info: {},
-          results: getCharacterInfosMock(10),
-        };
-      },
-    } as unknown as Response);
+    createResolvedValue({
+      info: {},
+      results: getCharacterInfosMock(10),
+    });
     const result = await fetchData();
     expect(isString(result)).toBeFalsy();
   });

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
-// import { getCharactersByName } from '@services/api.ts';
 import { CharacterInfo } from '@services/types.ts';
 import { render } from '@testing-library/react';
 import { act } from 'react';
