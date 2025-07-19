@@ -1,14 +1,15 @@
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
+import { getErrorInstance } from '@utils/index.ts';
 import type { ErrorInfo } from 'react';
 import { Component, type ReactNode } from 'react';
-import { getErrorInstance, type ErrorFallbackProps } from './index.ts';
+import { type ErrorFallbackProps } from './index.ts';
 
 type ErrorBoundaryProps = {
   FallbackComponent?: typeof Component<ErrorFallbackProps>;
   children?: ReactNode;
 };
 
-type ErrorBoundaryState = {
+export type ErrorBoundaryState = {
   error?: Error;
   errorInfo?: ErrorInfo;
 };
@@ -24,12 +25,12 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps> {
     console.log(error, errorInfo);
   }
 
-  protected resetError = (): void => {
+  protected resetError(): void {
     this.setState({
       error: undefined,
       errorInfo: undefined,
     });
-  };
+  }
 
   public render(): ReactNode {
     const { FallbackComponent, children } = this.props;
@@ -41,7 +42,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps> {
           <FallbackComponent
             error={error}
             errorInfo={errorInfo}
-            resetErrorBoundary={this.resetError}
+            resetErrorBoundary={this.resetError.bind(this)}
           />
         )
       );

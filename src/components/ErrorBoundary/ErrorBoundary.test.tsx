@@ -1,17 +1,25 @@
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
-import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary.tsx';
-import { ErrorFallback } from '@components/ErrorBoundary/index.ts';
+import type { ErrorBoundaryState } from '@components/ErrorBoundary/index.ts';
+import { ErrorBoundary, ErrorFallback } from '@components/ErrorBoundary/index.ts';
 import { render } from '@testing-library/react';
 import {
+  clickElement,
   componentDidCatchMock,
   ErrorBoundaryMock,
+  getNestedChild,
+  ProblematicChildMock,
+  queryNestedChild,
   resetErrorMock,
-} from 'src/test-utils/mocks/ErrorBoundaryMock.tsx';
-import { ProblematicChildMock } from 'src/test-utils/mocks/ProblematicChildMock';
-import { clickButton, getNestedChildByKey, queryNestedChildByKey } from 'src/test-utils/utils.ts';
+  setStateMock,
+} from 'src/test-utils/index.ts';
 import { vi } from 'vitest';
 
 const ERRORINFO_PROPERTY = 'componentStack';
+const ERROR_INSTANCE = Error(ERR_SOMETHING_WRONG);
+const STATE_TO_RESET: ErrorBoundaryState = {
+  error: undefined,
+  errorInfo: undefined,
+};
 
 describe('ErrorBoundary', () => {
   it(`Renders child if no errors where thrown`, () => {
@@ -20,8 +28,8 @@ describe('ErrorBoundary', () => {
         <ProblematicChildMock />
       </ErrorBoundary>,
     );
-    expect(getNestedChildByKey('ProblematicChildMock')).toBeInTheDocument();
-    expect(queryNestedChildByKey('ErrorFallback')).toBeNull();
+    expect(getNestedChild('ProblematicChildMock')).toBeInTheDocument();
+    expect(queryNestedChild('ErrorFallback')).toBeNull();
   });
 
   it(`Displays fallback UI when error occurs`, () => {
@@ -30,20 +38,20 @@ describe('ErrorBoundary', () => {
         <ProblematicChildMock throwError />
       </ErrorBoundary>,
     );
-    expect(getNestedChildByKey('ErrorFallback')).toBeInTheDocument();
-    expect(queryNestedChildByKey('ProblematicChildMock')).toBeNull();
+    expect(getNestedChild('ErrorFallback')).toBeInTheDocument();
+    expect(queryNestedChild('ProblematicChildMock')).toBeNull();
   });
 
-  it(`Calls componentDidCatch and logs error to console`, () => {
-    const consoleLogSpy = vi.spyOn(console, 'log');
+  it(`Invokes componentDidCatch and logs error to console`, () => {
+    const consoleLogMock = vi.spyOn(console, 'log');
     render(
-      <ErrorBoundaryMock FallbackComponent={ErrorFallback}>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
         <ProblematicChildMock throwError />
-      </ErrorBoundaryMock>,
+      </ErrorBoundary>,
     );
     expect(componentDidCatchMock).toHaveBeenCalled();
-    expect(consoleLogSpy.mock.calls[0][0]).toEqual(Error(ERR_SOMETHING_WRONG));
-    expect(consoleLogSpy.mock.calls[0][1]).toHaveProperty(ERRORINFO_PROPERTY);
+    expect(consoleLogMock.mock.calls[0][0]).toEqual(ERROR_INSTANCE);
+    expect(consoleLogMock.mock.calls[0][1]).toHaveProperty(ERRORINFO_PROPERTY);
   });
 
   it(`Resets error on button click`, () => {
@@ -52,7 +60,8 @@ describe('ErrorBoundary', () => {
         <ProblematicChildMock throwError />
       </ErrorBoundaryMock>,
     );
-    clickButton(getNestedChildByKey('ErrorFallbackResetBtn'));
+    clickElement(getNestedChild('ErrorFallbackResetBtn'));
     expect(resetErrorMock).toHaveBeenCalled();
+    expect(setStateMock.mock.calls[1][0]).toEqual(STATE_TO_RESET);
   });
 });
