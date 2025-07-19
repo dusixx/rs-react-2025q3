@@ -2,14 +2,14 @@ import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
 import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary.tsx';
 import { ErrorFallback } from '@components/ErrorBoundary/index.ts';
 import { render } from '@testing-library/react';
-import { clickButton, getNestedChildByKey } from 'src/test-utils/utils.ts';
+import { clickElement, getNestedChild } from 'src/test-utils/index.ts';
 import { ErrorButton } from './ErrorButton.tsx';
 
 describe('ErrorButton', () => {
   it(`Throws error when test button is clicked`, () => {
     render(<ErrorButton />);
     expect(() => {
-      clickButton(getNestedChildByKey('ErrorBtn'));
+      clickElement(getNestedChild('ErrorBtn'));
     }).toThrow(Error(ERR_SOMETHING_WRONG));
   });
 
@@ -19,9 +19,9 @@ describe('ErrorButton', () => {
         <ErrorButton />
       </ErrorBoundary>,
     );
-    const errorBtn = getNestedChildByKey('ErrorBtn');
-    clickButton(errorBtn);
-    expect(getNestedChildByKey('ErrorFallback')).toBeInTheDocument();
+    const errorBtn = getNestedChild('ErrorBtn');
+    clickElement(errorBtn);
+    expect(getNestedChild('ErrorFallback')).toBeInTheDocument();
     expect(errorBtn).not.toBeInTheDocument();
   });
 });
