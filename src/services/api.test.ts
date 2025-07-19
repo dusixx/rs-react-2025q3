@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
-import { getErrorMessage, isString } from '@utils/index.ts';
+import { getErrorMessage } from '@utils/index.ts';
 import { getCharacterInfosMock } from 'src/test-utils/index.ts';
 import { vi } from 'vitest';
 import { getCharactersByName } from './api.ts';
 
 const ERR_FETCH = 'fetch error';
 const ERR_NO_RESULTS = 'no results';
+const ITEMS_COUNT = 10;
 
 const fetchData = async (): Promise<ReturnType<typeof getCharactersByName> | string> => {
   try {
@@ -47,9 +48,9 @@ describe('api', () => {
   it(`Handles search results`, async () => {
     createResolvedValue({
       info: {},
-      results: getCharacterInfosMock(10),
+      results: getCharacterInfosMock(ITEMS_COUNT),
     });
     const result = await fetchData();
-    expect(isString(result)).toBeFalsy();
+    expect(result).toHaveLength(ITEMS_COUNT);
   });
 });
