@@ -2,7 +2,7 @@ import { ErrorBoundary, ErrorFallback } from '@components/ErrorBoundary/index.ts
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { App } from './App.tsx';
+import { App } from './components/App/App.tsx';
 import './styles/global.scss';
 
 const ROOT_SELECTOR = '#root';
