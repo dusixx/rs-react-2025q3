@@ -1,5 +1,5 @@
 import { hasOwnKeys, isObject, isString } from '@utils/index.ts';
-import type { CharacterInfo, SearchResult } from './types.ts';
+import type { CharacterInfo, SearchResult } from './api.types.ts';
 
 const isLikeCharacterInfo = (obj: unknown): obj is CharacterInfo => {
   return (

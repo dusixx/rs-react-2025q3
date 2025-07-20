@@ -1,5 +1,5 @@
 import { IconLocation } from '@common/constants.ts';
-import type { CharacterInfo } from '@services/types.ts';
+import type { CharacterInfo } from '@services/api.types.ts';
 import type { ReactNode } from 'react';
 import { Component } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';

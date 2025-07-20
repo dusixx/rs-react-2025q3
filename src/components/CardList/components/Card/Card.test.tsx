@@ -1,4 +1,4 @@
-import type { CharacterInfo } from '@services/types.ts';
+import type { CharacterInfo } from '@services/api.types.ts';
 import { render } from '@testing-library/react';
 import { serializeStyle } from '@utils/index.ts';
 import {

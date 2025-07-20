@@ -62,6 +62,7 @@ export default defineConfig({
         '**/utils.{js,ts}',
         'src/utils',
         'src/main.{ts,tsx,js,jsx}',
+        '**/**types**',
       ],
       thresholds: {
         global: {

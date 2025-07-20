@@ -1,5 +1,5 @@
 import { IconFemale, IconMale, IconMaleFemale } from '@common/constants.ts';
-import type { CharacterGender, CharacterLocation, CharacterStatus } from '@services/types.ts';
+import type { CharacterGender, CharacterLocation, CharacterStatus } from '@services/api.types';
 import type { IconType } from 'react-icons';
 
 export const getLocationName = (location: CharacterLocation | undefined): string => {

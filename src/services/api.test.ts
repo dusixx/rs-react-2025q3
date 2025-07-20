@@ -24,7 +24,7 @@ const createResolvedValue = (result: unknown, once: boolean = true): void => {
   } as Response);
 };
 
-describe('api', () => {
+describe('API tests', () => {
   vi.stubGlobal('fetch', vi.fn());
 
   it(`Handles fetch rejection`, async () => {
