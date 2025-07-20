@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 import { getCharactersByName } from '@services/api.ts';
-import type { CharacterInfo } from '@services/types.ts';
+import type { CharacterInfo } from '@services/api.types.ts';
 import { render } from '@testing-library/react';
 import { act } from 'react';
 import {
@@ -79,16 +79,6 @@ describe('MainPage', () => {
     expect(getCharactersByName).toHaveBeenCalledWith(FAKE_VALUE);
   });
 
-  it(`Calls API with correct parameters`, async () => {
-    await act(() => render(<MainPage />));
-
-    await act(() => {
-      return changeInput(getNestedChild('SearchBarInput'), '');
-    });
-    expect(setPersistedQuery).toHaveBeenCalledWith('');
-    expect(getCharactersByName).toHaveBeenCalledWith('');
-  });
-
   it(`Handles successful API responses`, async () => {
     setPersistedQuery(VALID_QUERY);
     await act(() => render(<MainPage />));
@@ -98,16 +88,19 @@ describe('MainPage', () => {
     expect(getNestedChild('CardList').children).toHaveLength(ITEMS_COUNT);
   });
 
-  it(`Handles empty query response`, async () => {
-    setPersistedQuery('');
+  it(`Handles empty query response on input change`, async () => {
     await act(() => render(<MainPage />));
 
+    await act(() => {
+      return changeInput(getNestedChild('SearchBarInput'), '');
+    });
     await act(() => vi.runAllTimers());
+    expect(setPersistedQuery).toHaveBeenCalledWith('');
     expect(getCharactersByName).toHaveBeenCalledWith('');
     expect(getNestedChild('CardList').children).toHaveLength(ITEMS_PER_PAGE);
   });
 
-  it(`Handles no results found`, async () => {
+  it(`Handles invalid query`, async () => {
     setPersistedQuery(INVALID_QUERY);
     await act(() => render(<MainPage />));
 

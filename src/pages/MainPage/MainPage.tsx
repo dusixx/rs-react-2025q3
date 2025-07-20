@@ -2,7 +2,7 @@ import { ERR_SOMETHING_WRONG, IconCloseCircleOutline } from '@common/constants.t
 import { CardList } from '@components/CardList/CardList.tsx';
 import { SearchBar } from '@components/SearchBar/SearchBar.tsx';
 import { getCharactersByName } from '@services/api.ts';
-import type { CharacterInfo } from '@services/types.ts';
+import type { CharacterInfo } from '@services/api.types.ts';
 import { getErrorMessage } from '@utils/index.ts';
 import type { ReactNode } from 'react';
 import { Component } from 'react';
