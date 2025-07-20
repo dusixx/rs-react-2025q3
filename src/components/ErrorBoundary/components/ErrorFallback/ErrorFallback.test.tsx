@@ -40,17 +40,17 @@ describe('ErrorFallback', () => {
   it(`Renders reset button`, () => {
     render(<ErrorFallback resetErrorBoundary={() => {}} />);
 
-    const errrorBtn = getNestedChild('ErrorFallbackResetBtn');
-    expect(errrorBtn).toBeInTheDocument();
-    expect(errrorBtn.textContent).toMatch(RESET_BTN_TEXT);
+    const errorBtn = getNestedChild('ErrorFallbackResetBtn');
+    expect(errorBtn).toBeInTheDocument();
+    expect(errorBtn.textContent).toMatch(RESET_BTN_TEXT);
   });
 
   it(`Resets error on reset button click`, () => {
     const resetMock = vi.fn();
     render(<ErrorFallback resetErrorBoundary={resetMock} />);
 
-    const errrorBtn = getNestedChild('ErrorFallbackResetBtn');
-    clickElement(errrorBtn);
+    const errorBtn = getNestedChild('ErrorFallbackResetBtn');
+    clickElement(errorBtn);
     expect(resetMock).toHaveBeenCalled();
   });
 });

@@ -44,8 +44,8 @@ describe('Card', () => {
   });
 
   it(`Renders random character info`, () => {
-    const mock = getCharacterInfoMock();
-    render(<Card info={mock} />);
-    testRenderedCard(mock);
+    const infoMock = getCharacterInfoMock();
+    render(<Card info={infoMock} />);
+    testRenderedCard(infoMock);
   });
 });

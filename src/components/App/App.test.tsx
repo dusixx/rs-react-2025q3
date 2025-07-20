@@ -11,10 +11,8 @@ describe('App', () => {
         <App />
       </MemoryRouter>,
     );
-    const mainPage = getNestedChild('Main', 'MainPage');
-    expect(getNestedChild('Header')).toBeInTheDocument();
-    expect(getNestedChild('Footer')).toBeInTheDocument();
-    expect(mainPage).toBeInTheDocument();
-    expect(getNestedChild(mainPage, 'SearchBar')).toBeInTheDocument();
+    expect(getNestedChild('Header', 'ErrorBtn')).toBeInTheDocument();
+    expect(getNestedChild('Footer', 'FooterLogo')).toBeInTheDocument();
+    expect(getNestedChild('Main', 'MainPage', 'SearchBar')).toBeInTheDocument();
   });
 });
