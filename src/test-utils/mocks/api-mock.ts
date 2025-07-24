@@ -3,7 +3,7 @@ import { getCharactersByName } from '@services/api.ts';
 import type { CharacterInfo } from '@services/api.types.ts';
 import { vi } from 'vitest';
 import { FAKE_VALUE } from '../constants.ts';
-import { getCharacterInfosMock } from './character-mock.ts';
+import { getCharacterInfoListMock } from './character-mock.ts';
 
 export const VALID_QUERY = 'rick';
 export const INVALID_QUERY = FAKE_VALUE;
@@ -18,7 +18,7 @@ vi.mock('@services/api.ts', async importOriginal => {
     getCharactersByName: vi.fn(async (query?: string): Promise<CharacterInfo[]> => {
       return query === INVALID_QUERY
         ? Promise.reject(Error(ERR_NOT_FOUND))
-        : Promise.resolve(getCharacterInfosMock(query ? ITEMS_COUNT : ITEMS_PER_PAGE));
+        : Promise.resolve(getCharacterInfoListMock(query ? ITEMS_COUNT : ITEMS_PER_PAGE));
     }),
   };
 });
