@@ -4,7 +4,7 @@ import { vi } from 'vitest';
 vi.stubGlobal('fetch', vi.fn());
 
 export const mockFetchResolvedValueOnce = (
-  json: unknown,
+  json?: unknown,
   responseRest?: Partial<Response>,
 ): void => {
   vi.mocked(global.fetch).mockResolvedValueOnce({

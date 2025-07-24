@@ -4,7 +4,7 @@ import { isLikeCharacterInfos, isLikeErrorResult, isLikeSearchResult } from './a
 
 const BASE_URL = 'https://rickandmortyapi.com/api/';
 
-export const getCharactersByName = async (name: string): Promise<CharacterInfo[]> => {
+export const getCharactersByName = async (name: string = ''): Promise<CharacterInfo[]> => {
   const response = await fetch(`${BASE_URL}character/?name=${name}`);
   const infos: unknown = await response.json();
 
