@@ -34,7 +34,7 @@ export const getCharacterInfoMock = (id: number = rndInt(1, 100)): CharacterInfo
   };
 };
 
-export const getCharacterInfosMock = (min: number, max: number = min): CharacterInfo[] => {
+export const getCharacterInfoListMock = (min: number, max: number = min): CharacterInfo[] => {
   return Array.from<CharacterInfo>({ length: rndInt(min, max) }).map((_, id) => {
     return { ...CharacterInfoMock, id };
   });

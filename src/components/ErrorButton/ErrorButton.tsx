@@ -6,15 +6,21 @@ import styles from './ErrorButton.module.scss';
 
 const ERROR_BTN_TEXT = 'error button';
 
+type ErrorButtonProps = {
+  errorMessage?: string;
+};
+
 type ErrorButtonState = {
   error?: Error;
 };
 
-export class ErrorButton extends Component {
+export class ErrorButton extends Component<ErrorButtonProps> {
   public state: ErrorButtonState = {};
 
   private handleClick = (): void => {
-    this.setState({ error: new Error(ERR_SOMETHING_WRONG) });
+    this.setState({
+      error: Error(this.props.errorMessage || ERR_SOMETHING_WRONG),
+    });
   };
 
   public render(): ReactNode {
