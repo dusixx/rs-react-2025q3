@@ -1,9 +1,17 @@
-import { IconFemale, IconLocation, IconMale, IconMaleFemale } from '@common/constants.ts';
-import type { CharacterInfo } from '@services/types.ts';
+import { IconLocation } from '@common/constants.ts';
+import type { CharacterInfo } from '@services/api.types.ts';
 import type { ReactNode } from 'react';
 import { Component } from 'react';
+import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Card.module.scss';
+import {
+  getGenderIcon,
+  getLocationName,
+  getStatusIndicatorStyle,
+  getThumbStyle,
+} from './Card.utils.ts';
 
+export const UNKNOWN_VALUE = 'unknown';
 const ICON_PROPS = {
   size: 16,
   color: 'var(--color-green-gray)',
@@ -15,46 +23,42 @@ type CardProps = {
 
 export class Card extends Component<CardProps> {
   public render(): ReactNode {
-    const { name, image, status, gender, species, location } = this.props.info;
-    const genderLower = gender.toLowerCase();
-    const statusLower = status.toLowerCase();
+    const {
+      image,
+      location,
+      name = UNKNOWN_VALUE,
+      status = UNKNOWN_VALUE,
+      gender = UNKNOWN_VALUE,
+      species = UNKNOWN_VALUE,
+    } = this.props.info;
 
-    const statusIndicatorColor =
-      statusLower === 'alive'
-        ? 'var(--color-green)'
-        : statusLower === 'dead'
-          ? 'var(--color-green-gray)'
-          : 'var(--color-violet-light)';
-
-    const genderIcon =
-      genderLower === 'female' ? (
-        <IconFemale {...ICON_PROPS} />
-      ) : genderLower === 'male' ? (
-        <IconMale {...ICON_PROPS} />
-      ) : (
-        <IconMaleFemale {...ICON_PROPS} />
-      );
+    const IconGender = getGenderIcon(gender);
 
     return (
       <div className={styles.card}>
-        <div className={styles.thumb}>
-          {image && <img className={styles.image} src={image} alt={name} />}
+        <div data-testid={TestId.CardThumb} className={styles.thumb} style={getThumbStyle(image)}>
+          {image && (
+            <img data-testid={TestId.CardImage} className={styles.image} src={image} alt={name} />
+          )}
         </div>
         <ul className={styles.desc}>
           <li data-name>
-            <p>{name}</p>
+            <p data-testid={TestId.CardName}>{name}</p>
           </li>
           <li data-status>
-            <div style={{ backgroundColor: statusIndicatorColor }}></div>
-            <span>{status}</span>
+            <div
+              data-testid={TestId.CardStatusIndicator}
+              style={getStatusIndicatorStyle(status)}
+            ></div>
+            <span data-testid={TestId.CardStatus}>{status}</span>
           </li>
           <li data-species>
-            {genderIcon}
-            <span>{species}</span>
+            <IconGender data-testid={TestId.CardIconGender} {...ICON_PROPS} />
+            <span data-testid={TestId.CardSpecies}>{species}</span>
           </li>
           <li data-location>
-            <IconLocation {...ICON_PROPS} />
-            <p>{location.name.replace(/\s+\(.+/, '')}</p>
+            <IconLocation data-testid={TestId.CardIconLocation} {...ICON_PROPS} />
+            <p data-testid={TestId.CardLocation}>{getLocationName(location) || UNKNOWN_VALUE}</p>
           </li>
         </ul>
       </div>

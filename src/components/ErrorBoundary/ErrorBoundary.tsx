@@ -1,14 +1,14 @@
-import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
+import { getErrorInstance } from '@utils/index.ts';
 import type { ErrorInfo } from 'react';
 import { Component, type ReactNode } from 'react';
-import { getErrorInstance, type ErrorFallbackProps } from './index.ts';
+import { type ErrorFallbackProps } from './index.ts';
 
-type ErrorBoundaryProps = {
+export type ErrorBoundaryProps = {
   FallbackComponent?: typeof Component<ErrorFallbackProps>;
   children?: ReactNode;
 };
 
-type ErrorBoundaryState = {
+export type ErrorBoundaryState = {
   error?: Error;
   errorInfo?: ErrorInfo;
 };
@@ -18,18 +18,18 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps> {
 
   public componentDidCatch(error: unknown, errorInfo: ErrorInfo): void {
     this.setState({
-      error: getErrorInstance(error) ?? Error(ERR_SOMETHING_WRONG),
+      error: getErrorInstance(error),
       errorInfo,
     });
     console.log(error, errorInfo);
   }
 
-  private resetError = (): void => {
+  protected resetError(): void {
     this.setState({
       error: undefined,
       errorInfo: undefined,
     });
-  };
+  }
 
   public render(): ReactNode {
     const { FallbackComponent, children } = this.props;
@@ -41,7 +41,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps> {
           <FallbackComponent
             error={error}
             errorInfo={errorInfo}
-            resetErrorBoundary={this.resetError}
+            resetErrorBoundary={this.resetError.bind(this)}
           />
         )
       );

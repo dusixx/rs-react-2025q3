@@ -1,3 +1,5 @@
+import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
+
 export const isObject = (obj: unknown): obj is object => {
   return obj != null && typeof obj === 'object';
 };
@@ -23,4 +25,29 @@ export const areStringsEqual = (
   { ignoreCase = true, locales }: { ignoreCase: boolean; locales: string },
 ): boolean => {
   return str1.localeCompare(str2, locales, ignoreCase ? { sensitivity: 'base' } : undefined) === 0;
+};
+
+export const serializeStyle = (style: object): string => {
+  return JSON.stringify(style)
+    .replace(/[^\w:,.]/gi, '')
+    .replace(/,/g, ';');
+};
+
+export const rndInt = (min: number, max: number): number => {
+  return Math.round(min + Math.random() * (max - min));
+};
+
+export const chooseOneRandomly = <T>(...values: T[]): T => {
+  return values[rndInt(0, values.length - 1)];
+};
+
+export const getErrorInstance = (
+  error: unknown,
+  defaultMessage = ERR_SOMETHING_WRONG,
+): Error | undefined => {
+  return isError(error) ? error : isString(error) ? Error(error) : Error(defaultMessage);
+};
+
+export const getErrorMessage = (error: unknown, defaultMessage: string = ''): string => {
+  return isString(error) ? error : isError(error) ? error.message : defaultMessage;
 };

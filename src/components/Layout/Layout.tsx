@@ -2,6 +2,7 @@ import { Header } from '@components/Layout/components/Header/Header';
 import type { ReactNode } from 'react';
 import { Component } from 'react';
 import { Outlet } from 'react-router-dom';
+import { TestId } from 'src/test-utils/constants.ts';
 import { Footer } from './components/Footer/Footer.tsx';
 
 export class Layout extends Component {
@@ -9,7 +10,7 @@ export class Layout extends Component {
     return (
       <>
         <Header />
-        <main>
+        <main data-testid={TestId.Main}>
           <Outlet />
         </main>
         <Footer />

@@ -16,6 +16,7 @@
     "stylelint:fix": "stylelint \"**/*.{css,scss}\" --fix",
     "lint:fix-all": "(npm run stylelint:fix) || true && npm run lint:fix",
     "test": "vitest",
+    "test:coverage": "vitest run --coverage",
     "coverage": "vitest run --coverage"
   },
   "husky": {
@@ -26,6 +27,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@testing-library/user-event": "^14.6.1",
     "clsx": "^2.1.1",
     "modern-normalize": "^3.0.1",
     "react": "^19.0.0",
