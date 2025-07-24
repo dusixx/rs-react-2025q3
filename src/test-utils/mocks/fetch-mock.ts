@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { vi } from 'vitest';
 
-vi.stubGlobal('fetch', vi.fn());
+const mocked = vi.spyOn(globalThis, 'fetch');
 
-export const mockFetchResolvedValueOnce = (
-  json?: unknown,
-  responseRest?: Partial<Response>,
-): void => {
-  vi.mocked(global.fetch).mockResolvedValueOnce({
-    json() {
-      return json;
-    },
-    ...responseRest,
-  } as Response);
-};
-
-export const mockFetchRejectedValueOnce = (errorMessage: string): void => {
-  vi.mocked(global.fetch).mockRejectedValueOnce(Error(errorMessage));
+export const fetchMock = {
+  mocked,
+  mockResolvedValueOnce(json?: unknown, responseRest?: Partial<Response>): void {
+    mocked.mockResolvedValueOnce({
+      json() {
+        return json;
+      },
+      ...responseRest,
+    } as Response);
+  },
+  mockRejectedValueOnce(errorMessage: string): void {
+    mocked.mockRejectedValueOnce(Error(errorMessage));
+  },
 };

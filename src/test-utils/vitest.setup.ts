@@ -7,11 +7,15 @@ vi.spyOn(console, 'log').mockImplementation(() => {});
 
 afterEach(() => {
   cleanup();
+  vi.resetAllMocks();
   vi.clearAllMocks();
-  vi.runOnlyPendingTimers();
-  vi.useRealTimers();
 });
 
 beforeEach(() => {
   vi.useFakeTimers({ shouldAdvanceTime: true });
+});
+
+afterAll(() => {
+  vi.unstubAllGlobals();
+  vi.useRealTimers();
 });

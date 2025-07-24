@@ -15,7 +15,7 @@ describe('ErrorFallback', () => {
     const heading = getNestedChild('ErrorFallbackHeading');
     const message = getNestedChild(heading, 'ErrorFallbackMessage');
 
-    expect(message.textContent).toMatch(FAKE_ERROR.message);
+    expect(message).toHaveTextContent(FAKE_ERROR.message);
     expect(getNestedChild(heading, 'ErrorFallbackIcon')).toBeInTheDocument();
     expect(queryNestedChild('ErrorFallbackStack')).toBeNull();
     expect(queryNestedChild('ErrorFallbackResetBtn')).toBeNull();
@@ -26,7 +26,7 @@ describe('ErrorFallback', () => {
 
     const heading = getNestedChild('ErrorFallbackHeading');
     const message = getNestedChild(heading, 'ErrorFallbackMessage');
-    expect(message.textContent).toMatch(ERR_SOMETHING_WRONG);
+    expect(message).toHaveTextContent(ERR_SOMETHING_WRONG);
   });
 
   it(`Renders error stack`, () => {
@@ -34,7 +34,7 @@ describe('ErrorFallback', () => {
 
     const errorInfo = getNestedChild('ErrorFallbackStack');
     expect(errorInfo).toBeInTheDocument();
-    expect(errorInfo.textContent).toMatch(FAKE_ERROR_INFO.componentStack);
+    expect(errorInfo).toHaveTextContent(FAKE_ERROR_INFO.componentStack);
   });
 
   it(`Renders reset button`, () => {
@@ -42,7 +42,7 @@ describe('ErrorFallback', () => {
 
     const errorBtn = getNestedChild('ErrorFallbackResetBtn');
     expect(errorBtn).toBeInTheDocument();
-    expect(errorBtn.textContent).toMatch(RESET_BTN_TEXT);
+    expect(errorBtn).toHaveTextContent(RESET_BTN_TEXT);
   });
 
   it(`Resets error on reset button click`, () => {
