@@ -4,14 +4,13 @@ export type CharacterLocation = {
 };
 export type CharacterStatus = 'alive' | 'dead' | 'unknown';
 export type CharacterGender = 'male' | 'female' | 'unknown';
-
 export type CharacterInfo = {
   id: number;
   name?: string;
   image?: string;
+  species?: string;
   status?: CharacterStatus;
   gender?: CharacterGender;
-  species?: string;
   location?: CharacterLocation;
 };
 

@@ -9,15 +9,17 @@ import { render } from '@testing-library/react';
 import { getErrorInstance } from '@utils/index.ts';
 import {
   clickElement,
-  componentDidCatchMock,
-  ErrorBoundaryMock,
   FAKE_VALUE,
   getNestedChild,
-  ProblematicChildMock,
   queryNestedChild,
+} from 'src/test-utils/index.ts';
+import {
+  componentDidCatchMock,
+  ErrorBoundaryMock,
   resetErrorMock,
   setStateMock,
-} from 'src/test-utils/index.ts';
+} from 'src/test-utils/mocks/ErrorBoundaryMock.tsx';
+import { ProblematicChildMock } from 'src/test-utils/mocks/ProblematicChildMock.tsx';
 import { vi } from 'vitest';
 
 const STATE_TO_RESET: ErrorBoundaryState = {
@@ -31,35 +33,32 @@ vi.mock('@utils/index.ts', async importOriginal => {
     getErrorInstance: vi.fn(() => Error(FAKE_VALUE)),
   };
 });
+const renderErrorBoundary = (throwError: boolean, mock: boolean = false): void => {
+  const ErrBoundary = mock ? ErrorBoundaryMock : ErrorBoundary;
+  render(
+    <ErrBoundary FallbackComponent={ErrorFallback}>
+      <ProblematicChildMock throwError={throwError} />
+    </ErrBoundary>,
+  );
+};
 
 describe('ErrorBoundary', () => {
   it(`Renders child if no errors where thrown`, () => {
-    render(
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <ProblematicChildMock />
-      </ErrorBoundary>,
-    );
+    renderErrorBoundary(false);
     expect(getNestedChild('ProblematicChildMock')).toBeInTheDocument();
     expect(queryNestedChild('ErrorFallback')).toBeNull();
   });
 
   it(`Displays fallback UI when error occurs`, () => {
-    render(
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <ProblematicChildMock throwError />
-      </ErrorBoundary>,
-    );
+    renderErrorBoundary(true);
     expect(getNestedChild('ErrorFallback')).toBeInTheDocument();
     expect(queryNestedChild('ProblematicChildMock')).toBeNull();
   });
 
   it(`Invokes componentDidCatch and logs error to console`, () => {
-    const consoleLogMock = vi.spyOn(console, 'log');
-    render(
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <ProblematicChildMock throwError />
-      </ErrorBoundary>,
-    );
+    const consoleLogMock = vi.spyOn(console, 'log').mockImplementationOnce(() => {});
+    renderErrorBoundary(true);
+
     const args = componentDidCatchMock.mock.calls[0];
     expect(setStateMock).toHaveBeenCalledWith({
       error: Error(FAKE_VALUE),
@@ -70,11 +69,7 @@ describe('ErrorBoundary', () => {
   });
 
   it(`Resets error on button click`, () => {
-    render(
-      <ErrorBoundaryMock FallbackComponent={ErrorFallback}>
-        <ProblematicChildMock throwError />
-      </ErrorBoundaryMock>,
-    );
+    renderErrorBoundary(true, true);
     clickElement(getNestedChild('ErrorFallbackResetBtn'));
     expect(resetErrorMock).toHaveBeenCalled();
     expect(setStateMock.mock.calls[1][0]).toEqual(STATE_TO_RESET);

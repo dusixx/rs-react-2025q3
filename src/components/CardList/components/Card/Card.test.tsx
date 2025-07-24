@@ -1,12 +1,8 @@
 import type { CharacterInfo } from '@services/api.types.ts';
 import { render } from '@testing-library/react';
 import { serializeStyle } from '@utils/index.ts';
-import {
-  CharacterInfoMock,
-  getCharacterInfoMock,
-  getNestedChild,
-  queryNestedChild,
-} from 'src/test-utils/index.ts';
+import { getNestedChild, queryNestedChild } from 'src/test-utils/index.ts';
+import { CharacterInfoMock, getCharacterInfoMock } from 'src/test-utils/mocks/character-mock.ts';
 import { Card, UNKNOWN_VALUE } from './Card.tsx';
 import { getLocationName, getStatusIndicatorStyle, getThumbStyle } from './Card.utils.ts';
 
@@ -19,10 +15,10 @@ const testRenderedCard = (info: CharacterInfo): void => {
   expect(getNestedChild('CardStatusIndicator')).toHaveStyle(
     serializeStyle(getStatusIndicatorStyle(status)),
   );
-  expect(getNestedChild('CardName').textContent).toEqual(name || UNKNOWN_VALUE);
-  expect(getNestedChild('CardStatus').textContent).toEqual(status || UNKNOWN_VALUE);
-  expect(getNestedChild('CardSpecies').textContent).toEqual(species || UNKNOWN_VALUE);
-  expect(getNestedChild('CardLocation').textContent).toEqual(
+  expect(getNestedChild('CardName')).toHaveTextContent(name || UNKNOWN_VALUE);
+  expect(getNestedChild('CardStatus')).toHaveTextContent(status || UNKNOWN_VALUE);
+  expect(getNestedChild('CardSpecies')).toHaveTextContent(species || UNKNOWN_VALUE);
+  expect(getNestedChild('CardLocation')).toHaveTextContent(
     getLocationName(location) || UNKNOWN_VALUE,
   );
   if (image) {
@@ -39,8 +35,9 @@ describe('Card', () => {
   });
 
   it(`Renders incomplete character info`, () => {
-    render(<Card info={{ id: 1 }} />);
-    testRenderedCard({ id: 1 });
+    const infoMock = { id: 1 };
+    render(<Card info={infoMock} />);
+    testRenderedCard(infoMock);
   });
 
   it(`Renders random character info`, () => {

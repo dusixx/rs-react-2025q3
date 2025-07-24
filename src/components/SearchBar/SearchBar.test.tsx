@@ -36,7 +36,7 @@ describe('SearchBar', () => {
 
   it(`Renders search input placeholder`, () => {
     render(<SearchBar placeholder={FAKE_VALUE} />);
-    expect(getNestedChild<HTMLInputElement>('SearchBarInput').placeholder).toBe(FAKE_VALUE);
+    expect(getNestedChild('SearchBarInput')).toHaveProperty('placeholder', FAKE_VALUE);
   });
 
   it(`Updates input value and enables search button when user types`, () => {

@@ -1,66 +1,28 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
-import { getCharactersByName } from '@services/api.ts';
-import type { CharacterInfo } from '@services/api.types.ts';
 import { render } from '@testing-library/react';
 import { act } from 'react';
+import { changeInput, clickElement, FAKE_VALUE, getNestedChild } from 'src/test-utils/index.ts';
 import {
-  changeInput,
-  clickElement,
-  FAKE_VALUE,
-  getCharacterInfosMock,
-  getNestedChild,
-} from 'src/test-utils/index.ts';
+  ERR_NOT_FOUND,
+  getCharactersByNameMock,
+  INVALID_QUERY,
+  ITEMS_COUNT,
+  ITEMS_PER_PAGE,
+  VALID_QUERY,
+} from 'src/test-utils/mocks/api-mock.ts';
+import { localStorageMock } from 'src/test-utils/mocks/index.ts';
 import { vi } from 'vitest';
+import { LS_KEY_LAST_QUERY } from './MainPage.constants.ts';
 import MainPage from './MainPage.tsx';
-import { getPersistedQuery, setPersistedQuery } from './index.ts';
-
-const storeMock = {
-  query: '',
-};
-const VALID_QUERY = 'rick';
-const INVALID_QUERY = FAKE_VALUE;
-const ERR_NOT_FOUND = 'Nothing was found';
-const ITEMS_PER_PAGE = 10;
-const ITEMS_COUNT = 5;
-
-vi.mock('./index.ts', async importOriginal => {
-  const actual = await importOriginal<typeof import('./index.ts')>();
-  return {
-    ...actual,
-    getPersistedQuery: vi.fn(() => storeMock.query),
-    setPersistedQuery: vi.fn((value: string) => (storeMock.query = value)),
-  };
-});
-vi.mock('@services/api.ts', async importOriginal => {
-  const actual = await importOriginal<typeof import('@services/api.ts')>();
-  return {
-    ...actual,
-    getCharactersByName: vi.fn(async (query?: string): Promise<CharacterInfo[]> => {
-      return query === INVALID_QUERY
-        ? Promise.reject(Error(ERR_NOT_FOUND))
-        : Promise.resolve(getCharacterInfosMock(query ? ITEMS_COUNT : ITEMS_PER_PAGE));
-    }),
-  };
-});
-const componentDidMountMock = vi.spyOn(MainPage.prototype, 'componentDidMount');
-const setStateMock = vi.spyOn(MainPage.prototype, 'setState');
 
 describe('MainPage', () => {
-  it(`Makes initial API call on component mount`, async () => {
-    await act(() => render(<MainPage />));
-
-    expect(componentDidMountMock).toHaveBeenCalled();
-    expect(setStateMock).toHaveBeenCalled();
-    expect(getPersistedQuery).toHaveBeenCalled();
-    expect(getCharactersByName).toHaveBeenCalled();
-  });
+  const { setItem, getItem } = localStorageMock;
 
   it(`Handles search term from localStorage on initial load`, async () => {
-    setPersistedQuery(FAKE_VALUE);
+    setItem(LS_KEY_LAST_QUERY, FAKE_VALUE);
     await act(() => render(<MainPage />));
 
-    expect(getPersistedQuery).toHaveBeenCalled();
-    expect(getCharactersByName).toHaveBeenCalledWith(FAKE_VALUE);
+    expect(getItem).toHaveBeenCalledWith(LS_KEY_LAST_QUERY);
+    expect(getItem).toHaveReturnedWith(FAKE_VALUE);
   });
 
   it(`Shows loading state while fetching data`, async () => {
@@ -70,44 +32,40 @@ describe('MainPage', () => {
 
   it(`Calls API with correct parameters`, async () => {
     await act(() => render(<MainPage />));
-
     await act(() => {
       changeInput(getNestedChild('SearchBarInput'), FAKE_VALUE);
       return clickElement(getNestedChild('SearchBarBtn'));
     });
-    expect(setPersistedQuery).toHaveBeenCalledWith(FAKE_VALUE);
-    expect(getCharactersByName).toHaveBeenCalledWith(FAKE_VALUE);
+    expect(setItem).toHaveBeenCalledWith(LS_KEY_LAST_QUERY, FAKE_VALUE);
+    expect(getCharactersByNameMock).toHaveBeenCalledWith(FAKE_VALUE);
   });
 
   it(`Handles successful API responses`, async () => {
-    setPersistedQuery(VALID_QUERY);
+    setItem(LS_KEY_LAST_QUERY, VALID_QUERY);
     await act(() => render(<MainPage />));
-
     await act(() => vi.runAllTimers());
-    expect(getCharactersByName).toHaveBeenCalledWith(VALID_QUERY);
-    expect(getNestedChild('CardList').children).toHaveLength(ITEMS_COUNT);
+
+    expect(getCharactersByNameMock).toHaveBeenCalledWith(VALID_QUERY);
+    expect(getNestedChild('CardList')).toHaveProperty('children.length', ITEMS_COUNT);
   });
 
   it(`Handles empty query response on input change`, async () => {
     await act(() => render(<MainPage />));
-
-    await act(() => {
-      return changeInput(getNestedChild('SearchBarInput'), '');
-    });
+    await act(() => changeInput(getNestedChild('SearchBarInput'), ''));
     await act(() => vi.runAllTimers());
-    expect(setPersistedQuery).toHaveBeenCalledWith('');
-    expect(getCharactersByName).toHaveBeenCalledWith('');
-    expect(getNestedChild('CardList').children).toHaveLength(ITEMS_PER_PAGE);
+
+    expect(setItem).toHaveBeenCalledWith(LS_KEY_LAST_QUERY, '');
+    expect(getCharactersByNameMock).toHaveBeenCalledWith('');
+    expect(getNestedChild('CardList')).toHaveProperty('children.length', ITEMS_PER_PAGE);
   });
 
   it(`Handles invalid query`, async () => {
-    setPersistedQuery(INVALID_QUERY);
+    setItem(LS_KEY_LAST_QUERY, INVALID_QUERY);
     await act(() => render(<MainPage />));
-
     await act(() => vi.runAllTimers());
-    expect(getCharactersByName).toHaveBeenCalledWith(INVALID_QUERY);
-    const searchError = getNestedChild('SearchError');
-    expect(getNestedChild(searchError, 'SearchErrorIcon')).toBeInTheDocument();
-    expect(getNestedChild(searchError, 'SearchErrorMessage').textContent).toMatch(ERR_NOT_FOUND);
+
+    expect(getCharactersByNameMock).toHaveBeenCalledWith(INVALID_QUERY);
+    expect(getNestedChild('SearchError', 'SearchErrorIcon')).toBeInTheDocument();
+    expect(getNestedChild('SearchError', 'SearchErrorMessage')).toHaveTextContent(ERR_NOT_FOUND);
   });
 });

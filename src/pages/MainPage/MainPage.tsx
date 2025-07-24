@@ -11,11 +11,10 @@ import {
   ERROR_ICON_PROPS,
   INITIAL_STATE,
   LOADER_VISIBILITY_DURATION,
+  LS_KEY_LAST_QUERY,
   QUERY_PLACEHOLDER,
   SPINNER_PROPS,
-  getPersistedQuery,
-  setPersistedQuery,
-} from './index.ts';
+} from './MainPage.constants.ts';
 import styles from './MainPage.module.scss';
 
 export type MainPageState = {
@@ -27,7 +26,7 @@ export type MainPageState = {
 
 export default class MainPage extends Component {
   public state: MainPageState = {
-    query: getPersistedQuery(),
+    query: localStorage.getItem(LS_KEY_LAST_QUERY) ?? '',
     ...INITIAL_STATE,
   };
 
@@ -36,7 +35,7 @@ export default class MainPage extends Component {
   }
 
   private handleQuery = (query: string): void => {
-    setPersistedQuery(query);
+    localStorage.setItem(LS_KEY_LAST_QUERY, query);
     this.setState({
       query,
       ...INITIAL_STATE,

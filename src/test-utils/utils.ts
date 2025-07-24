@@ -3,20 +3,20 @@
 import { fireEvent, screen, within } from '@testing-library/react';
 import { TestId } from './constants.ts';
 
-export type TestIdName = keyof typeof TestId;
-export type TestIdValue = (typeof TestId)[TestIdName];
+export type TestIdKey = keyof typeof TestId;
+export type TestIdValue = (typeof TestId)[TestIdKey];
 
 export const changeInput = (input: HTMLElement, value: string): boolean => {
   return fireEvent.change(input, { target: { value } });
 };
 
-export const clickElement = (el: HTMLElement): boolean => {
+export const clickElement = (el: Element): boolean => {
   return fireEvent.click(el);
 };
 
 export const getNestedChild = <T extends HTMLElement = HTMLElement>(
-  root: TestIdName | HTMLElement,
-  ...children: TestIdName[]
+  root: TestIdKey | HTMLElement,
+  ...children: TestIdKey[]
 ): T => {
   const initial = root instanceof HTMLElement ? (root as T) : screen.getByTestId<T>(TestId[root]);
   return children.reduce<T>((element, child) => {
@@ -34,6 +34,6 @@ export const queryNestedChild = (
   }
 };
 
-export const getElementsByKeys = <T extends HTMLElement[]>(...ids: TestIdName[]): T => {
+export const getElementsByKeys = <T extends HTMLElement[]>(...ids: TestIdKey[]): T => {
   return ids.map(id => screen.getByTestId(TestId[id])) as T;
 };

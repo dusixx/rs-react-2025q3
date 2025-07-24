@@ -1,4 +1,9 @@
-import type { CharacterInfo } from '@services/api.types';
+import type {
+  CharacterGender,
+  CharacterInfo,
+  CharacterLocation,
+  CharacterStatus,
+} from '@services/api.types';
 import { chooseOneRandomly, rndInt } from '@utils/index.ts';
 
 const IMAGE_SRC = '/annie-image.jpeg';
@@ -20,9 +25,10 @@ export const getCharacterInfoMock = (id: number = rndInt(1, 100)): CharacterInfo
     id,
     image: chooseOneRandomly(IMAGE_SRC, undefined),
     name: chooseOneRandomly('annie', 'dorothy', undefined),
-    status: chooseOneRandomly('alive', 'dead', 'unknown', undefined),
     species: chooseOneRandomly('human', 'alien', undefined),
-    location: chooseOneRandomly(undefined, {
+    status: chooseOneRandomly<CharacterStatus | undefined>('alive', 'dead', 'unknown', undefined),
+    gender: chooseOneRandomly<CharacterGender | undefined>('female', 'male', 'unknown', undefined),
+    location: chooseOneRandomly<CharacterLocation | undefined>(undefined, {
       name: chooseOneRandomly('anatomy park', 'earth', 'mars'),
     }),
   };

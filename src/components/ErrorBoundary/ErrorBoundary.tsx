@@ -3,7 +3,7 @@ import type { ErrorInfo } from 'react';
 import { Component, type ReactNode } from 'react';
 import { type ErrorFallbackProps } from './index.ts';
 
-type ErrorBoundaryProps = {
+export type ErrorBoundaryProps = {
   FallbackComponent?: typeof Component<ErrorFallbackProps>;
   children?: ReactNode;
 };
