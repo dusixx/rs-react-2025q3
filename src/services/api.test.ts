@@ -1,6 +1,7 @@
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
 import { fetchMock, getCharacterInfoListMock } from 'src/test-utils/mocks/index.ts';
 import { getCharactersByName } from './api.ts';
+import type { SearchResult } from './api.types.ts';
 
 const ERR_FETCH = 'fetch error';
 const ERR_NO_RESULTS = 'no results';
@@ -13,7 +14,7 @@ describe('API tests', () => {
   });
 
   it(`Handles invalid search results`, async () => {
-    fetchMock.mockResolvedValueOnce();
+    fetchMock.mockResolvedValueOnce(null);
     await expect(getCharactersByName()).rejects.toThrow(ERR_SOMETHING_WRONG);
   });
 
@@ -25,8 +26,13 @@ describe('API tests', () => {
   });
 
   it(`Handles valid search results`, async () => {
-    fetchMock.mockResolvedValueOnce({
-      info: {},
+    fetchMock.mockResolvedValueOnce<SearchResult>({
+      info: {
+        count: 1,
+        pages: 1,
+        prev: null,
+        next: null,
+      },
       results: getCharacterInfoListMock(ITEMS_COUNT),
     });
     expect(await getCharactersByName()).toHaveLength(ITEMS_COUNT);
