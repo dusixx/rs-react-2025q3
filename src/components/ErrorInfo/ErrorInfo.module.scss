@@ -1,0 +1,13 @@
+.error-info {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  padding: 10px 30px;
+  border-radius: var(--border-radius);
+
+  font-family: inherit;
+  font-size: 12px;
+
+  background-color: var(--color-accent-10);
+}
