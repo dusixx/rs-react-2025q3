@@ -11,9 +11,18 @@ export const IconMale = IoIosMale;
 export const IconMaleFemale = IoMaleFemaleOutline;
 export const IconLocation = IoLocationSharp;
 
-export enum RoutePath {
-  Home = '/',
-  Error = '*',
-}
-
 export const ERR_SOMETHING_WRONG = 'Something went wrong';
+export const LS_KEY_LAST_QUERY = 'last-query-djh501';
+export const LOADER_VISIBILITY_DURATION = 500;
+
+export const RoutePath = {
+  Home: '/',
+  Search: '/search',
+  Error: '*',
+} as const;
+
+export const SearchParamKey = {
+  Detailes: 'details',
+  Page: 'page',
+  Query: 'q',
+} as const;
