@@ -1,0 +1,78 @@
+.card {
+  position: sticky;
+  top: 4px;
+
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+
+  width: 380px;
+  min-height: 40vh;
+  border-radius: var(--border-radius);
+
+  text-align: center;
+  text-transform: capitalize;
+
+  background-color: white;
+}
+
+.card:not(:has(.info)) {
+  justify-content: space-between;
+}
+
+.thumb {
+  width: 100%;
+
+  background: url('/logo.png');
+  background-color: rgb(175 175 175);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.desc {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 30px 40px;
+}
+
+.item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.item[data-episodes] {
+  flex-direction: column;
+}
+
+.btn {
+  @extend %btn-primary;
+
+  margin-bottom: 40px;
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+.error-info,
+.loader {
+  margin: auto 0;
+}
