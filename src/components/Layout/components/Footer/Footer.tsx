@@ -1,5 +1,4 @@
-import type { ReactNode } from 'react';
-import { Component } from 'react';
+import type { JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Footer.module.scss';
 
@@ -14,15 +13,14 @@ export const IMAGE_PROPS = {
   alt: 'rss logo',
   width: 30,
 };
-export class Footer extends Component {
-  public render(): ReactNode {
-    return (
-      <footer data-testid={TestId.Footer} className={styles.footer}>
-        <a data-testid={TestId.FooterLink} className={styles.link} {...LINK_PROPS}>
-          <img data-testid={TestId.FooterLogo} {...IMAGE_PROPS} />
-          <span>{COPYRIGHT}</span>
-        </a>
-      </footer>
-    );
-  }
-}
+
+export const Footer = (): JSX.Element => {
+  return (
+    <footer data-testid={TestId.Footer} className={styles.footer}>
+      <a data-testid={TestId.FooterLink} className={styles.link} {...LINK_PROPS}>
+        <img data-testid={TestId.FooterLogo} {...IMAGE_PROPS} />
+        <span>{COPYRIGHT}</span>
+      </a>
+    </footer>
+  );
+};
