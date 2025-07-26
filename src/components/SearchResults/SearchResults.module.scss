@@ -1,17 +1,13 @@
 .results {
+  position: relative;
   display: flex;
+  gap: 60px;
+  align-items: flex-start;
 }
 
-.error-info {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-
-  padding: 10px 30px;
-  border-radius: var(--border-radius);
-
-  font-family: inherit;
-  font-size: 12px;
-
-  background-color: var(--color-accent-10);
+.list {
+  max-width: 800px;
+  @media (width<=500px) {
+    display: none;
+  }
 }
