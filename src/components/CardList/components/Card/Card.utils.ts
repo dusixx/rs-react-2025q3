@@ -2,8 +2,22 @@ import { IconFemale, IconMale, IconMaleFemale } from '@common/constants.ts';
 import type { CharacterGender, CharacterLocation, CharacterStatus } from '@services/api.types';
 import type { IconType } from 'react-icons';
 
-export const getLocationName = (location: CharacterLocation | undefined): string => {
-  return location?.name.replace(/\s+\(.+/, '') ?? '';
+export const trimBracketsWithContent = (text: string): string => {
+  return text.replace(/\s*\(.+/, '');
+};
+
+export const getEpisodes = (urls: string[]): string[] => {
+  return urls.map(url => {
+    const arr = url.split('/');
+    return arr[arr.length - 1];
+  });
+};
+
+export const getLocationName = (
+  location: CharacterLocation | undefined,
+  defaultName?: string,
+): string => {
+  return (trimBracketsWithContent(location?.name ?? '') || defaultName) ?? '';
 };
 
 export const getThumbStyle = (image?: string): object => {

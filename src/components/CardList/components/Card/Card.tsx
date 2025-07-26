@@ -1,7 +1,6 @@
 import { IconLocation } from '@common/constants.ts';
 import type { CharacterInfo } from '@services/api.types.ts';
-import type { ReactNode } from 'react';
-import { Component } from 'react';
+import type { JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Card.module.scss';
 import {
@@ -19,49 +18,49 @@ const ICON_PROPS = {
 
 type CardProps = {
   info: CharacterInfo;
+  onClick?: (id: number) => void;
 };
 
-export class Card extends Component<CardProps> {
-  public render(): ReactNode {
-    const {
-      image,
-      location,
-      name = UNKNOWN_VALUE,
-      status = UNKNOWN_VALUE,
-      gender = UNKNOWN_VALUE,
-      species = UNKNOWN_VALUE,
-    } = this.props.info;
+export const Card = ({ info, onClick }: CardProps): JSX.Element => {
+  const {
+    id,
+    image,
+    location,
+    name = UNKNOWN_VALUE,
+    status = UNKNOWN_VALUE,
+    gender = UNKNOWN_VALUE,
+    species = UNKNOWN_VALUE,
+  } = info;
 
-    const IconGender = getGenderIcon(gender);
+  const IconGender = getGenderIcon(gender);
 
-    return (
-      <div className={styles.card}>
-        <div data-testid={TestId.CardThumb} className={styles.thumb} style={getThumbStyle(image)}>
-          {image && (
-            <img data-testid={TestId.CardImage} className={styles.image} src={image} alt={name} />
-          )}
-        </div>
-        <ul className={styles.desc}>
-          <li data-name>
-            <p data-testid={TestId.CardName}>{name}</p>
-          </li>
-          <li data-status>
-            <div
-              data-testid={TestId.CardStatusIndicator}
-              style={getStatusIndicatorStyle(status)}
-            ></div>
-            <span data-testid={TestId.CardStatus}>{status}</span>
-          </li>
-          <li data-species>
-            <IconGender data-testid={TestId.CardIconGender} {...ICON_PROPS} />
-            <span data-testid={TestId.CardSpecies}>{species}</span>
-          </li>
-          <li data-location>
-            <IconLocation data-testid={TestId.CardIconLocation} {...ICON_PROPS} />
-            <p data-testid={TestId.CardLocation}>{getLocationName(location) || UNKNOWN_VALUE}</p>
-          </li>
-        </ul>
+  return (
+    <article className={styles.card} onClick={() => onClick?.(id)}>
+      <div data-testid={TestId.CardThumb} className={styles.thumb} style={getThumbStyle(image)}>
+        {image && (
+          <img data-testid={TestId.CardImage} className={styles.image} src={image} alt={name} />
+        )}
       </div>
-    );
-  }
-}
+      <ul className={styles.desc}>
+        <li data-name>
+          <p data-testid={TestId.CardName}>{name}</p>
+        </li>
+        <li data-status>
+          <div
+            data-testid={TestId.CardStatusIndicator}
+            style={getStatusIndicatorStyle(status)}
+          ></div>
+          <span data-testid={TestId.CardStatus}>{status}</span>
+        </li>
+        <li data-species>
+          <IconGender data-testid={TestId.CardIconGender} {...ICON_PROPS} />
+          <span data-testid={TestId.CardSpecies}>{species}</span>
+        </li>
+        <li data-location>
+          <IconLocation data-testid={TestId.CardIconLocation} {...ICON_PROPS} />
+          <p data-testid={TestId.CardLocation}>{getLocationName(location) || UNKNOWN_VALUE}</p>
+        </li>
+      </ul>
+    </article>
+  );
+};
