@@ -16,7 +16,7 @@ import { useEffect, useState, type JSX } from 'react';
 import { Outlet } from 'react-router-dom';
 import styles from './SearchResults.module.scss';
 
-type SearchResultsProps = {
+export type SearchResultsProps = {
   query: string;
   page?: number;
   version?: string;
@@ -30,10 +30,6 @@ export const SearchResults = ({ query, page, version }: SearchResultsProps): JSX
   const { getParams, setParams, createParams } = useCustomSearchParams();
 
   const [detailsId] = getParams('details');
-
-  useEffect(() => {
-    // console.log('page=', page);
-  }, [page]);
 
   useEffect(() => {
     setLoading(true);

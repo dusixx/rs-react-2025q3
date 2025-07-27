@@ -60,7 +60,7 @@ export default defineConfig({
         'src/setupTests.{js,ts}',
         'src/**/*.d.ts',
         '**/utils.{js,ts}',
-        'src/utils',
+        '**/utils',
         'src/main.{ts,tsx,js,jsx}',
         '**/**types**',
       ],

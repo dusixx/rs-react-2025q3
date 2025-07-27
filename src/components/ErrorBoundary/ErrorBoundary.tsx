@@ -1,10 +1,10 @@
 import { getErrorInstance } from '@common/utils/index.ts';
 import type { ErrorInfo } from 'react';
 import { Component, type ReactNode } from 'react';
-import { type ErrorFallbackProps } from './index.ts';
+import type { ErrorFallback } from './index.ts';
 
 export type ErrorBoundaryProps = {
-  FallbackComponent?: typeof Component<ErrorFallbackProps>;
+  FallbackComponent?: typeof ErrorFallback;
   children?: ReactNode;
 };
 

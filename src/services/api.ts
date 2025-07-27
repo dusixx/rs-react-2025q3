@@ -26,5 +26,5 @@ export const getCharacterById = async (id: number | string): Promise<CharacterIn
   if (isLikeCharacterInfo(info)) {
     return info;
   }
-  throw Error(ERR_SOMETHING_WRONG);
+  throw Error(isLikeErrorResult(info) ? info.error : ERR_SOMETHING_WRONG);
 };

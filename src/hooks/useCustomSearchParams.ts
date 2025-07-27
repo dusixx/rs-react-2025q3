@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 export type SearchParamValue = (typeof SearchParamKey)[keyof typeof SearchParamKey];
 type SetParamsProps = Partial<Record<SearchParamValue, string>>;
 
-type UseCustomSearchParamsResult = {
+export type UseCustomSearchParamsResult = {
   searchParams: URLSearchParams;
   setSearchParams: SetURLSearchParams;
   setParams: (props: SetParamsProps) => void;

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import {
   IconArrowLeft,
   IconArrowLeftDouble,
@@ -7,23 +8,9 @@ import {
 } from '@common/constants.ts';
 import clsx from 'clsx';
 import { useEffect, useState, type JSX } from 'react';
+import { TestId } from 'src/test-utils/constants.ts';
+import { ButtonTitle, PRIM_BTN_ICON_PROPS, SEC_BTN_ICON_PROPS } from './Paginator.constants.ts';
 import styles from './Paginator.module.scss';
-
-const ButtonTitle = {
-  Next: 'next',
-  Prev: 'prev',
-  Last: 'last',
-  First: 'first',
-} as const;
-
-const PRIM_BTN_ICON_PROPS = {
-  size: 32,
-  color: 'currentColor',
-};
-const SEC_BTN_ICON_PROPS = {
-  size: 24,
-  color: 'currentColor',
-};
 
 type PaginatorProps = {
   totalPages?: number;
@@ -66,10 +53,11 @@ export const Paginator = ({
   };
 
   return (
-    <div className={clsx(styles.paginator, className)}>
+    <div data-testid={TestId.Paginator} className={clsx(styles.paginator, className)}>
       <div className={styles.btnGroup}>
         <button
-          data-btn
+          data-testid={TestId.PaginatorFirstBtn}
+          className={styles.btnSec}
           disabled={currentPage === INITIAL_PAGE}
           onClick={handleFirstClick}
           title={ButtonTitle.First}
@@ -77,6 +65,7 @@ export const Paginator = ({
           <IconArrowLeftDouble {...SEC_BTN_ICON_PROPS} />
         </button>
         <button
+          data-testid={TestId.PaginatorPrevBtn}
           className={styles.btn}
           disabled={currentPage === INITIAL_PAGE}
           onClick={handlePrevClick}
@@ -85,13 +74,18 @@ export const Paginator = ({
           <IconArrowLeft {...PRIM_BTN_ICON_PROPS} />
         </button>
       </div>
-      <div className={styles.counter}>
-        <span data-current>{currentPage}</span>
+      <div data-testid={TestId.PaginatorCounter} className={styles.counter}>
+        <span data-testid={TestId.PaginatorCounterCurrent} data-current>
+          {currentPage}
+        </span>
         <span>/</span>
-        <span data-total>{totalPages}</span>
+        <span data-testid={TestId.PaginatorCounterTotal} data-total>
+          {totalPages}
+        </span>
       </div>
       <div className={styles.btnGroup}>
         <button
+          data-testid={TestId.PaginatorNextBtn}
           className={styles.btn}
           disabled={currentPage === totalPages}
           onClick={handleNextClick}
@@ -100,7 +94,8 @@ export const Paginator = ({
           <IconArrowRight {...PRIM_BTN_ICON_PROPS} />
         </button>
         <button
-          data-btn
+          data-testid={TestId.PaginatorLastBtn}
+          className={styles.btnSec}
           disabled={currentPage === totalPages}
           onClick={handleLastClick}
           title={ButtonTitle.Last}

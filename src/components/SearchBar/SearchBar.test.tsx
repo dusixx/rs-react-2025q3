@@ -2,8 +2,7 @@ import { render } from '@testing-library/react';
 import { FAKE_VALUE } from 'src/test-utils/constants.ts';
 import {
   changeInput,
-  // clickElement,
-  // getElementsByKeys,
+  clickElement,
   getNestedChild,
   queryNestedChild,
 } from 'src/test-utils/index.ts';
@@ -26,48 +25,18 @@ describe('SearchBar', () => {
     expect(queryNestedChild('SearchBarClear')).toBeNull();
   });
 
-  // it(`Renders empty search input on clear click`, () => {
-  //   const handleChangeMock = vi.fn();
-  //   render(<SearchBar onChange={handleChangeMock} />);
-  //   const input = getNestedChild('SearchBarInput');
-  //   act(() => {
-  //     changeInput(input, FAKE_VALUE);
-  //     clickElement(getNestedChild('SearchBarClear'));
-  //   });
-  //   expect(input).toHaveValue('');
-  //   expect(handleChangeMock).toHaveBeenCalledWith('');
-  // });
-
   it(`Renders search input placeholder`, () => {
     render(<SearchBar placeholder={FAKE_VALUE} value='' />);
     expect(getNestedChild('SearchBarInput')).toHaveProperty('placeholder', FAKE_VALUE);
   });
 
-  // it(`Updates input value and enables search button when user types`, () => {
-  //   render(<SearchBar />);
+  it(`Triggers search callback with correct parameters`, () => {
+    const handleSubmit = vi.fn();
+    render(<SearchBar onSubmit={handleSubmit} value={FAKE_VALUE} />);
 
-  //   const [searchBtn, searchInput] = getElementsByKeys('SearchBarBtn', 'SearchBarInput');
-  //   expect(searchBtn).toHaveAttribute('disabled');
-  //   changeInput(searchInput, FAKE_VALUE);
-  //   expect(searchInput).toHaveValue(FAKE_VALUE);
-  //   expect(searchBtn).not.toHaveAttribute('disabled');
-  // });
-
-  // it(`Trims whitespace from search input`, () => {
-  //   render(<SearchBar value={`\t${FAKE_VALUE}\t`} />);
-
-  //   const [searchBtn, searchInput] = getElementsByKeys('SearchBarBtn', 'SearchBarInput');
-  //   clickElement(searchBtn);
-  //   expect(searchInput).toHaveValue(FAKE_VALUE);
-  // });
-
-  // it(`Triggers search callback with correct parameters`, () => {
-  //   const handleQueryMock = vi.fn();
-  //   render(<SearchBar onQuery={handleQueryMock} value={FAKE_VALUE} />);
-
-  //   clickElement(getNestedChild('SearchBarBtn'));
-  //   expect(handleQueryMock).toHaveBeenCalledWith(FAKE_VALUE);
-  // });
+    clickElement(getNestedChild('SearchBarBtn'));
+    expect(handleSubmit).toHaveBeenCalledWith(FAKE_VALUE);
+  });
 
   it(`Triggers change callback with correct parameters`, () => {
     const handleChangeMock = vi.fn();

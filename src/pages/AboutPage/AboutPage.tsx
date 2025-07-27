@@ -1,19 +1,11 @@
-import { LINK_REL_PROPS } from '@common/constants.ts';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AUTHOR_LINK_PROPS, COURSE_LINK_PROPS } from './AboutPage.constants.ts';
 import styles from './AboutPage.module.scss';
-
-const AUTHOR_LINK_PROPS = {
-  href: 'https://github.com/dusixx',
-  ...LINK_REL_PROPS,
-};
-const COURSE_LINK_PROPS = {
-  href: 'https://rs.school/courses/reactjs',
-  ...LINK_REL_PROPS,
-};
 
 export default function AboutPage(): JSX.Element {
   const navigate = useNavigate();
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.info}>

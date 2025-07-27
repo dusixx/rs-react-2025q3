@@ -8,6 +8,7 @@ import { getErrorInstance, getErrorMessage, isNumericInteger } from '@utils/inde
 import { useEffect, useState, type ReactNode } from 'react';
 import { Description } from './Description.tsx';
 import styles from './DetailedCard.module.scss';
+import { TestId } from 'src/test-utils/constants.ts';
 
 const CLOSE_BTN_TEXT = 'Close';
 
@@ -46,7 +47,7 @@ export const DetailedCard = (): ReactNode => {
     return;
   }
   return (
-    <article className={styles.card}>
+    <article data-testid={TestId.DetailedCard} className={styles.card}>
       {loading && <Loader className={styles.loader} />}
       {!loading && info && (
         <div className={styles.info}>
