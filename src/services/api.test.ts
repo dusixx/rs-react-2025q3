@@ -35,6 +35,6 @@ describe('API tests', () => {
       },
       results: getCharacterInfoListMock(ITEMS_COUNT),
     });
-    expect(await getCharactersByName()).toHaveLength(ITEMS_COUNT);
+    expect(await getCharactersByName()).toHaveProperty('results.length', ITEMS_COUNT);
   });
 });
