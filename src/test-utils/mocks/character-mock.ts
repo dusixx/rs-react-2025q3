@@ -1,10 +1,10 @@
+import { chooseOneRandomly, rndInt } from '@common/utils';
 import type {
   CharacterGender,
   CharacterInfo,
   CharacterLocation,
   CharacterStatus,
 } from '@services/api.types';
-import { chooseOneRandomly, rndInt } from '@utils/index.ts';
 
 const IMAGE_SRC = '/annie-image.jpeg';
 

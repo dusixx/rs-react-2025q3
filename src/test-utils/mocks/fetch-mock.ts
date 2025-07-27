@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-parameters */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { vi } from 'vitest';
 
@@ -5,9 +6,9 @@ const mocked = vi.spyOn(globalThis, 'fetch');
 
 export const fetchMock = {
   mocked,
-  mockResolvedValueOnce(json?: unknown, responseRest?: Partial<Response>): void {
+  mockResolvedValueOnce<T>(json: T, responseRest?: Partial<Response>): void {
     mocked.mockResolvedValueOnce({
-      json() {
+      json(): T {
         return json;
       },
       ...responseRest,
