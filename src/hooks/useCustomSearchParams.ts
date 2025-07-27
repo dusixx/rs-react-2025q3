@@ -12,11 +12,25 @@ type UseCustomSearchParamsResult = {
   setParams: (props: SetParamsProps) => void;
   getParams: (...keys: SearchParamValue[]) => string[];
   deleteParams: (...keys: SearchParamValue[]) => void;
+  createParams: (props: SetParamsProps) => void;
+  hasParams: (...keys: SearchParamValue[]) => boolean;
 };
 
 export const useCustomSearchParams = (): UseCustomSearchParamsResult => {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const hasParams = useCallback(
+    (...keys: SearchParamValue[]): boolean => {
+      return keys.every(key => searchParams.has(key));
+    },
+    [searchParams],
+  );
+  const createParams = useCallback(
+    (props: SetParamsProps): void => {
+      setSearchParams(new URLSearchParams(props));
+    },
+    [setSearchParams],
+  );
   const setParams = useCallback(
     (props: SetParamsProps): void => {
       Object.entries(props).forEach(([key, value]) => {
@@ -47,5 +61,7 @@ export const useCustomSearchParams = (): UseCustomSearchParamsResult => {
     setParams,
     getParams,
     deleteParams,
+    createParams,
+    hasParams,
   };
 };
