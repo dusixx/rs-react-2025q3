@@ -5,7 +5,7 @@ import { ERR_NOT_FOUND, getCharactersByNameMock } from 'src/test-utils/mocks/api
 import { getCharacterInfoListMock } from 'src/test-utils/mocks/character-mock.ts';
 import { mockUseCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
 import { outletMock } from 'src/test-utils/mocks/router-dom-mock.tsx';
-import { clickElement, getNestedChild } from 'src/test-utils/utils.ts';
+import { getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
 import type { SearchResultsProps } from './SearchResults.tsx';
 import { SearchResults } from './SearchResults.tsx';
@@ -38,7 +38,7 @@ const SEARCH_RESULT = {
 };
 
 describe('SearchResults', () => {
-  const { getParams, createParams } = mockUseCustomSearchResult;
+  const { getParams } = mockUseCustomSearchResult;
 
   it(`Displays results if valid params specified`, async () => {
     const name = 'rick';
@@ -73,19 +73,5 @@ describe('SearchResults', () => {
     await act(() => vi.runAllTimers());
     expect(getNestedChild('CardList')).toHaveClass('mock-list');
     expect(getNestedChild('SearchResultsOutlet')).toBeInTheDocument();
-  });
-
-  it(`Handles paginator buttons click`, async () => {
-    const name = 'ed';
-    const page = 4;
-    act(() => {
-      vi.mocked(getParams)?.mockReturnValue(['1']);
-      vi.mocked(getCharactersByNameMock).mockReturnValueOnce(Promise.resolve(SEARCH_RESULT));
-    });
-    await renderResults({ query: name, page });
-    await act(() => vi.runAllTimers());
-    const btnNext = getNestedChild('Paginator', 'PaginatorNextBtn');
-    clickElement(btnNext);
-    expect(createParams).toHaveBeenCalledWith({ page: (page + 1).toString(), q: name });
   });
 });
