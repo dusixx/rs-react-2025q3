@@ -1,19 +1,23 @@
 import { RoutePath } from '@common/constants.ts';
+import { DetailedCard } from '@components/CardList/components/DetailedCard/DetailedCard.tsx';
 import { Layout } from '@components/Layout/Layout.tsx';
-import MainPage from '@pages/MainPage/MainPage.tsx';
-import type { ReactNode } from 'react';
-import { Component } from 'react';
+import AboutPage from '@pages/AboutPage/AboutPage.tsx';
+import ErrorPage from '@pages/ErrorPage/ErrorPage.tsx';
+import SearchPage from '@pages/SearchPage/SearchPage';
+import type { JSX } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-export class App extends Component {
-  public render(): ReactNode {
-    return (
-      <Routes>
-        <Route path={RoutePath.Home} element={<Layout />}>
-          <Route path={RoutePath.Home} element={<MainPage />} />
-          <Route path={RoutePath.Error} element={<Navigate to={RoutePath.Home} />} />
+export const App = (): JSX.Element => {
+  return (
+    <Routes>
+      <Route path={RoutePath.Home} element={<Navigate to={RoutePath.Search} replace />} />
+      <Route path={RoutePath.Home} element={<Layout />}>
+        <Route path={RoutePath.Search} element={<SearchPage />}>
+          <Route index element={<DetailedCard />} />
         </Route>
-      </Routes>
-    );
-  }
-}
+        <Route path={RoutePath.About} element={<AboutPage />} />
+        <Route path={RoutePath.Error} element={<ErrorPage />} />
+      </Route>
+    </Routes>
+  );
+};

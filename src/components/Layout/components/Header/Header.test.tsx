@@ -1,7 +1,8 @@
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { getNestedChild } from 'src/test-utils/index.ts';
-import { Header, IMAGE_PROPS } from './Header.tsx';
+import { IMAGE_PROPS } from './Header.constants.ts';
+import { Header } from './Header.tsx';
 
 describe('Header', () => {
   it(`Renders header`, () => {

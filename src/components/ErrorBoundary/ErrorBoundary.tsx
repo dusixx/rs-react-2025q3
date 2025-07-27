@@ -1,4 +1,4 @@
-import { getErrorInstance } from '@utils/index.ts';
+import { getErrorInstance } from '@common/utils/index.ts';
 import type { ErrorInfo } from 'react';
 import { Component, type ReactNode } from 'react';
 import { type ErrorFallbackProps } from './index.ts';

@@ -4,9 +4,9 @@ import { Loader } from '@components/Loader/Loader.tsx';
 import { useCustomSearchParams } from '@hooks/useCustomSearchParams.ts';
 import { getCharacterById } from '@services/api.ts';
 import type { CharacterInfo } from '@services/api.types.ts';
-import { getErrorInstance, getErrorMessage } from '@utils/index.ts';
+import { getErrorInstance, getErrorMessage, isNumericInteger } from '@utils/index.ts';
 import { useEffect, useState, type ReactNode } from 'react';
-import { Desc } from './Desc.tsx';
+import { Description } from './Description.tsx';
 import styles from './DetailedCard.module.scss';
 
 const CLOSE_BTN_TEXT = 'Close';
@@ -20,7 +20,11 @@ export const DetailedCard = (): ReactNode => {
   const [id] = getParams('details');
 
   useEffect(() => {
+    if (!isNumericInteger(id)) {
+      return;
+    }
     setLoading(true);
+
     void getCharacterById(id)
       .then(setInfo)
       .catch((error: unknown) => {
@@ -49,7 +53,7 @@ export const DetailedCard = (): ReactNode => {
           <div className={styles.thumb}>
             <img className={styles.image} src={info.image} alt={info.name} />
           </div>
-          <Desc info={info} />
+          <Description info={info} />
         </div>
       )}
       {!loading && !info && (

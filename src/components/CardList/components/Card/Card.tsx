@@ -1,5 +1,6 @@
-import { IconLocation } from '@common/constants.ts';
+import { IconLocation, UNKNOWN } from '@common/constants.ts';
 import type { CharacterInfo } from '@services/api.types.ts';
+import clsx from 'clsx';
 import type { JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Card.module.scss';
@@ -10,7 +11,6 @@ import {
   getThumbStyle,
 } from './Card.utils.ts';
 
-export const UNKNOWN_VALUE = 'unknown';
 const ICON_PROPS = {
   size: 16,
   color: 'var(--color-green-gray)',
@@ -19,23 +19,24 @@ const ICON_PROPS = {
 type CardProps = {
   info: CharacterInfo;
   onClick?: (id: number) => void;
+  className?: string;
 };
 
-export const Card = ({ info, onClick }: CardProps): JSX.Element => {
+export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
   const {
     id,
     image,
     location,
-    name = UNKNOWN_VALUE,
-    status = UNKNOWN_VALUE,
-    gender = UNKNOWN_VALUE,
-    species = UNKNOWN_VALUE,
+    name = UNKNOWN,
+    status = UNKNOWN,
+    gender = UNKNOWN,
+    species = UNKNOWN,
   } = info;
 
   const IconGender = getGenderIcon(gender);
 
   return (
-    <article className={styles.card} onClick={() => onClick?.(id)}>
+    <article className={clsx(styles.card, className)} onClick={() => onClick?.(id)}>
       <div data-testid={TestId.CardThumb} className={styles.thumb} style={getThumbStyle(image)}>
         {image && (
           <img data-testid={TestId.CardImage} className={styles.image} src={image} alt={name} />
@@ -58,7 +59,7 @@ export const Card = ({ info, onClick }: CardProps): JSX.Element => {
         </li>
         <li data-location>
           <IconLocation data-testid={TestId.CardIconLocation} {...ICON_PROPS} />
-          <p data-testid={TestId.CardLocation}>{getLocationName(location) || UNKNOWN_VALUE}</p>
+          <p data-testid={TestId.CardLocation}>{getLocationName(location) || UNKNOWN}</p>
         </li>
       </ul>
     </article>

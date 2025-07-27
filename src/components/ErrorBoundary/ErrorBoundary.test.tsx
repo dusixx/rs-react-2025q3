@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
+import { getErrorInstance } from '@common/utils';
 import {
   ErrorBoundary,
   ErrorFallback,
   type ErrorBoundaryState,
 } from '@components/ErrorBoundary/index.ts';
 import { render } from '@testing-library/react';
-import { getErrorInstance } from '@utils/index.ts';
 import {
   clickElement,
   FAKE_VALUE,
@@ -26,8 +26,8 @@ const STATE_TO_RESET: ErrorBoundaryState = {
   error: undefined,
   errorInfo: undefined,
 };
-vi.mock('@utils/index.ts', async importOriginal => {
-  const actual = await importOriginal<typeof import('@utils/index.ts')>();
+vi.mock('@common/utils/index.ts', async importOriginal => {
+  const actual = await importOriginal<typeof import('@common/utils')>();
   return {
     ...actual,
     getErrorInstance: vi.fn(() => Error(FAKE_VALUE)),

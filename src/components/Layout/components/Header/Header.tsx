@@ -1,17 +1,14 @@
 import { RoutePath } from '@common/constants.ts';
-import { ErrorButton } from '@components/ErrorButton/ErrorButton.tsx';
 import type { JSX } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { TestId } from 'src/test-utils/constants.ts';
+import { IMAGE_PROPS } from './Header.constants.ts';
 import styles from './Header.module.scss';
 
-export const IMAGE_PROPS = {
-  src: '/logo.png',
-  alt: 'rick and morty logo',
-  width: 32,
-};
-
 export const Header = (): JSX.Element => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   return (
     <header data-testid={TestId.Header} className={styles.header}>
       <NavLink data-testid={TestId.HeaderLogo} className={styles.logo} to={RoutePath.Home}>
@@ -21,7 +18,13 @@ export const Header = (): JSX.Element => {
           <b>Finder</b>
         </div>
       </NavLink>
-      <ErrorButton />
+      <button
+        className={styles.btn}
+        onClick={() => void navigate(RoutePath.About)}
+        disabled={location.pathname === RoutePath.About}
+      >
+        About
+      </button>
     </header>
   );
 };
