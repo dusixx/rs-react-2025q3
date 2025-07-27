@@ -62,12 +62,14 @@ export const SearchResults = ({ query, page, version }: SearchResultsProps): JSX
   }
   return (
     <div className={styles.wrapper}>
-      <Paginator
-        className={styles.paginator}
-        totalPages={totalPages}
-        initialPage={page || INITIAL_PAGE}
-        onClick={handlePaginatorClick}
-      />
+      {!loading && (
+        <Paginator
+          className={styles.paginator}
+          totalPages={totalPages}
+          initialPage={page || INITIAL_PAGE}
+          onClick={handlePaginatorClick}
+        />
+      )}
       {loading && <Loader />}
       {!loading && (
         <div className={styles.results}>

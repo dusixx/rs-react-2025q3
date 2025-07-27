@@ -82,6 +82,7 @@ describe('SearchResults', () => {
     vi.mocked(getCharactersByNameMock).mockReturnValueOnce(Promise.resolve(SEARCH_RESULT));
     await renderResults({ query: name, page });
 
+    await act(() => vi.runAllTimers());
     clickElement(getNestedChild('PaginatorNextBtn'));
     expect(createParams).toHaveBeenCalledWith({ page: (page + 1).toString(), q: name });
     clickElement(getNestedChild('PaginatorPrevBtn'));
