@@ -11,3 +11,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.item[data-episodes] {
+  flex-direction: column;
+  margin-top: 4px;
+}

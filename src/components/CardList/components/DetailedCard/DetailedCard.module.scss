@@ -46,10 +46,6 @@
   width: 100%;
 }
 
-.item[data-episodes] {
-  flex-direction: column;
-}
-
 .btn {
   @extend %btn-primary;
 
