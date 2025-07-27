@@ -1,9 +1,10 @@
+/* eslint-disable react-refresh/only-export-components */
 import clsx from 'clsx';
 import type { JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Loader.module.scss';
 
-const SPINNER_PROPS = {
+export const SPINNER_PROPS = {
   style: { opacity: 0.5 },
   src: '/spinner.gif',
   alt: 'spinner',

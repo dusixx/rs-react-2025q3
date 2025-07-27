@@ -25,9 +25,10 @@ const renderResults = async (props: SearchResultsProps = { query: '' }): Promise
   );
 };
 const ITEMS_COUNT = 10;
+const PAGES_COUNT = 20;
 const SEARCH_RESULT = {
   info: {
-    pages: 20,
+    pages: PAGES_COUNT,
     count: ITEMS_COUNT,
     next: null,
     prev: null,
@@ -83,5 +84,11 @@ describe('SearchResults', () => {
 
     clickElement(getNestedChild('PaginatorNextBtn'));
     expect(createParams).toHaveBeenCalledWith({ page: (page + 1).toString(), q: name });
+    clickElement(getNestedChild('PaginatorPrevBtn'));
+    expect(createParams).toHaveBeenCalledWith({ page: page.toString(), q: name });
+    clickElement(getNestedChild('PaginatorFirstBtn'));
+    expect(createParams).toHaveBeenCalledWith({ page: '1', q: name });
+    clickElement(getNestedChild('PaginatorLastBtn'));
+    expect(createParams).toHaveBeenCalledWith({ page: PAGES_COUNT.toString(), q: name });
   });
 });
