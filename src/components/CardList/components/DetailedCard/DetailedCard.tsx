@@ -6,9 +6,9 @@ import { getCharacterById } from '@services/api.ts';
 import type { CharacterInfo } from '@services/api.types.ts';
 import { getErrorInstance, getErrorMessage, isNumericInteger } from '@utils/index.ts';
 import { useEffect, useState, type ReactNode } from 'react';
-import { Description } from './Description.tsx';
-import styles from './DetailedCard.module.scss';
 import { TestId } from 'src/test-utils/constants.ts';
+import { Description } from './components/Description/Description.tsx';
+import styles from './DetailedCard.module.scss';
 
 const CLOSE_BTN_TEXT = 'Close';
 

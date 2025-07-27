@@ -1,5 +1,5 @@
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
-import { CharacterInfoMock } from 'src/test-utils/mocks/character-mock.ts';
+import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
 import { fetchMock, getCharacterInfoListMock } from 'src/test-utils/mocks/index.ts';
 import { getCharacterById, getCharactersByName } from './api.ts';
 import type { CharacterInfo, SearchResult } from './api.types.ts';
@@ -50,7 +50,7 @@ describe('API tests', () => {
   });
 
   it(`Handles valid search results`, async () => {
-    fetchMock.mockResolvedValueOnce<CharacterInfo>(CharacterInfoMock);
-    expect(await getCharacterById('')).toEqual(CharacterInfoMock);
+    fetchMock.mockResolvedValueOnce<CharacterInfo>(characterMock);
+    expect(await getCharacterById('')).toEqual(characterMock);
   });
 });

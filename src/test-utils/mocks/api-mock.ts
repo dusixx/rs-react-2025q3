@@ -4,7 +4,7 @@ import { getCharacterById, getCharactersByName } from '@services/api.ts';
 import type { CharacterInfo, SearchResult } from '@services/api.types.ts';
 import { vi } from 'vitest';
 import { FAKE_VALUE } from '../constants.ts';
-import { CharacterInfoMock, getCharacterInfoListMock } from './character-mock.ts';
+import { characterMock, getCharacterInfoListMock } from './character-mock.ts';
 
 export const VALID_QUERY = 'rick';
 export const INVALID_QUERY = FAKE_VALUE;
@@ -35,7 +35,7 @@ vi.mock('@services/api.ts', async importOriginal => {
       id = Number(id);
       return !isInteger(id) || id <= 0
         ? Promise.reject(Error(ERR_NOT_FOUND))
-        : Promise.resolve({ ...CharacterInfoMock, id });
+        : Promise.resolve({ ...characterMock, id });
     }),
   };
 });

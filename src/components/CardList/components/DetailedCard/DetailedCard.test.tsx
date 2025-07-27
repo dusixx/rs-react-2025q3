@@ -4,7 +4,7 @@ import { rndInt } from '@utils/index.ts';
 import { MemoryRouter } from 'react-router-dom';
 import { clickElement, getNestedChild } from 'src/test-utils/index.ts';
 import { ERR_NOT_FOUND, getCharacterByIdMock } from 'src/test-utils/mocks/api-mock.ts';
-import { CharacterInfoMock } from 'src/test-utils/mocks/character-mock.ts';
+import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
 import { mockUseCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
 import { vi } from 'vitest';
 import { DetailedCard } from './DetailedCard.tsx';
@@ -21,7 +21,7 @@ const renderCard = async (): Promise<void> => {
 
 describe('DetailedCard', () => {
   const { getParams, deleteParams } = mockUseCustomSearchResult;
-  const { name, image } = CharacterInfoMock;
+  const { name, image } = characterMock;
 
   it(`Renders card if valid id is specified`, async () => {
     const id = rndInt(1, 100).toString();

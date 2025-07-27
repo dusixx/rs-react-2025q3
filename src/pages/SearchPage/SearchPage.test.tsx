@@ -62,7 +62,7 @@ describe('SearchPage', () => {
     await renderPage();
     await act(() => vi.runAllTimers());
     expect(getCharactersByNameMock).toHaveBeenCalledWith(INVALID_QUERY, INITIAL_PAGE);
-    expect(getNestedChild('SearchError', 'SearchErrorIcon')).toBeInTheDocument();
-    expect(getNestedChild('SearchError', 'SearchErrorMessage')).toHaveTextContent(ERR_NOT_FOUND);
+    expect(getNestedChild('ErrorInfo', 'ErrorInfoIcon')).toBeInTheDocument();
+    expect(getNestedChild('ErrorInfo', 'ErrorInfoMessage')).toHaveTextContent(ERR_NOT_FOUND);
   });
 });

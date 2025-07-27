@@ -16,6 +16,7 @@ export type CharacterInfo = Record<string, unknown> & {
   episode?: string[];
   type?: string;
   created?: string;
+  url?: string;
 };
 
 export type SearchResultInfo = {

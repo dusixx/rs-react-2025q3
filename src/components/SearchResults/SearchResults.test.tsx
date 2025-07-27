@@ -5,7 +5,7 @@ import { ERR_NOT_FOUND, getCharactersByNameMock } from 'src/test-utils/mocks/api
 import { getCharacterInfoListMock } from 'src/test-utils/mocks/character-mock.ts';
 import { mockUseCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
 import { outletMock } from 'src/test-utils/mocks/router-dom-mock.tsx';
-import { getNestedChild } from 'src/test-utils/utils.ts';
+import { clickElement, getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
 import type { SearchResultsProps } from './SearchResults.tsx';
 import { SearchResults } from './SearchResults.tsx';
@@ -15,7 +15,6 @@ vi.mock('./SearchResults.module.scss', () => ({
     list: 'mock-list',
   },
 }));
-
 const renderResults = async (props: SearchResultsProps = { query: '' }): Promise<void> => {
   await act(() =>
     render(
@@ -25,7 +24,6 @@ const renderResults = async (props: SearchResultsProps = { query: '' }): Promise
     ),
   );
 };
-
 const ITEMS_COUNT = 10;
 const SEARCH_RESULT = {
   info: {
@@ -38,7 +36,7 @@ const SEARCH_RESULT = {
 };
 
 describe('SearchResults', () => {
-  const { getParams } = mockUseCustomSearchResult;
+  const { getParams, createParams } = mockUseCustomSearchResult;
 
   it(`Displays results if valid params specified`, async () => {
     const name = 'rick';
@@ -70,8 +68,20 @@ describe('SearchResults', () => {
     vi.mocked(outletMock).mockReturnValue(<div data-testid={TestId.SearchResultsOutlet}></div>);
     vi.mocked(getParams)?.mockReturnValue(['1']);
     await renderResults();
+
     await act(() => vi.runAllTimers());
     expect(getNestedChild('CardList')).toHaveClass('mock-list');
     expect(getNestedChild('SearchResultsOutlet')).toBeInTheDocument();
+  });
+
+  it(`Handles paginator buttons click`, async () => {
+    const name = 'ed';
+    const page = 4;
+    vi.mocked(getParams)?.mockReturnValue(['1']);
+    vi.mocked(getCharactersByNameMock).mockReturnValueOnce(Promise.resolve(SEARCH_RESULT));
+    await renderResults({ query: name, page });
+
+    clickElement(getNestedChild('PaginatorNextBtn'));
+    expect(createParams).toHaveBeenCalledWith({ page: (page + 1).toString(), q: name });
   });
 });

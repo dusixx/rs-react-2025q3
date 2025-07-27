@@ -1,10 +1,11 @@
+/* eslint-disable react-refresh/only-export-components */
 import { ERR_SOMETHING_WRONG, IconCloseCircleOutline } from '@common/constants.ts';
 import clsx from 'clsx';
 import type { JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './ErrorInfo.module.scss';
 
-const ERROR_ICON_PROPS = {
+export const ERROR_ICON_PROPS = {
   size: 16,
   color: 'var(--color-accent)',
 };
@@ -19,9 +20,9 @@ export const ErrorInfo = ({
   className,
 }: ErrorInfoProps): JSX.Element => {
   return (
-    <pre data-testid={TestId.SearchError} className={clsx(styles.errorInfo, className)}>
-      <IconCloseCircleOutline data-testid={TestId.SearchErrorIcon} {...ERROR_ICON_PROPS} />
-      <b data-testid={TestId.SearchErrorMessage}>Error: {message}</b>
+    <pre data-testid={TestId.ErrorInfo} className={clsx(styles.errorInfo, className)}>
+      <IconCloseCircleOutline data-testid={TestId.ErrorInfoIcon} {...ERROR_ICON_PROPS} />
+      <b data-testid={TestId.ErrorInfoMessage}>Error: {message}</b>
     </pre>
   );
 };
