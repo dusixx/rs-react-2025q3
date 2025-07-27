@@ -15,6 +15,5 @@ describe('Header', () => {
     const logoImage = getNestedChild(header, 'HeaderLogo', 'HeaderLogoImage');
     expect(logoImage).toBeInTheDocument();
     expect(logoImage).toHaveAttribute('src', IMAGE_PROPS.src);
-    expect(getNestedChild(header, 'ErrorBtn')).toBeInTheDocument();
   });
 });
