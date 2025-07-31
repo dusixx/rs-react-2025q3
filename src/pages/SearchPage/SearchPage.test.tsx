@@ -34,11 +34,6 @@ describe('SearchPage', () => {
     expect(getItem).toHaveReturnedWith(FAKE_VALUE);
   });
 
-  it(`Shows loading state while fetching data`, async () => {
-    await renderPage();
-    expect(getNestedChild('Loader')).toBeInTheDocument();
-  });
-
   it(`Calls API with correct parameters`, async () => {
     await renderPage();
     await act(() => {

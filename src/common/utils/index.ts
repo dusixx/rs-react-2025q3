@@ -48,3 +48,13 @@ export const isNumericInteger = (v: string): boolean => {
 export const isNumericPositiveInteger = (v: number | string): boolean => {
   return isNumeric(v) && isPositiveInteger(Number(v));
 };
+
+export const convertObjectValues = <T>(
+  obj: Record<string, unknown>,
+  converter: (v: unknown) => T,
+): Record<string, T> => {
+  return Object.keys(obj).reduce<Record<string, T>>((res, key) => {
+    res[key] = converter(obj[key]);
+    return res;
+  }, {});
+};

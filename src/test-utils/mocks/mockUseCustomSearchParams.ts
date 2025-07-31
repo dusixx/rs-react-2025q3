@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
+import { CustomSearchParam } from '@common/types.ts';
 import type { UseCustomSearchParamsResult } from '@hooks/useCustomSearchParams.ts';
 import { vi } from 'vitest';
 
-type T = Partial<UseCustomSearchParamsResult>;
+type T = Partial<UseCustomSearchParamsResult<CustomSearchParam>>;
 
 export const mockUseCustomSearchResult: T = {
   getParams: vi.fn(),

@@ -3,6 +3,7 @@ import {
   INITIAL_PAGE,
   LOADER_VISIBILITY_DURATION,
 } from '@common/constants.ts';
+import type { CustomSearchParam } from '@common/types.ts';
 import { getErrorInstance, getErrorMessage } from '@common/utils';
 import { CardList } from '@components/CardList/CardList.tsx';
 import { ErrorInfo } from '@components/ErrorInfo/ErrorInfo.tsx';
@@ -27,7 +28,7 @@ export const SearchResults = ({ query, page, version }: SearchResultsProps): JSX
   const [totalPages, setTotalPages] = useState(INITIAL_PAGE);
   const [error, setError] = useState<Error>();
   const [loading, setLoading] = useState(false);
-  const { getParams, setParams, createParams } = useCustomSearchParams();
+  const { getParams, setParams, createParams } = useCustomSearchParams<CustomSearchParam>();
 
   const [detailsId] = getParams('details');
 
@@ -51,10 +52,10 @@ export const SearchResults = ({ query, page, version }: SearchResultsProps): JSX
   }, [query, page, version]);
 
   const handlePaginatorClick = (page: number): void => {
-    createParams({ q: query, page: page.toString() });
+    createParams({ q: query, page });
   };
   const handleItemClick = (id: number): void => {
-    setParams({ details: id.toString() });
+    setParams({ details: id });
   };
 
   if (!results) {

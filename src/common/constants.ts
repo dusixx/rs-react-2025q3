@@ -40,9 +40,3 @@ export const RoutePath = {
   About: '/about',
   All: '*',
 } as const;
-
-export const SearchParamKey = {
-  Detailes: 'details',
-  Page: 'page',
-  Query: 'q',
-} as const;

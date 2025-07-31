@@ -1,4 +1,5 @@
 import { ERR_SOMETHING_WRONG, LOADER_VISIBILITY_DURATION } from '@common/constants.ts';
+import type { CustomSearchParam } from '@common/types.ts';
 import { ErrorInfo } from '@components/ErrorInfo/ErrorInfo.tsx';
 import { Loader } from '@components/Loader/Loader.tsx';
 import { useCustomSearchParams } from '@hooks/useCustomSearchParams.ts';
@@ -16,9 +17,9 @@ export const DetailedCard = (): ReactNode => {
   const [info, setInfo] = useState<CharacterInfo | null>(null);
   const [error, setError] = useState<Error>();
   const [loading, setLoading] = useState(false);
-  const { getParams, deleteParams } = useCustomSearchParams();
+  const { getParams, deleteParams } = useCustomSearchParams<CustomSearchParam>();
 
-  const [id] = getParams('details');
+  const [id = ''] = getParams('details');
 
   useEffect(() => {
     if (isNumericInteger(id)) {
