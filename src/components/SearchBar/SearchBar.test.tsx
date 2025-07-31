@@ -11,29 +11,16 @@ import { SearchBar } from './SearchBar.tsx';
 
 describe('SearchBar', () => {
   it(`Renders search input and search button`, () => {
-    render(<SearchBar value='' />);
+    render(<SearchBar value='' placeholder={FAKE_VALUE} />);
     expect(getNestedChild('SearchBarBtn', 'SearchBarBtnIcon')).toBeInTheDocument();
-  });
-
-  it(`Renders clear button for non-empty search input`, () => {
-    render(<SearchBar value={FAKE_VALUE} />);
-    expect(getNestedChild('SearchBarClear', 'SearchBarClearIcon')).toBeInTheDocument();
-  });
-
-  it(`Renders no clear button for empty search input`, () => {
-    render(<SearchBar value='' />);
-    expect(queryNestedChild('SearchBarClear')).toBeNull();
-  });
-
-  it(`Renders search input placeholder`, () => {
-    render(<SearchBar placeholder={FAKE_VALUE} value='' />);
     expect(getNestedChild('SearchBarInput')).toHaveProperty('placeholder', FAKE_VALUE);
+    expect(queryNestedChild('SearchBarClear')).toBeNull();
   });
 
   it(`Triggers search callback with correct parameters`, () => {
     const handleSubmit = vi.fn();
     render(<SearchBar onSubmit={handleSubmit} value={FAKE_VALUE} />);
-
+    expect(getNestedChild('SearchBarClear', 'SearchBarClearIcon')).toBeInTheDocument();
     clickElement(getNestedChild('SearchBarBtn'));
     expect(handleSubmit).toHaveBeenCalledWith(FAKE_VALUE);
   });
@@ -41,7 +28,6 @@ describe('SearchBar', () => {
   it(`Triggers change callback with correct parameters`, () => {
     const handleChangeMock = vi.fn();
     render(<SearchBar onChange={handleChangeMock} value='' />);
-
     changeInput(getNestedChild('SearchBarInput'), FAKE_VALUE);
     expect(handleChangeMock).toHaveBeenCalledWith(FAKE_VALUE);
   });

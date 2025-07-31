@@ -7,13 +7,13 @@ import { useEffect, useState, type JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchPage.module.scss';
 
-export const QUERY_PLACEHOLDER = 'Input name...';
+export const QUERY_PLACEHOLDER = 'Character name...';
 
-export default function MainPage(): JSX.Element {
+export default function SearchPage(): JSX.Element {
   const { query, setQuery } = usePersistedSearchQuery();
   const [page, setPage] = useState(INITIAL_PAGE);
   const [value, setValue] = useState(query);
-  const [version, setVersion] = useState('');
+  const [version, setVersion] = useState(crypto.randomUUID());
   const { getParams, createParams, deleteParams, hasParams } = useCustomSearchParams();
 
   useEffect(() => {

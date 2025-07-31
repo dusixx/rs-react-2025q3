@@ -21,22 +21,21 @@ export const DetailedCard = (): ReactNode => {
   const [id] = getParams('details');
 
   useEffect(() => {
-    if (!isNumericInteger(id)) {
-      return;
-    }
-    setLoading(true);
+    if (isNumericInteger(id)) {
+      setLoading(true);
 
-    void getCharacterById(id)
-      .then(setInfo)
-      .catch((error: unknown) => {
-        setError(getErrorInstance(error, ERR_SOMETHING_WRONG));
-        setInfo(null);
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setLoading(false);
-        }, LOADER_VISIBILITY_DURATION);
-      });
+      void getCharacterById(id)
+        .then(setInfo)
+        .catch((error: unknown) => {
+          setError(getErrorInstance(error, ERR_SOMETHING_WRONG));
+          setInfo(null);
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setLoading(false);
+          }, LOADER_VISIBILITY_DURATION);
+        });
+    }
   }, [id]);
 
   const handleCloseClick = (): void => {

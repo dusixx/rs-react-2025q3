@@ -1,18 +1,16 @@
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
-import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
-import { fetchMock, getCharacterInfoListMock } from 'src/test-utils/mocks/index.ts';
+import { characterMock, searchResultMock } from 'src/test-utils/mocks/character-mock.ts';
+import { fetchMock } from 'src/test-utils/mocks/index.ts';
 import { getCharacterById, getCharactersByName } from './api.ts';
-import type { CharacterInfo, SearchResult } from './api.types.ts';
+import type { CharacterInfo } from './api.types.ts';
 
 const ERR_FETCH = 'fetch error';
 const ERR_NO_RESULTS = 'no results';
-const ITEMS_COUNT = 10;
 
 describe('API tests', () => {
   it(`Handles fetch rejection`, async () => {
     fetchMock.mockRejectedValueOnce(ERR_FETCH);
     await expect(getCharactersByName()).rejects.toThrow(ERR_FETCH);
-
     fetchMock.mockRejectedValueOnce(ERR_FETCH);
     await expect(getCharacterById('')).rejects.toThrow(ERR_FETCH);
   });
@@ -20,7 +18,6 @@ describe('API tests', () => {
   it(`Handles invalid search results`, async () => {
     fetchMock.mockResolvedValueOnce(null);
     await expect(getCharactersByName()).rejects.toThrow(ERR_SOMETHING_WRONG);
-
     fetchMock.mockResolvedValueOnce(null);
     await expect(getCharacterById('')).rejects.toThrow(ERR_SOMETHING_WRONG);
   });
@@ -37,19 +34,11 @@ describe('API tests', () => {
   });
 
   it(`Handles valid search results`, async () => {
-    fetchMock.mockResolvedValueOnce<SearchResult>({
-      info: {
-        count: 1,
-        pages: 1,
-        prev: null,
-        next: null,
-      },
-      results: getCharacterInfoListMock(ITEMS_COUNT),
-    });
-    expect(await getCharactersByName()).toHaveProperty('results.length', ITEMS_COUNT);
-  });
-
-  it(`Handles valid search results`, async () => {
+    fetchMock.mockResolvedValueOnce(searchResultMock);
+    expect(await getCharactersByName()).toHaveProperty(
+      'results.length',
+      searchResultMock.info.count,
+    );
     fetchMock.mockResolvedValueOnce<CharacterInfo>(characterMock);
     expect(await getCharacterById('')).toEqual(characterMock);
   });

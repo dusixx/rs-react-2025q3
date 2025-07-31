@@ -3,7 +3,7 @@ import { serializeStyle } from '@common/utils/index.ts';
 import type { CharacterInfo } from '@services/api.types.ts';
 import { render } from '@testing-library/react';
 import { getNestedChild, queryNestedChild } from 'src/test-utils/index.ts';
-import { characterMock, getCharacterInfoMock } from 'src/test-utils/mocks/character-mock.ts';
+import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
 import { Card } from './Card.tsx';
 import { getLocationName, getStatusIndicatorStyle, getThumbStyle } from './Card.utils.ts';
 
@@ -35,12 +35,6 @@ describe('Card', () => {
 
   it(`Renders incomplete character info`, () => {
     const infoMock = { id: 1 };
-    render(<Card info={infoMock} />);
-    testRenderedCard(infoMock);
-  });
-
-  it(`Renders random character info`, () => {
-    const infoMock = getCharacterInfoMock();
     render(<Card info={infoMock} />);
     testRenderedCard(infoMock);
   });

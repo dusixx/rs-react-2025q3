@@ -1,61 +1,43 @@
-import { chooseOneRandomly, rndInt } from '@common/utils';
-import type {
-  CharacterGender,
-  CharacterInfo,
-  CharacterLocation,
-  CharacterStatus,
-} from '@services/api.types';
+import { Endpoint } from '@services/api.ts';
+import type { CharacterInfo, SearchResult } from '@services/api.types';
+import { rndInt } from '@utils/index.ts';
 
-const IMAGE_SRC = '/annie-image.jpeg';
-const RICK_IMAGE_SRC = '/rick.jpeg';
+export const ITEMS_PER_PAGE = 20;
+export const PAGES_COUNT = 10;
+export const EPISODES_COUNT = 10;
+export const CHARACTER_ID = 176450;
 
-export const characterMock: CharacterInfo = {
-  id: 1,
-  image: IMAGE_SRC,
-  name: 'annie',
-  status: 'alive',
-  species: 'human',
-  gender: 'female',
-  location: {
-    name: 'anatomy park',
-  },
+const getEpisodesMock = (length: number = EPISODES_COUNT): string[] => {
+  return Array.from({ length }).map((_, idx) => `${Endpoint.Episode}${String(idx + 1)}`);
 };
 
-export const rickCharacterMock: Required<CharacterInfo> = {
-  id: 7123489,
-  image: RICK_IMAGE_SRC,
-  url: 'https://rickandmortyapi.com/api/character/1',
+export const characterMock: Required<CharacterInfo> = {
+  id: CHARACTER_ID,
+  image: '/rick.jpeg',
   name: 'Rick Sanchez',
   status: 'alive',
   species: 'human',
-  type: '',
   gender: 'male',
+  type: '',
   origin: { name: '"Earth (C-137)"' },
   location: { name: 'Citadel of Ricks (Replacement Dimension)' },
-  episode: [
-    'https://rickandmortyapi.com/api/episode/1',
-    'https://rickandmortyapi.com/api/episode/2',
-    'https://rickandmortyapi.com/api/episode/3',
-  ],
   created: '"2017-11-04T18:48:46.250Z"',
-};
-
-export const getCharacterInfoMock = (id: number = rndInt(1, 100)): CharacterInfo => {
-  return {
-    id,
-    image: chooseOneRandomly(IMAGE_SRC, undefined),
-    name: chooseOneRandomly('annie', 'dorothy', undefined),
-    species: chooseOneRandomly('human', 'alien', undefined),
-    status: chooseOneRandomly<CharacterStatus | undefined>('alive', 'dead', 'unknown', undefined),
-    gender: chooseOneRandomly<CharacterGender | undefined>('female', 'male', 'unknown', undefined),
-    location: chooseOneRandomly<CharacterLocation | undefined>(undefined, {
-      name: chooseOneRandomly('anatomy park', 'earth', 'mars'),
-    }),
-  };
+  episode: getEpisodesMock(),
+  url: `${Endpoint.Character}/1`,
 };
 
 export const getCharacterInfoListMock = (min: number, max: number = min): CharacterInfo[] => {
   return Array.from<CharacterInfo>({ length: rndInt(min, max) }).map((_, id) => {
     return { ...characterMock, id };
   });
+};
+
+export const searchResultMock: SearchResult = {
+  info: {
+    count: ITEMS_PER_PAGE,
+    pages: PAGES_COUNT,
+    next: null,
+    prev: null,
+  },
+  results: getCharacterInfoListMock(ITEMS_PER_PAGE),
 };

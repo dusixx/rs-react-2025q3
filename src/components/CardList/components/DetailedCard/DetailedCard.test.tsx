@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { act, render, screen } from '@testing-library/react';
 import { rndInt } from '@utils/index.ts';
 import { MemoryRouter } from 'react-router-dom';
@@ -34,7 +33,7 @@ describe('DetailedCard', () => {
     await act(() => vi.runAllTimers());
     expect(screen.getByRole('article')).toBeInTheDocument();
     expect(screen.getByRole('img')).toHaveAttribute('src', image);
-    expect(screen.getByText(name!)).toBeInTheDocument();
+    expect(screen.getByText(name)).toBeInTheDocument();
     expect(getNestedChild('DetailedCardDesc')).toBeInTheDocument();
   });
 

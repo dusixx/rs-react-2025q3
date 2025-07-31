@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import {
   IconArrowLeft,
   IconArrowLeftDouble,
@@ -31,25 +30,21 @@ export const Paginator = ({
     setCurrentPage(initialPage);
   }, [initialPage]);
 
-  const handlePrevClick = (): void => {
-    const page = Math.max(currentPage - 1, INITIAL_PAGE);
+  const updatePage = (page: number): void => {
     setCurrentPage(page);
     onClick?.(page);
+  };
+  const handlePrevClick = (): void => {
+    updatePage(Math.max(currentPage - 1, INITIAL_PAGE));
   };
   const handleNextClick = (): void => {
-    const page = Math.min(currentPage + 1, totalPages);
-    setCurrentPage(page);
-    onClick?.(page);
+    updatePage(Math.min(currentPage + 1, totalPages));
   };
   const handleFirstClick = (): void => {
-    const page = INITIAL_PAGE;
-    setCurrentPage(page);
-    onClick?.(page);
+    updatePage(INITIAL_PAGE);
   };
   const handleLastClick = (): void => {
-    const page = totalPages;
-    setCurrentPage(page);
-    onClick?.(page);
+    updatePage(totalPages);
   };
 
   return (

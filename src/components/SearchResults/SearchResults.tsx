@@ -51,7 +51,7 @@ export const SearchResults = ({ query, page, version }: SearchResultsProps): JSX
   }, [query, page, version]);
 
   const handlePaginatorClick = (page: number): void => {
-    createParams({ page: page.toString(), q: query });
+    createParams({ q: query, page: page.toString() });
   };
   const handleItemClick = (id: number): void => {
     setParams({ details: id.toString() });

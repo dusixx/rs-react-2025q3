@@ -1,5 +1,5 @@
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
-import { isError, isString } from './type-guards.ts';
+import { isError, isInteger, isPositiveInteger, isString } from './type-guards.ts';
 
 export * from './type-guards.ts';
 
@@ -36,11 +36,15 @@ export const getErrorMessage = (error: unknown, defaultMessage: string = ''): st
   return isString(error) ? error : isError(error) ? error.message : defaultMessage;
 };
 
-export const isNumeric = (v: string): boolean => {
-  const num = parseFloat(v);
+export const isNumeric = (v: string | number): boolean => {
+  const num = parseFloat(v.toString());
   return !isNaN(num) && isFinite(num);
 };
 
 export const isNumericInteger = (v: string): boolean => {
-  return isNumeric(v) && Number.isInteger(Number(v));
+  return isNumeric(v) && isInteger(Number(v));
+};
+
+export const isNumericPositiveInteger = (v: number | string): boolean => {
+  return isNumeric(v) && isPositiveInteger(Number(v));
 };

@@ -1,6 +1,29 @@
 import { IconFemale, IconMale, IconMaleFemale } from '@common/constants.ts';
-import type { CharacterGender, CharacterLocation, CharacterStatus } from '@services/api.types';
+import type { CharacterLocation } from '@services/api.types';
 import type { IconType } from 'react-icons';
+
+const GENDER_ICONS: Record<string, IconType> = {
+  male: IconMale,
+  female: IconFemale,
+  unknown: IconMaleFemale,
+} as const;
+
+const STATUS_INDICATOR_COLOR: Record<string, string> = {
+  alive: 'var(--color-green)',
+  dead: 'var(--color-green-gray)',
+  unknown: 'var(--color-violet-light)',
+} as const;
+
+export const getStatusIndicatorStyle = (status: string = 'unknown'): object => {
+  return {
+    backgroundColor:
+      STATUS_INDICATOR_COLOR[status.toLowerCase()] ?? STATUS_INDICATOR_COLOR['unknown'],
+  };
+};
+
+export const getGenderIcon = (gender: string = 'unknown'): IconType => {
+  return GENDER_ICONS[gender.toLowerCase()] ?? GENDER_ICONS['unknown'];
+};
 
 export const trimBracketsWithContent = (text: string): string => {
   return text.replace(/\s*\(.+/, '');
@@ -25,21 +48,4 @@ export const getThumbStyle = (image?: string): object => {
     opacity: image ? 1 : 0.1,
     flex: image ? 0 : 1,
   };
-};
-
-export const getStatusIndicatorStyle = (status: CharacterStatus = 'unknown'): object => {
-  const statusLower = status.toLowerCase();
-  return {
-    backgroundColor:
-      statusLower === 'alive'
-        ? 'var(--color-green)'
-        : statusLower === 'dead'
-          ? 'var(--color-green-gray)'
-          : 'var(--color-violet-light)',
-  };
-};
-
-export const getGenderIcon = (gender: CharacterGender = 'unknown'): IconType => {
-  const genderLower = gender.toLowerCase();
-  return genderLower === 'female' ? IconFemale : genderLower === 'male' ? IconMale : IconMaleFemale;
 };

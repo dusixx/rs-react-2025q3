@@ -7,8 +7,8 @@ import {
   ERR_NOT_FOUND,
   getCharactersByNameMock,
   INVALID_QUERY,
-  ITEMS_PER_PAGE,
 } from 'src/test-utils/mocks/api-mock.ts';
+import { ITEMS_PER_PAGE } from 'src/test-utils/mocks/character-mock.ts';
 import { localStorageMock } from 'src/test-utils/mocks/local-storage-mock.ts';
 import { changeInput, clickElement, getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';

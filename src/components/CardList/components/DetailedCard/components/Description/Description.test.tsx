@@ -1,15 +1,17 @@
 import { UNKNOWN } from '@common/constants.ts';
 import { render, screen } from '@testing-library/react';
-import { rickCharacterMock } from 'src/test-utils/mocks/character-mock.ts';
+import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
 import { getNestedChild } from 'src/test-utils/utils.ts';
 import { getEpisodes, getLocationName } from '../../../Card/Card.utils.ts';
 import { Description, EPISODES_DATA_ATTR } from './Description.tsx';
 
 describe('Description', () => {
   it(`Renders description correctly`, () => {
+    render(<Description info={characterMock} />);
+
     const { id, name, status, species, origin, location, created, image, episode, url } =
-      rickCharacterMock;
-    render(<Description info={rickCharacterMock} />);
+      characterMock;
+    const episodes = getEpisodes(episode).join(', ');
 
     expect(getNestedChild('DetailedCardDesc')).toBeInTheDocument();
     expect(screen.getByText(id)).toBeInTheDocument();
@@ -33,7 +35,7 @@ describe('Description', () => {
     expect(screen.queryByText(image)).toBeNull();
     expect(screen.queryByText(url)).toBeNull();
 
-    expect(screen.getByText(getEpisodes(episode).join(', '))).toBeInTheDocument();
+    expect(screen.getByText(episodes)).toBeInTheDocument();
     expect(screen.getByText('episode:')).toBeInTheDocument();
 
     expect(getNestedChild('DetailedCardDesc', 'DetailedCardEpisode')).toHaveAttribute(
