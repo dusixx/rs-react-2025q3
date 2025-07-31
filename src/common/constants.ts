@@ -38,7 +38,7 @@ export const RoutePath = {
   Home: '/',
   Search: '/search',
   About: '/about',
-  Error: '*',
+  All: '*',
 } as const;
 
 export const SearchParamKey = {

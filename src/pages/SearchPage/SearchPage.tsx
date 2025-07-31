@@ -1,4 +1,4 @@
-import { INITIAL_PAGE, INITIAL_QUERY } from '@common/constants.ts';
+import { INITIAL_PAGE } from '@common/constants.ts';
 import { SearchBar } from '@components/SearchBar/SearchBar.tsx';
 import { SearchResults } from '@components/SearchResults/SearchResults.tsx';
 import { useCustomSearchParams } from '@hooks/useCustomSearchParams.ts';
@@ -19,15 +19,15 @@ export default function SearchPage(): JSX.Element {
   useEffect(() => {
     if (!hasParams('page')) {
       createParams({
-        q: INITIAL_QUERY,
+        q: query,
         page: INITIAL_PAGE.toString(),
       });
     }
-    const [q = INITIAL_QUERY, p = INITIAL_PAGE] = getParams('q', 'page');
+    const [q = query, p = INITIAL_PAGE] = getParams('q', 'page');
     setQuery(q);
     setValue(q);
     setPage(Number(p));
-  }, [getParams, setQuery, setValue, deleteParams, hasParams, createParams]);
+  }, [getParams, setQuery, setValue, deleteParams, hasParams, createParams, query]);
 
   const handleSubmit = (value: string): void => {
     createParams({ q: value, page: INITIAL_PAGE.toString() });

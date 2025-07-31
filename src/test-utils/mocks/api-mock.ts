@@ -21,9 +21,9 @@ vi.mock('@services/api.ts', async importOriginal => {
         : Promise.resolve(searchResultMock);
     }),
     getCharacterById: vi.fn(async (id: number | string): Promise<CharacterInfo> => {
-      return !isNumericPositiveInteger(id)
-        ? Promise.reject(Error(ERR_NOT_FOUND))
-        : Promise.resolve({ ...characterMock, id: Number(id) });
+      return isNumericPositiveInteger(id)
+        ? Promise.resolve({ ...characterMock, id: Number(id) })
+        : Promise.reject(Error(ERR_NOT_FOUND));
     }),
   };
 });

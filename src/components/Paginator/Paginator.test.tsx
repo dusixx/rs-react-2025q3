@@ -21,23 +21,15 @@ describe('CardList', () => {
     const nextBtn = screen.getByTitle(ButtonTitle.Next);
     const currentPage = getNestedChild('PaginatorCounterCurrent');
 
-    clickElement(firstBtn);
+    clickElement(firstBtn, { times: 2 });
     expect(currentPage).toHaveTextContent('1');
     expect(handleClick).toHaveBeenCalledWith(1);
 
-    clickElement(firstBtn);
-    expect(currentPage).toHaveTextContent('1');
-    expect(handleClick).toHaveBeenCalledWith(1);
+    clickElement(nextBtn, { times: 2 });
+    expect(currentPage).toHaveTextContent('3');
+    expect(handleClick).toHaveBeenCalledWith(3);
 
-    clickElement(nextBtn);
-    expect(currentPage).toHaveTextContent('2');
-    expect(handleClick).toHaveBeenCalledWith(2);
-
-    clickElement(lastBtn);
-    expect(currentPage).toHaveTextContent('10');
-    expect(handleClick).toHaveBeenCalledWith(10);
-
-    clickElement(nextBtn);
+    clickElement(lastBtn, { times: 2 });
     expect(currentPage).toHaveTextContent('10');
     expect(handleClick).toHaveBeenCalledWith(10);
 

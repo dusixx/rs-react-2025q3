@@ -25,12 +25,10 @@ export const SearchBar = ({
   const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>): void => {
     onChange?.(value);
   };
-
   const handleSubmit = (event: SyntheticEvent): void => {
     onSubmit?.(value.trim());
     event.preventDefault();
   };
-
   const handleClearClick = (): void => {
     onChange?.(INITIAL_VALUE);
   };

@@ -16,7 +16,7 @@ export const App = (): JSX.Element => {
           <Route index element={<DetailedCard />} />
         </Route>
         <Route path={RoutePath.About} element={<AboutPage />} />
-        <Route path={RoutePath.Error} element={<ErrorPage />} />
+        <Route path={RoutePath.All} element={<ErrorPage />} />
       </Route>
     </Routes>
   );

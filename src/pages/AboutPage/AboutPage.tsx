@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { AUTHOR_LINK_PROPS, COURSE_LINK_PROPS } from './AboutPage.constants.ts';
 import styles from './AboutPage.module.scss';
 
+const BTN_TEXT = 'Go Back';
+
 export default function AboutPage(): JSX.Element {
   const navigate = useNavigate();
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.info}>
@@ -17,7 +18,7 @@ export default function AboutPage(): JSX.Element {
         </span>
       </div>
       <button className={styles.btn} onClick={() => void navigate(-1)}>
-        Go Back
+        {BTN_TEXT}
       </button>
     </div>
   );

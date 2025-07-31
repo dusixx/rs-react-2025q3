@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import type { SetURLSearchParams } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 
-export type SearchParamValue = (typeof SearchParamKey)[keyof typeof SearchParamKey];
+type SearchParamValue = (typeof SearchParamKey)[keyof typeof SearchParamKey];
 type SetParamsProps = Partial<Record<SearchParamValue, string>>;
 
 export type UseCustomSearchParamsResult = {

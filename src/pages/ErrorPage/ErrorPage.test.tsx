@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { navigateMock } from 'src/test-utils/mocks/router-dom-mock.tsx';
 import { clickElement } from 'src/test-utils/utils.ts';
-import ErrorPage from './ErrorPage.tsx';
+import ErrorPage, { HEADING_404, TEXT_404 } from './ErrorPage.tsx';
 
 describe('ErrorPage', () => {
   it(`Displays text`, () => {
@@ -12,8 +12,8 @@ describe('ErrorPage', () => {
         <ErrorPage />
       </MemoryRouter>,
     );
-    expect(screen.getByText('404')).toBeInTheDocument();
-    expect(screen.getByText(/page not found/i)).toBeInTheDocument();
+    expect(screen.getByText(HEADING_404)).toBeInTheDocument();
+    expect(screen.getByText(TEXT_404)).toBeInTheDocument();
   });
 
   it(`Navigates home page on button click`, () => {
