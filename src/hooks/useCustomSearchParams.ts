@@ -14,7 +14,8 @@ export type UseCustomSearchParamsResult<P extends Record<string, unknown>> = {
 };
 
 const stringify = (value: unknown): string => {
-  return value == null ? '' : JSON.stringify(value);
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
+  return value == null ? '' : String(value);
 };
 
 export const useCustomSearchParams = <

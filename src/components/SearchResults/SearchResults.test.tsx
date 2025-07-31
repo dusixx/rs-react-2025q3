@@ -70,12 +70,12 @@ describe('SearchResults', () => {
     await act(() => vi.runAllTimers());
 
     clickElement(getNestedChild('PaginatorNextBtn'));
-    expect(createParams).toHaveBeenCalledWith({ page: (page + 1).toString(), q: name });
+    expect(createParams).toHaveBeenCalledWith({ page: page + 1, q: name });
     clickElement(getNestedChild('PaginatorPrevBtn'));
-    expect(createParams).toHaveBeenCalledWith({ page: page.toString(), q: name });
+    expect(createParams).toHaveBeenCalledWith({ page: page, q: name });
     clickElement(getNestedChild('PaginatorFirstBtn'));
-    expect(createParams).toHaveBeenCalledWith({ page: '1', q: name });
+    expect(createParams).toHaveBeenCalledWith({ page: 1, q: name });
     clickElement(getNestedChild('PaginatorLastBtn'));
-    expect(createParams).toHaveBeenCalledWith({ page: PAGES_COUNT.toString(), q: name });
+    expect(createParams).toHaveBeenCalledWith({ page: PAGES_COUNT, q: name });
   });
 });
