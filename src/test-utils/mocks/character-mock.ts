@@ -5,7 +5,7 @@ import { rndInt } from '@utils/index.ts';
 export const ITEMS_PER_PAGE = 20;
 export const PAGES_COUNT = 10;
 export const EPISODES_COUNT = 10;
-export const CHARACTER_ID = 176450;
+export const CHARACTER_ID = 897;
 
 const getEpisodesMock = (length: number = EPISODES_COUNT): string[] => {
   return Array.from({ length }).map((_, idx) => `${Endpoint.Episode}${String(idx + 1)}`);

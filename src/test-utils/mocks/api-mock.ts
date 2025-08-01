@@ -2,6 +2,7 @@
 import { isNumericPositiveInteger } from '@common/utils';
 import { getCharacterById, getCharactersByName } from '@services/api/api.ts';
 import type { CharacterInfo, SearchResult } from '@services/api/api.types.ts';
+import { saveInfosToCSVFile } from '@services/file-saver/file-saver.ts';
 import { vi } from 'vitest';
 import { FAKE_VALUE } from '../constants.ts';
 import { characterMock, searchResultMock } from './character-mock.ts';
@@ -10,6 +11,9 @@ export const VALID_QUERY = 'rick';
 export const INVALID_QUERY = FAKE_VALUE;
 export const INVALID_ID = -1;
 export const ERR_NOT_FOUND = 'Nothing was found';
+
+export const getCharactersByNameMock = getCharactersByName;
+export const getCharacterByIdMock = getCharacterById;
 
 vi.mock('@services/api/api.ts', async importOriginal => {
   const actual = await importOriginal<typeof import('@services/api/api.ts')>();
@@ -27,5 +31,13 @@ vi.mock('@services/api/api.ts', async importOriginal => {
     }),
   };
 });
-export const getCharactersByNameMock = getCharactersByName;
-export const getCharacterByIdMock = getCharacterById;
+
+export const saveInfosToCSVFileMock = saveInfosToCSVFile;
+
+vi.mock('@services/file-saver/file-saver.ts', async importOriginal => {
+  const actual = await importOriginal<typeof import('@services/file-saver/file-saver.ts')>();
+  return {
+    ...actual,
+    saveInfosToCSVFile: vi.fn(),
+  };
+});
