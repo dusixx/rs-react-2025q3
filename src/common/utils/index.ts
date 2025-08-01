@@ -58,3 +58,7 @@ export const mapObjectValues = <T>(
     return res;
   }, {});
 };
+
+export const capitalize = (str: string, locale: string = navigator.language): string => {
+  return str.replace(/^\p{CWU}/u, char => char.toLocaleUpperCase(locale));
+};
