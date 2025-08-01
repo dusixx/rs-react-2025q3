@@ -1,5 +1,6 @@
 import { INITIAL_PAGE } from '@common/constants.ts';
 import type { CustomSearchParam } from '@common/types.ts';
+import { FlyoutPanel } from '@components/FlyoutPanel/FlyoutPanel.tsx';
 import { SearchBar } from '@components/SearchBar/SearchBar.tsx';
 import { SearchResults } from '@components/SearchResults/SearchResults.tsx';
 import { useCustomSearchParams } from '@hooks/useCustomSearchParams.ts';
@@ -59,6 +60,7 @@ export default function SearchPage(): JSX.Element {
           value={value}
         />
         <SearchResults query={query} page={page} version={version} />
+        <FlyoutPanel />
       </div>
     </div>
   );
