@@ -4,7 +4,7 @@ export type CharacterLocation = {
 };
 export type CharacterStatus = 'alive' | 'dead' | 'unknown';
 export type CharacterGender = 'male' | 'female' | 'unknown';
-export type CharacterInfo = Record<string, unknown> & {
+export type CharacterInfo = {
   id: number;
   name?: string;
   image?: string;
