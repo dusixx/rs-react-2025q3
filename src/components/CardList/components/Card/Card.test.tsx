@@ -1,9 +1,10 @@
 import { UNKNOWN } from '@common/constants.ts';
 import { serializeStyle } from '@common/utils/index.ts';
 import type { CharacterInfo } from '@services/api/api.types.ts';
-import { render } from '@testing-library/react';
-import { getNestedChild, queryNestedChild } from 'src/test-utils/index.ts';
+import { render, screen } from '@testing-library/react';
+import { clickElement, getNestedChild, queryNestedChild } from 'src/test-utils/index.ts';
 import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
+import { vi } from 'vitest';
 import { Card } from './Card.tsx';
 import { getLocationName, getStatusIndicatorStyle, getThumbStyle } from './Card.utils.ts';
 
@@ -29,13 +30,19 @@ const testRenderedCard = (info: CharacterInfo): void => {
 
 describe('Card', () => {
   it(`Renders full character info`, () => {
-    render(<Card info={characterMock} />);
+    const handleSelect = vi.fn();
+    render(<Card info={characterMock} onSelect={handleSelect} />);
     testRenderedCard(characterMock);
+    clickElement(screen.getByRole('checkbox'));
+    expect(handleSelect).toHaveBeenCalled();
   });
 
   it(`Renders incomplete character info`, () => {
+    const handleClick = vi.fn();
     const infoMock = { id: 1 };
-    render(<Card info={infoMock} />);
+    render(<Card info={infoMock} onClick={handleClick} />);
     testRenderedCard(infoMock);
+    clickElement(getNestedChild('CardThumb'));
+    expect(handleClick).toHaveBeenCalled();
   });
 });

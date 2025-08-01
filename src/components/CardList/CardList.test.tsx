@@ -1,16 +1,52 @@
-import { render } from '@testing-library/react';
-import { getNestedChild } from 'src/test-utils/index.ts';
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+import { render, within } from '@testing-library/react';
+import { addInfo, removeInfo } from 'src/store/charactersSlice.ts';
+import { clickElement, getNestedChild } from 'src/test-utils/index.ts';
 import { getCharacterInfoListMock } from 'src/test-utils/mocks/character-mock.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
+import { dispatchMock, mockUseSelector } from 'src/test-utils/mocks/redux-mock.ts';
+import { vi } from 'vitest';
 import { CardList } from './CardList.tsx';
 
-const MIN_ITEMS_COUNT = 1;
 const ITEMS_PER_PAGE = 10;
 
 describe('CardList', () => {
   it(`Renders correct number of items when data is provided`, () => {
-    const infos = getCharacterInfoListMock(MIN_ITEMS_COUNT, ITEMS_PER_PAGE);
+    const infos = getCharacterInfoListMock(ITEMS_PER_PAGE, ITEMS_PER_PAGE);
+    vi.mocked(mockUseSelector).mockReturnValueOnce(infos);
     render(<CardList infos={infos} />, { wrapper: ProvidersMock });
     expect(getNestedChild('CardList')).toHaveProperty('children.length', infos.length);
+  });
+
+  it(`Removes selected card from the store`, () => {
+    const infos = getCharacterInfoListMock(ITEMS_PER_PAGE, ITEMS_PER_PAGE);
+    vi.mocked(mockUseSelector).mockReturnValueOnce(infos);
+    render(<CardList infos={infos} />, { wrapper: ProvidersMock });
+
+    const cardList = getNestedChild('CardList');
+    const firstCard = cardList.children[0] as HTMLElement;
+    const checkbox = within(firstCard).getByRole('checkbox');
+
+    clickElement(checkbox);
+    expect(dispatchMock).toHaveBeenCalledWith({
+      payload: infos[0],
+      type: removeInfo.type,
+    });
+  });
+
+  it(`Adds selected card to the store`, () => {
+    const infos = getCharacterInfoListMock(ITEMS_PER_PAGE, ITEMS_PER_PAGE);
+    vi.mocked(mockUseSelector).mockReturnValueOnce([]);
+    render(<CardList infos={infos} />, { wrapper: ProvidersMock });
+
+    const cardList = getNestedChild('CardList');
+    const firstCard = cardList.children[0] as HTMLElement;
+    const checkbox = within(firstCard).getByRole('checkbox');
+
+    clickElement(checkbox);
+    expect(dispatchMock).toHaveBeenCalledWith({
+      payload: infos[0],
+      type: addInfo.type,
+    });
   });
 });

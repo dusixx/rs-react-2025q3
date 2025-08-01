@@ -1,0 +1,43 @@
+import { render, screen } from '@testing-library/react';
+import { clearInfos } from 'src/store/charactersSlice.ts';
+import { clickElement, queryNestedChild } from 'src/test-utils/index.ts';
+import { saveInfosToCSVFileMock } from 'src/test-utils/mocks/api-mock.ts';
+import { getCharacterInfoListMock } from 'src/test-utils/mocks/character-mock.ts';
+import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
+import { dispatchMock, mockUseSelector } from 'src/test-utils/mocks/redux-mock.ts';
+import { vi } from 'vitest';
+import {
+  BTN_DOWNLOAD_TEXT,
+  BTN_UNSELECT_TEXT,
+  FlyoutPanel,
+  ITEMS_COUNT_LABEl,
+} from './FlyoutPanel.tsx';
+
+const ITEMS_COUNT = 10;
+
+describe('FlyoutPanel', () => {
+  it(`Renders flyout panel correctly`, () => {
+    const infos = getCharacterInfoListMock(ITEMS_COUNT, ITEMS_COUNT);
+    vi.mocked(mockUseSelector).mockReturnValueOnce(infos);
+    render(<FlyoutPanel />, { wrapper: ProvidersMock });
+
+    expect(mockUseSelector).toHaveBeenCalled();
+    expect(screen.getByText(RegExp(ITEMS_COUNT_LABEl, 'i'))).toHaveTextContent(
+      ITEMS_COUNT.toString(),
+    );
+    clickElement(screen.getByText(BTN_DOWNLOAD_TEXT));
+    expect(saveInfosToCSVFileMock).toHaveBeenCalledWith(infos);
+
+    clickElement(screen.getByText(BTN_UNSELECT_TEXT));
+    expect(dispatchMock).toHaveBeenCalledWith({
+      payload: undefined,
+      type: clearInfos.type,
+    });
+  });
+
+  it('Renders no flyout panel if no data is provided', () => {
+    vi.mocked(mockUseSelector).mockReturnValueOnce([]);
+    render(<FlyoutPanel />, { wrapper: ProvidersMock });
+    expect(queryNestedChild('FlyoutPanel')).toBeNull();
+  });
+});
