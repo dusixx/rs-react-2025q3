@@ -19,11 +19,11 @@ export const CardList = ({ infos, onItemClick, className }: CardListProps): JSX.
   const selectedInfos = useSelector<StoreState, CharacterInfo[]>(
     state => state.selectedCharacters.infos,
   );
-  const isChecked = ({ id }: CharacterInfo): boolean => {
+  const isSelected = ({ id }: CharacterInfo): boolean => {
     return Boolean(selectedInfos.find(info => info.id === id));
   };
-  const handleChange = (info: CharacterInfo): void => {
-    dispatch(isChecked(info) ? removeInfo(info) : addInfo(info));
+  const handleSelect = (info: CharacterInfo): void => {
+    dispatch(isSelected(info) ? removeInfo(info) : addInfo(info));
   };
   return (
     <ul data-testid={TestId.CardList} className={clsx(styles.list, className)}>
@@ -32,8 +32,8 @@ export const CardList = ({ infos, onItemClick, className }: CardListProps): JSX.
           info={info}
           key={info.id}
           onClick={onItemClick}
-          onChange={handleChange}
-          checked={isChecked(info)}
+          onSelect={handleSelect}
+          selected={isSelected(info)}
         />
       ))}
     </ul>

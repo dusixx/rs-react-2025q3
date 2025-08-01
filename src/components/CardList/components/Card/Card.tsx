@@ -19,12 +19,12 @@ const ICON_PROPS = {
 type CardProps = {
   info: CharacterInfo;
   onClick?: (id: number) => void;
-  onChange?: (info: CharacterInfo) => void;
-  checked?: boolean;
+  onSelect?: (info: CharacterInfo) => void;
+  selected?: boolean;
   className?: string;
 };
 
-export const Card = ({ info, onClick, onChange, checked, className }: CardProps): JSX.Element => {
+export const Card = ({ info, onClick, onSelect, selected, className }: CardProps): JSX.Element => {
   const {
     id,
     image,
@@ -41,7 +41,7 @@ export const Card = ({ info, onClick, onChange, checked, className }: CardProps)
     onClick?.(id);
   };
   const handleChange = (): void => {
-    onChange?.(info);
+    onSelect?.(info);
   };
   const IconGender = getGenderIcon(gender);
 
@@ -59,7 +59,7 @@ export const Card = ({ info, onClick, onChange, checked, className }: CardProps)
               className={styles.checkbox}
               type='checkbox'
               onChange={handleChange}
-              checked={checked}
+              checked={selected}
             />
           </label>
         </li>
