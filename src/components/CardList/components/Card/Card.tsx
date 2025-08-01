@@ -1,5 +1,5 @@
 import { IconLocation, UNKNOWN } from '@common/constants.ts';
-import type { CharacterInfo } from '@services/api.types.ts';
+import type { CharacterInfo } from '@services/api/api.types.ts';
 import clsx from 'clsx';
 import { type JSX, type SyntheticEvent } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';

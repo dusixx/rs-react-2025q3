@@ -1,4 +1,4 @@
-import type { CharacterInfo } from '@services/api.types.ts';
+import type { CharacterInfo } from '@services/api/api.types.ts';
 import type { ReactNode } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Description.module.scss';

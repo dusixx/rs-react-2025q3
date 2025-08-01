@@ -4,7 +4,7 @@ import {
   getLocationName,
   trimBracketsWithContent,
 } from '@components/CardList/components/Card/Card.utils.ts';
-import type { CharacterInfo } from '@services/api.types.ts';
+import type { CharacterInfo } from '@services/api/api.types';
 import { isObject } from '@utils/type-guards.ts';
 
 const stringifyValue = (value: unknown): string => {
@@ -17,7 +17,8 @@ export const createDescription = (info: CharacterInfo): Record<string, string> =
     if (key === 'created' || key === 'image' || key === 'url') {
       return result;
     }
-    let valueStr = stringifyValue(info[key]);
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    let valueStr = stringifyValue(info[key as keyof CharacterInfo]);
 
     if (key === 'location' || key === 'origin') {
       valueStr = getLocationName(info[key], UNKNOWN);

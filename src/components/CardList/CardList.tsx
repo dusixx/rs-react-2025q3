@@ -1,4 +1,4 @@
-import type { CharacterInfo } from '@services/api.types.ts';
+import type { CharacterInfo } from '@services/api/api.types.ts';
 import clsx from 'clsx';
 import type { JSX } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,8 +19,6 @@ export const CardList = ({ infos, onItemClick, className }: CardListProps): JSX.
   const selectedInfos = useSelector<StoreState, CharacterInfo[]>(
     state => state.selectedCharacters.infos,
   );
-  console.log(selectedInfos);
-
   const isChecked = ({ id }: CharacterInfo): boolean => {
     return Boolean(selectedInfos.find(info => info.id === id));
   };
