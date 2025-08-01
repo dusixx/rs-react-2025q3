@@ -1,4 +1,5 @@
-import type { CharacterInfo } from '@services/api.types.ts';
+import type { CharacterInfo } from '@services/api/api.types';
+import { saveInfosToCSVFile } from '@services/file-saver/file-saver.ts';
 import type { ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearInfos } from 'src/store/charactersSlice.ts';
@@ -31,7 +32,13 @@ export const FlyoutPanel = (): ReactNode => {
           >
             {BTN_UNSELECT_TEXT}
           </button>
-          <button className={styles.btn} type='button'>
+          <button
+            className={styles.btn}
+            type='button'
+            onClick={() => {
+              saveInfosToCSVFile(selectedInfos);
+            }}
+          >
             {BTN_DOWNLOAD_TEXT}
           </button>
         </div>
