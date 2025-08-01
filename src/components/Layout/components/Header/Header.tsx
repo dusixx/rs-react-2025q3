@@ -1,9 +1,12 @@
 import { RoutePath } from '@common/constants.ts';
+import { ThemeSwitcher } from '@components/ThemeSwitcher/ThemeSwitcher.tsx';
 import type { JSX } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { TestId } from 'src/test-utils/constants.ts';
 import { IMAGE_PROPS } from './Header.constants.ts';
 import styles from './Header.module.scss';
+
+export const BTN_ABOUT_TEXT = 'About';
 
 export const Header = (): JSX.Element => {
   const navigate = useNavigate();
@@ -18,13 +21,16 @@ export const Header = (): JSX.Element => {
           <b>Finder</b>
         </div>
       </NavLink>
-      <button
-        className={styles.btn}
-        onClick={() => void navigate(RoutePath.About)}
-        disabled={location.pathname === RoutePath.About}
-      >
-        About
-      </button>
+      <div className={styles.group}>
+        <ThemeSwitcher />
+        <button
+          className={styles.btn}
+          onClick={() => void navigate(RoutePath.About)}
+          disabled={location.pathname === RoutePath.About}
+        >
+          {BTN_ABOUT_TEXT}
+        </button>
+      </div>
     </header>
   );
 };

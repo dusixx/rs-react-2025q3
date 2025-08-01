@@ -1,0 +1,27 @@
+.switcher {
+  display: flex;
+  flex-shrink: 0;
+
+  width: fit-content;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+}
+
+.btn {
+  @extend %btn;
+
+  aspect-ratio: 1;
+  width: 28px;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+
+  opacity: 0.3;
+}
+
+.active {
+  opacity: 1;
+  background-color: var(--color-border);
+}
