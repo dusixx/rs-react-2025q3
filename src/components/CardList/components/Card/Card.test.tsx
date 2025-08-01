@@ -1,6 +1,6 @@
 import { UNKNOWN } from '@common/constants.ts';
 import { serializeStyle } from '@common/utils/index.ts';
-import type { CharacterInfo } from '@services/api.types.ts';
+import type { CharacterInfo } from '@services/api/api.types.ts';
 import { render } from '@testing-library/react';
 import { getNestedChild, queryNestedChild } from 'src/test-utils/index.ts';
 import { characterMock } from 'src/test-utils/mocks/character-mock.ts';

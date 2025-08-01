@@ -1,7 +1,6 @@
 import { INITIAL_PAGE, LS_KEY_LAST_QUERY } from '@common/constants.ts';
 import { render } from '@testing-library/react';
 import { act } from 'react';
-import { MemoryRouter } from 'react-router-dom';
 import { FAKE_VALUE } from 'src/test-utils/constants.ts';
 import {
   ERR_NOT_FOUND,
@@ -10,18 +9,16 @@ import {
 } from 'src/test-utils/mocks/api-mock.ts';
 import { ITEMS_PER_PAGE } from 'src/test-utils/mocks/character-mock.ts';
 import { localStorageMock } from 'src/test-utils/mocks/local-storage-mock.ts';
+import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { changeInput, clickElement, getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
 import SearchPage from './SearchPage.tsx';
 
 const renderPage = async (): Promise<void> => {
-  await act(() =>
-    render(
-      <MemoryRouter>
-        <SearchPage />
-      </MemoryRouter>,
-    ),
-  );
+  await act(() => {
+    render(<SearchPage />, { wrapper: ProvidersMock });
+    return Promise.resolve();
+  });
 };
 
 describe('SearchPage', () => {

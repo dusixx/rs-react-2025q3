@@ -1,9 +1,9 @@
 import { act, render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { TestId } from 'src/test-utils/constants.ts';
 import { ERR_NOT_FOUND, getCharactersByNameMock } from 'src/test-utils/mocks/api-mock.ts';
 import { ITEMS_PER_PAGE, PAGES_COUNT } from 'src/test-utils/mocks/character-mock.ts';
 import { mockUseCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
+import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { outletElementMock } from 'src/test-utils/mocks/router-dom-mock.tsx';
 import { clickElement, getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
@@ -16,13 +16,10 @@ vi.mock('./SearchResults.module.scss', () => ({
   },
 }));
 const renderResults = async (props: SearchResultsProps = { query: '' }): Promise<void> => {
-  await act(() =>
-    render(
-      <MemoryRouter>
-        <SearchResults {...props} />
-      </MemoryRouter>,
-    ),
-  );
+  await act(() => {
+    render(<SearchResults {...props} />, { wrapper: ProvidersMock });
+    return Promise.resolve();
+  });
 };
 
 describe('SearchResults', () => {
