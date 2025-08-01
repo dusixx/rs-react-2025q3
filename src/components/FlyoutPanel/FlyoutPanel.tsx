@@ -1,0 +1,41 @@
+import type { CharacterInfo } from '@services/api.types.ts';
+import type { ReactNode } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearInfos } from 'src/store/charactersSlice.ts';
+import type { StoreDispatch, StoreState } from 'src/store/store.ts';
+import styles from './FlyoutPanel.module.scss';
+
+const BTN_DOWNLOAD_TEXT = 'Download';
+const BTN_UNSELECT_TEXT = 'Unselect All';
+
+export const FlyoutPanel = (): ReactNode => {
+  const dispatch = useDispatch<StoreDispatch>();
+  const selectedInfos = useSelector<StoreState, CharacterInfo[]>(
+    state => state.selectedCharacters.infos,
+  );
+  if (!selectedInfos.length) {
+    return;
+  }
+  return (
+    <div className={styles.panel}>
+      <div className={styles.innerWrapper}>
+        <span>
+          Selected: <b>{selectedInfos.length}</b>
+        </span>
+        <div className={styles.group}>
+          <button
+            className={styles.btn}
+            data-unselect
+            type='button'
+            onClick={() => dispatch(clearInfos())}
+          >
+            {BTN_UNSELECT_TEXT}
+          </button>
+          <button className={styles.btn} type='button'>
+            {BTN_DOWNLOAD_TEXT}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};

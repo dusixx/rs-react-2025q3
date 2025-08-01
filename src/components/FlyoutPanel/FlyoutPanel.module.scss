@@ -1,0 +1,35 @@
+.panel {
+  position: fixed;
+  bottom: 0;
+
+  width: 100%;
+  padding: 20px;
+
+  background-color: white;
+}
+
+.inner-wrapper {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  justify-content: space-between;
+
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.btn {
+  @extend %btn-primary;
+
+  background-color: var(--color-accent);
+}
+
+[data-unselect] {
+  background-color: var(--color-violet);
+}
+
+.group {
+  display: flex;
+  gap: 16px;
+}
