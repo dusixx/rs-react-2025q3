@@ -1,7 +1,7 @@
 import { IconLocation, UNKNOWN } from '@common/constants.ts';
 import type { CharacterInfo } from '@services/api.types.ts';
 import clsx from 'clsx';
-import type { JSX } from 'react';
+import { type JSX, type SyntheticEvent } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Card.module.scss';
 import {
@@ -19,10 +19,12 @@ const ICON_PROPS = {
 type CardProps = {
   info: CharacterInfo;
   onClick?: (id: number) => void;
+  onChange?: (info: CharacterInfo) => void;
+  checked?: boolean;
   className?: string;
 };
 
-export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
+export const Card = ({ info, onClick, onChange, checked, className }: CardProps): JSX.Element => {
   const {
     id,
     image,
@@ -32,17 +34,35 @@ export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
     gender = UNKNOWN,
     species = UNKNOWN,
   } = info;
-
+  const handleCardClick = ({ target }: SyntheticEvent): void => {
+    if (target instanceof HTMLElement && target.closest('[data-chekbox-label]')) {
+      return;
+    }
+    onClick?.(id);
+  };
+  const handleChange = (): void => {
+    onChange?.(info);
+  };
   const IconGender = getGenderIcon(gender);
 
   return (
-    <article className={clsx(styles.card, className)} onClick={() => onClick?.(id)}>
+    <article className={clsx(styles.card, className)} onClick={handleCardClick}>
       <div data-testid={TestId.CardThumb} className={styles.thumb} style={getThumbStyle(image)}>
         {image && (
           <img data-testid={TestId.CardImage} className={styles.image} src={image} alt={name} />
         )}
       </div>
       <ul className={styles.desc}>
+        <li>
+          <label className={styles.label} data-chekbox-label>
+            <input
+              className={styles.checkbox}
+              type='checkbox'
+              onChange={handleChange}
+              checked={checked}
+            />
+          </label>
+        </li>
         <li data-name>
           <p data-testid={TestId.CardName}>{name}</p>
         </li>
