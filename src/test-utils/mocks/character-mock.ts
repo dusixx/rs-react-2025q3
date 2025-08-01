@@ -1,5 +1,5 @@
-import { Endpoint } from '@services/api.ts';
-import type { CharacterInfo, SearchResult } from '@services/api.types';
+import { Endpoint } from '@services/api/api';
+import type { CharacterInfo, SearchResult } from '@services/api/api.types';
 import { rndInt } from '@utils/index.ts';
 
 export const ITEMS_PER_PAGE = 20;
