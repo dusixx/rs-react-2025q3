@@ -1,4 +1,4 @@
-import { INITIAL_PAGE, LS_KEY_LAST_QUERY } from '@common/constants.ts';
+import { INITIAL_PAGE, LocalStorageKey } from '@common/constants.ts';
 import { render } from '@testing-library/react';
 import { act } from 'react';
 import { FAKE_VALUE } from 'src/test-utils/constants.ts';
@@ -25,9 +25,9 @@ describe('SearchPage', () => {
   const { setItem, getItem } = localStorageMock;
 
   it(`Handles search term from localStorage on initial load`, async () => {
-    setItem(LS_KEY_LAST_QUERY, FAKE_VALUE);
+    setItem(LocalStorageKey.LastQuery, FAKE_VALUE);
     await renderPage();
-    expect(getItem).toHaveBeenCalledWith(LS_KEY_LAST_QUERY);
+    expect(getItem).toHaveBeenCalledWith(LocalStorageKey.LastQuery);
     expect(getItem).toHaveReturnedWith(FAKE_VALUE);
   });
 
@@ -37,12 +37,12 @@ describe('SearchPage', () => {
       changeInput(getNestedChild('SearchBarInput'), FAKE_VALUE);
       return clickElement(getNestedChild('SearchBarBtn'));
     });
-    expect(setItem).toHaveBeenCalledWith(LS_KEY_LAST_QUERY, FAKE_VALUE);
+    expect(setItem).toHaveBeenCalledWith(LocalStorageKey.LastQuery, FAKE_VALUE);
     expect(getCharactersByNameMock).toHaveBeenCalledWith(FAKE_VALUE, INITIAL_PAGE);
   });
 
   it(`Handles empty query response`, async () => {
-    setItem(LS_KEY_LAST_QUERY, '');
+    setItem(LocalStorageKey.LastQuery, '');
     await renderPage();
     await act(() => vi.runAllTimers());
     expect(getCharactersByNameMock).toHaveBeenCalledWith('', INITIAL_PAGE);
@@ -50,7 +50,7 @@ describe('SearchPage', () => {
   });
 
   it(`Handles invalid query`, async () => {
-    setItem(LS_KEY_LAST_QUERY, INVALID_QUERY);
+    setItem(LocalStorageKey.LastQuery, INVALID_QUERY);
     await renderPage();
     await act(() => vi.runAllTimers());
     expect(getCharactersByNameMock).toHaveBeenCalledWith(INVALID_QUERY, INITIAL_PAGE);

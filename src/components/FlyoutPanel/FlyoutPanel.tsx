@@ -10,7 +10,7 @@ import styles from './FlyoutPanel.module.scss';
 
 export const BTN_DOWNLOAD_TEXT = 'Download';
 export const BTN_UNSELECT_TEXT = 'Unselect All';
-export const ITEMS_COUNT_LABEl = 'Selected items';
+export const ITEMS_COUNT_LABEl = 'Total selected';
 const ICON_SIZE = 16;
 
 export const FlyoutPanel = (): ReactNode => {
