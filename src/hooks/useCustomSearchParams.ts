@@ -1,4 +1,4 @@
-import { convertObjectValues } from '@utils/index.ts';
+import { mapObjectValues } from '@utils/index.ts';
 import { useCallback } from 'react';
 import type { SetURLSearchParams } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
@@ -7,10 +7,11 @@ export type UseCustomSearchParamsResult<P extends Record<string, unknown>> = {
   searchParams: URLSearchParams;
   setSearchParams: SetURLSearchParams;
   setParams: (props: P) => void;
+  createParams: (props: P) => void;
   getParams: (...keys: (keyof P)[]) => (string | undefined)[];
   deleteParams: (...keys: (keyof P)[]) => void;
-  createParams: (props: P) => void;
   hasParams: (...keys: (keyof P)[]) => boolean;
+  clearParams: () => void;
 };
 
 const stringify = (value: unknown): string => {
@@ -31,7 +32,7 @@ export const useCustomSearchParams = <
   );
   const createParams = useCallback(
     (props: P): void => {
-      setSearchParams(new URLSearchParams(convertObjectValues(props, stringify)));
+      setSearchParams(new URLSearchParams(mapObjectValues(props, stringify)));
     },
     [setSearchParams],
   );
@@ -59,6 +60,10 @@ export const useCustomSearchParams = <
     },
     [searchParams, setSearchParams],
   );
+  const clearParams = useCallback((): void => {
+    setSearchParams();
+  }, [setSearchParams]);
+
   return {
     searchParams,
     setSearchParams,
@@ -67,5 +72,6 @@ export const useCustomSearchParams = <
     deleteParams,
     createParams,
     hasParams,
+    clearParams,
   };
 };

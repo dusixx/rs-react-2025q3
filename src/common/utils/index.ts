@@ -49,12 +49,12 @@ export const isNumericPositiveInteger = (v: number | string): boolean => {
   return isNumeric(v) && isPositiveInteger(Number(v));
 };
 
-export const convertObjectValues = <T>(
+export const mapObjectValues = <T>(
   obj: Record<string, unknown>,
-  converter: (v: unknown) => T,
+  mapper: (v: unknown) => T,
 ): Record<string, T> => {
   return Object.keys(obj).reduce<Record<string, T>>((res, key) => {
-    res[key] = converter(obj[key]);
+    res[key] = mapper(obj[key]);
     return res;
   }, {});
 };
