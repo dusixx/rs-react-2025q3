@@ -6,6 +6,7 @@ import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Header.module.scss';
 
 export const BTN_ABOUT_TEXT = 'About';
+const LOGO_PATH = '/icons.svg#rm-logo';
 
 export const Header = (): JSX.Element => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const Header = (): JSX.Element => {
     <header data-testid={TestId.Header} className={styles.header}>
       <NavLink data-testid={TestId.HeaderLogo} className={styles.logo} to={RoutePath.Home}>
         <svg data-testid={TestId.HeaderLogoImage}>
-          <use href='/public/icons.svg#rm-logo'></use>
+          <use href={LOGO_PATH}></use>
         </svg>
       </NavLink>
       <div className={styles.group}>
