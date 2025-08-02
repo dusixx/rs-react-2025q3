@@ -1,11 +1,5 @@
-export const PRIM_BTN_ICON_PROPS = {
-  size: 32,
-  color: 'currentColor',
-};
-export const SEC_BTN_ICON_PROPS = {
-  size: 24,
-  color: 'currentColor',
-};
+export const PRIM_BTN_ICON_SIZE = 32;
+export const SEC_BTN_ICON_SIZE = 24;
 export const ButtonTitle = {
   Next: 'next',
   Prev: 'prev',

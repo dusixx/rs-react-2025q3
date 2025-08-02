@@ -19,9 +19,9 @@ export const ThemeSwitcher = (): JSX.Element => {
         }}
       >
         {theme === 'light' ? (
-          <IconDarkTheme size={18} role='img' />
+          <IconDarkTheme size={ICON_DARK_SIZE} role='img' />
         ) : (
-          <IconLightTheme size={28} role='img' />
+          <IconLightTheme size={ICON_LIGHT_SIZE} role='img' />
         )}
       </button>
     </div>
