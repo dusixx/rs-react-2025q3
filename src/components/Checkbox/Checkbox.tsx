@@ -26,8 +26,8 @@ export const Checkbox = ({ onChange, checked = false, ...rest }: CheckBoxProps):
     onChange?.(!value);
   };
   return (
-    <button className={styles.checkbox} onClick={handleClick} {...rest} role='checkbox'>
-      {value && <IconCheckMark {...ICON_PROPS} role='img' />}
+    <button className={styles.btn} onClick={handleClick} {...rest} role='checkbox'>
+      <div className={styles.thumb}> {value && <IconCheckMark {...ICON_PROPS} role='img' />}</div>
     </button>
   );
 };
