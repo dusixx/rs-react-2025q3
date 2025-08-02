@@ -20,12 +20,16 @@
 }
 
 .clear-btn {
-  @extend %btn;
+  @extend %btn-primary;
 
   position: absolute;
   top: 50%;
   right: 66px;
   transform: translateY(-50%);
 
+  padding: 4px;
+  border: unset;
+
   opacity: 0.3;
+  background-color: transparent;
 }

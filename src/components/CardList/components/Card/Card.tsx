@@ -1,4 +1,5 @@
 import { IconLocation, UNKNOWN } from '@common/constants.ts';
+import { Checkbox } from '@components/Checkbox/Checkbox.tsx';
 import type { CharacterInfo } from '@services/api/api.types.ts';
 import clsx from 'clsx';
 import { type JSX, type SyntheticEvent } from 'react';
@@ -34,8 +35,9 @@ export const Card = ({ info, onClick, onSelect, selected, className }: CardProps
     gender = UNKNOWN,
     species = UNKNOWN,
   } = info;
+
   const handleCardClick = ({ target }: SyntheticEvent): void => {
-    if (target instanceof HTMLElement && target.closest('[data-chekbox-label]')) {
+    if (target instanceof Element && target.closest('[data-chekbox]')) {
       return;
     }
     onClick?.(id);
@@ -54,14 +56,7 @@ export const Card = ({ info, onClick, onSelect, selected, className }: CardProps
       </div>
       <ul className={styles.desc}>
         <li>
-          <label className={styles.label} data-chekbox-label>
-            <input
-              className={styles.checkbox}
-              type='checkbox'
-              onChange={handleChange}
-              checked={selected}
-            />
-          </label>
+          <Checkbox data-chekbox onChange={handleChange} checked={selected} />
         </li>
         <li data-name>
           <p data-testid={TestId.CardName}>{name}</p>

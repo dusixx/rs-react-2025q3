@@ -1,12 +1,17 @@
 @use './utils/reset';
+@use './utils/mixins' as mix;
 
 body {
+  overflow-y: scroll;
+
   font-family: 'Open sans', Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   color: var(--color-text);
 
-  background-color: var(--color-bg);
+  background-color: var(--color-body-bg);
+
+  @include mix.main-transition;
 }
 
 #root {

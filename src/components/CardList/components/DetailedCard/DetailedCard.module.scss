@@ -10,12 +10,13 @@
 
   width: 380px;
   min-height: 40vh;
+  border: 1px dotted var(--color-border-10);
   border-radius: var(--border-radius);
 
   text-align: center;
   text-transform: capitalize;
 
-  background-color: white;
+  background-color: var(--color-bg);
 }
 
 .card:not(:has(.info)) {

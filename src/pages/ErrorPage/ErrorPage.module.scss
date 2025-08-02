@@ -11,13 +11,12 @@
 
   line-height: 1;
 
-  background-color: white;
+  background-color: var(--color-bg);
 }
 
 [data-logo] {
   margin-bottom: 4px;
   font-size: 64px;
-  color: var(--color-green-gray);
 }
 
 [data-text] {

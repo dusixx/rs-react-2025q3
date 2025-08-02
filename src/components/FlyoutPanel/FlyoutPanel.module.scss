@@ -4,9 +4,9 @@
 
   width: 100%;
   padding: 20px;
-  border-top: 1px solid rgb(128 128 128 / 20%);
+  border-top: 1px solid var(--color-border);
 
-  background-color: white;
+  background-color: var(--color-bg);
 }
 
 .inner-wrapper {
@@ -22,12 +22,10 @@
 
 .btn {
   @extend %btn-primary;
-
-  background-color: var(--color-accent);
 }
 
-[data-unselect] {
-  background-color: var(--color-violet);
+[data-download] {
+  background-color: var(--color-accent);
 }
 
 .group {
