@@ -8,5 +8,4 @@ export const LINK_PROPS = {
 export const IMAGE_PROPS = {
   src: '/rss-logo.svg',
   alt: 'rss logo',
-  width: 30,
 };

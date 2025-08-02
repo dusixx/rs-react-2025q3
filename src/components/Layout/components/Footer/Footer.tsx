@@ -7,7 +7,7 @@ export const Footer = (): JSX.Element => {
   return (
     <footer data-testid={TestId.Footer} className={styles.footer}>
       <a data-testid={TestId.FooterLink} className={styles.link} {...LINK_PROPS}>
-        <img data-testid={TestId.FooterLogo} {...IMAGE_PROPS} />
+        <img className={styles.logo} data-testid={TestId.FooterLogo} {...IMAGE_PROPS} />
         <span>{COPYRIGHT}</span>
       </a>
     </footer>

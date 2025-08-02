@@ -16,7 +16,7 @@ export type UseCustomSearchParamsResult<P extends Record<string, unknown>> = {
 };
 
 const stringify = (value: unknown): string => {
-  return value == null ? '' : String(value);
+  return value != null ? String(value) : '';
 };
 
 export const useCustomSearchParams = <
@@ -30,14 +30,12 @@ export const useCustomSearchParams = <
     },
     [searchParams],
   );
-
   const createParams = useCallback(
     (props: P): void => {
       setSearchParams(new URLSearchParams(mapObjectValues(props, stringify)));
     },
     [setSearchParams],
   );
-
   const setParams = useCallback(
     (props: P): void => {
       Object.entries(props).forEach(([key, value]) => {
@@ -47,14 +45,12 @@ export const useCustomSearchParams = <
     },
     [searchParams, setSearchParams],
   );
-
   const getParams = useCallback(
     (...keys: (keyof P)[]): (string | undefined)[] => {
       return keys.map(key => searchParams.get(key.toString()) ?? undefined);
     },
     [searchParams],
   );
-
   const deleteParams = useCallback(
     (...keys: (keyof P)[]): void => {
       keys.forEach(key => {
@@ -64,7 +60,6 @@ export const useCustomSearchParams = <
     },
     [searchParams, setSearchParams],
   );
-
   const clearParams = useCallback((): void => {
     setSearchParams();
   }, [setSearchParams]);

@@ -1,10 +1,11 @@
-/* eslint-disable max-len */
-import { createDescription } from '@components/CardList/components/DetailedCard/components/Description/Description.utils.ts';
+import { createDescription } from '@components/CardList/index.ts';
 import type { CharacterInfo } from '@services/api/api.types.ts';
 import { capitalize } from '@utils/index.ts';
+import { saveAs } from 'file-saver';
 
 const EOL = '\n';
 const CSV_SPLITTER = ';';
+const CSV_FILE_TYPE = 'text/csv;charset=utf-8;';
 
 const convertInfosToCSV = (infos: CharacterInfo[]): string => {
   const descInfos = infos.map(createDescription);
@@ -24,19 +25,9 @@ const convertInfosToCSV = (infos: CharacterInfo[]): string => {
   return `${heading}${EOL}${rows}`;
 };
 
-const saveCSVToFile = (filename: string, csv: string): void => {
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-};
-
-export const saveInfosToCSVFile = (infos: CharacterInfo[]): void => {
-  saveCSVToFile(`${infos.length.toString()}_items`, convertInfosToCSV(infos));
+export const saveInfosToFile = (
+  infos: CharacterInfo[],
+  { filename = `${infos.length.toString()}_items`, type = CSV_FILE_TYPE } = {},
+): void => {
+  saveAs(new File([convertInfosToCSV(infos)], filename, { type }));
 };

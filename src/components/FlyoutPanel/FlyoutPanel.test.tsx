@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { clearInfos } from 'src/store/charactersSlice.ts';
 import { clickElement, queryNestedChild } from 'src/test-utils/index.ts';
-import { saveInfosToCSVFileMock } from 'src/test-utils/mocks/api-mock.ts';
+import { saveInfosToFileMock } from 'src/test-utils/mocks/api-mock.ts';
 import { getCharacterInfoListMock } from 'src/test-utils/mocks/character-mock.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { dispatchMock, mockUseSelector } from 'src/test-utils/mocks/redux-mock.ts';
@@ -16,7 +16,7 @@ import {
 const ITEMS_COUNT = 10;
 
 describe('FlyoutPanel', () => {
-  it(`Renders flyout panel correctly`, () => {
+  it(`Renders flyout panel and handles buttons clicks correctly`, () => {
     const infos = getCharacterInfoListMock(ITEMS_COUNT, ITEMS_COUNT);
     vi.mocked(mockUseSelector).mockReturnValueOnce(infos);
     render(<FlyoutPanel />, { wrapper: ProvidersMock });
@@ -26,7 +26,7 @@ describe('FlyoutPanel', () => {
       ITEMS_COUNT.toString(),
     );
     clickElement(screen.getByText(BTN_DOWNLOAD_TEXT));
-    expect(saveInfosToCSVFileMock).toHaveBeenCalledWith(infos);
+    expect(saveInfosToFileMock).toHaveBeenCalledWith(infos);
 
     clickElement(screen.getByText(BTN_UNSELECT_TEXT));
     expect(dispatchMock).toHaveBeenCalledWith({

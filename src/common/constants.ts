@@ -1,3 +1,4 @@
+import { HiOutlineInformationCircle } from 'react-icons/hi2';
 import {
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,
@@ -8,10 +9,16 @@ import {
 } from 'react-icons/io';
 import { IoClose, IoLocationSharp, IoMaleFemaleOutline } from 'react-icons/io5';
 import { LiaDownloadSolid } from 'react-icons/lia';
-import { MdDeselect, MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight } from 'react-icons/md';
-import { RiSearchLine } from 'react-icons/ri';
-import { MdOutlineLightMode } from 'react-icons/md';
 import { LuMoonStar } from 'react-icons/lu';
+import {
+  MdDeselect,
+  MdKeyboardDoubleArrowLeft,
+  MdKeyboardDoubleArrowRight,
+  MdOutlineLightMode,
+} from 'react-icons/md';
+import { RiSearchLine } from 'react-icons/ri';
+import { WiDaySunny } from 'react-icons/wi';
+import { IoMdCheckmark } from 'react-icons/io';
 
 export const IconClose = IoClose;
 export const IconCloseCircle = IoMdCloseCircle;
@@ -27,14 +34,18 @@ export const IconArrowLeftDouble = MdKeyboardDoubleArrowLeft;
 export const IconArrowRightDouble = MdKeyboardDoubleArrowRight;
 export const IconDownload = LiaDownloadSolid;
 export const IconDeselect = MdDeselect;
-export const IconLightTheme = MdOutlineLightMode;
+export const IconLightTheme = WiDaySunny;
+export const IconLightTheme2 = MdOutlineLightMode;
 export const IconDarkTheme = LuMoonStar;
+export const IconCheckMark = IoMdCheckmark;
+export const IconInfo = HiOutlineInformationCircle;
 
 export const ERR_SOMETHING_WRONG = 'Something went wrong';
-export const LOADER_VISIBILITY_DURATION = 500;
+export const LOADER_VISIBILITY_DURATION = 350;
 export const INITIAL_QUERY = '';
 export const INITIAL_PAGE = 1;
 export const UNKNOWN = 'unknown';
+export const DARK_THEME_CLASS = 'dark-theme';
 
 export const LINK_REL_PROPS = {
   target: '_blank',
