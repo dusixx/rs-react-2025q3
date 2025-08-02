@@ -11,7 +11,7 @@ import { SearchBar } from './SearchBar.tsx';
 
 describe('SearchBar', () => {
   it(`Renders search input and search button`, () => {
-    render(<SearchBar value='' placeholder={FAKE_VALUE} />);
+    render(<SearchBar placeholder={FAKE_VALUE} />);
     expect(getNestedChild('SearchBarBtn', 'SearchBarBtnIcon')).toBeInTheDocument();
     expect(getNestedChild('SearchBarInput')).toHaveProperty('placeholder', FAKE_VALUE);
     expect(queryNestedChild('SearchBarClear')).toBeNull();
@@ -27,7 +27,7 @@ describe('SearchBar', () => {
 
   it(`Triggers change callback with correct parameters`, () => {
     const handleChangeMock = vi.fn();
-    render(<SearchBar onChange={handleChangeMock} value='' />);
+    render(<SearchBar onChange={handleChangeMock} />);
     changeInput(getNestedChild('SearchBarInput'), FAKE_VALUE);
     expect(handleChangeMock).toHaveBeenCalledWith(FAKE_VALUE);
   });

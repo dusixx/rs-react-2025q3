@@ -8,7 +8,7 @@ const ICON_SIZE = 20;
 const INITIAL_VALUE = '';
 
 type SearchBarProps = {
-  value: string;
+  value?: string;
   className?: string;
   placeholder?: string;
   onChange?: (value: string) => void;
@@ -26,7 +26,7 @@ export const SearchBar = ({
     onChange?.(value);
   };
   const handleSubmit = (event: SyntheticEvent): void => {
-    onSubmit?.(value.trim());
+    onSubmit?.(value?.trim() ?? '');
     event.preventDefault();
   };
   const handleClearClick = (): void => {

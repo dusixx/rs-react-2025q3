@@ -37,7 +37,7 @@ export const Card = ({ info, onClick, onSelect, selected, className }: CardProps
   } = info;
 
   const handleCardClick = ({ target }: SyntheticEvent): void => {
-    if (target instanceof Element && target.closest('[data-chekbox]')) {
+    if (target instanceof Element && target.closest('[data-checkbox]')) {
       return;
     }
     onClick?.(id);
@@ -56,7 +56,7 @@ export const Card = ({ info, onClick, onSelect, selected, className }: CardProps
       </div>
       <ul className={styles.desc}>
         <li>
-          <Checkbox data-chekbox onChange={handleChange} checked={selected} />
+          <Checkbox data-checkbox onChange={handleChange} checked={selected} />
         </li>
         <li data-name>
           <p data-testid={TestId.CardName}>{name}</p>
