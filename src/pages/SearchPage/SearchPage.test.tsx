@@ -42,9 +42,8 @@ describe('SearchPage', () => {
     expect(getCharactersByNameMock).toHaveBeenCalledWith(FAKE_VALUE, INITIAL_PAGE);
   });
 
-  it(`Handles search term from localStorage on initial load`, async () => {
+  it(`Initiates a search with an empty query`, async () => {
     const { createParams } = mockUseCustomSearchResult;
-    setItem(LocalStorageKey.LastQuery, FAKE_VALUE);
     await renderPage();
     await act(() => {
       changeInput(getNestedChild('SearchBarInput'), '');
