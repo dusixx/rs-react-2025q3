@@ -2,7 +2,6 @@
 import { isNumericPositiveInteger } from '@common/utils';
 import { getCharacterById, getCharactersByName } from '@services/api/api.ts';
 import type { CharacterInfo, SearchResult } from '@services/api/api.types.ts';
-import { saveInfosToFile } from '@services/file-saver/file-saver.ts';
 import { vi } from 'vitest';
 import { FAKE_VALUE } from '../constants.ts';
 import { characterMock, searchResultMock } from './character-mock.ts';
@@ -29,15 +28,5 @@ vi.mock('@services/api/api.ts', async importOriginal => {
         ? Promise.resolve({ ...characterMock, id: Number(id) })
         : Promise.reject(Error(ERR_NOT_FOUND));
     }),
-  };
-});
-
-export const saveInfosToFileMock = saveInfosToFile;
-
-vi.mock('@services/file-saver/file-saver.ts', async importOriginal => {
-  const actual = await importOriginal<typeof import('@services/file-saver/file-saver.ts')>();
-  return {
-    ...actual,
-    saveInfosToFile: vi.fn(),
   };
 });
