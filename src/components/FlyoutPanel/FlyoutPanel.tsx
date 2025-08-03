@@ -1,17 +1,16 @@
-import { IconDownload } from '@common/constants.ts';
+import { DownloadLink } from '@components/DownloadLink/DownloadLink.tsx';
 import type { CharacterInfo } from '@services/api/api.types';
-import { saveInfosToFile } from '@services/file-saver/file-saver.ts';
 import type { ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearInfos } from 'src/store/charactersSlice.ts';
 import type { StoreDispatch, StoreState } from 'src/store/store.ts';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './FlyoutPanel.module.scss';
+import { convertInfosToCSV } from './FlyoutPanel.utils.ts';
 
-export const BTN_DOWNLOAD_TEXT = 'Download';
 export const BTN_UNSELECT_TEXT = 'Unselect All';
 export const ITEMS_COUNT_LABEl = 'Total selected';
-const ICON_SIZE = 16;
+const MIME_TYPE = 'text/csv;charset=utf-8;';
 
 export const FlyoutPanel = (): ReactNode => {
   const dispatch = useDispatch<StoreDispatch>();
@@ -31,17 +30,11 @@ export const FlyoutPanel = (): ReactNode => {
           <button className={styles.btn} type='button' onClick={() => dispatch(clearInfos())}>
             {BTN_UNSELECT_TEXT}
           </button>
-          <button
-            data-download
-            className={styles.btn}
-            type='button'
-            onClick={() => {
-              saveInfosToFile(selectedInfos);
-            }}
-          >
-            <IconDownload size={ICON_SIZE} />
-            {BTN_DOWNLOAD_TEXT}
-          </button>
+          <DownloadLink
+            content={convertInfosToCSV(selectedInfos)}
+            fileName={`${selectedInfos.length.toString()}_items`}
+            type={MIME_TYPE}
+          />
         </div>
       </div>
     </div>
