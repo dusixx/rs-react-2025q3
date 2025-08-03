@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { clickElement } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
-import { Checkbox, ICON_PROPS } from './Checkbox.tsx';
+import { Checkbox, ICON_COLOR } from './Checkbox.tsx';
 
 describe('ErrorInfo', () => {
   it(`Renders checkbox correctly`, () => {
     const handleChange = vi.fn();
     render(<Checkbox data-checkbox onChange={handleChange} checked={true} />);
 
-    expect(screen.getByRole('img')).toHaveAttribute('color', ICON_PROPS.color);
+    expect(screen.getByRole('img')).toHaveAttribute('color', ICON_COLOR);
     const btn = screen.getByRole('checkbox');
     expect(btn).toHaveAttribute('data-checkbox', 'true');
     clickElement(btn);

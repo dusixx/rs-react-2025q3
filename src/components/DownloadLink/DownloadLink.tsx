@@ -36,7 +36,7 @@ export const DownloadLink = ({
     setDownload(fileName);
   };
   return (
-    <a className={styles.btn} href={url} download={download} role='link' onClick={handleClick}>
+    <a className={styles.btn} href={url} download={download} onClick={handleClick} role='link'>
       {children ? (
         children
       ) : (

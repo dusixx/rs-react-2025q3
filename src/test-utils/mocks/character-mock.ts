@@ -27,8 +27,8 @@ export const characterMock: Required<CharacterInfo> = {
 };
 
 export const getCharacterInfoListMock = (min: number, max: number = min): CharacterInfo[] => {
-  return Array.from<CharacterInfo>({ length: rndInt(min, max) }).map((_, id) => {
-    return { ...characterMock, id };
+  return Array.from<CharacterInfo>({ length: rndInt(min, max) }).map((_, idx) => {
+    return { ...characterMock, id: idx + 1 };
   });
 };
 

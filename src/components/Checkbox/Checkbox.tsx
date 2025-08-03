@@ -1,12 +1,10 @@
-/* eslint-disable react-refresh/only-export-components */
 import { IconCheckMark } from '@common/constants.ts';
 import { useEffect, useState, type JSX } from 'react';
 import styles from './Checkbox.module.scss';
 
-export const ICON_PROPS = {
-  size: 16,
-  color: 'var(--color-accent)',
-};
+const ICON_SIZE = 16;
+export const ICON_COLOR = 'var(--color-accent)';
+
 type CheckBoxProps = {
   onChange?: (checked: boolean) => void;
   checked?: boolean;
@@ -27,7 +25,9 @@ export const Checkbox = ({ onChange, checked = false, ...rest }: CheckBoxProps):
   };
   return (
     <button className={styles.btn} onClick={handleClick} {...rest} role='checkbox'>
-      <div className={styles.thumb}> {value && <IconCheckMark {...ICON_PROPS} role='img' />}</div>
+      <div className={styles.thumb}>
+        {value && <IconCheckMark size={ICON_SIZE} color={ICON_COLOR} role='img' />}
+      </div>
     </button>
   );
 };
