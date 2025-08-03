@@ -11,8 +11,9 @@ import { BTN_UNSELECT_TEXT, FlyoutPanel, ITEMS_COUNT_LABEl } from './FlyoutPanel
 const ITEMS_COUNT = 10;
 
 describe('FlyoutPanel', () => {
+  URLMock.revokeObjectURL = vi.fn();
+
   it(`Renders flyout panel and handles buttons clicks correctly`, () => {
-    URLMock.revokeObjectURL = vi.fn();
     const infos = getCharacterInfoListMock(ITEMS_COUNT, ITEMS_COUNT);
     vi.mocked(mockUseSelector).mockReturnValueOnce(infos);
     render(<FlyoutPanel />, { wrapper: ProvidersMock });

@@ -8,8 +8,7 @@ describe('DownloadLink', () => {
   it(`Renders download link correctly`, () => {
     const blob = {};
     const text = crypto.randomUUID();
-
-    URLMock.createObjectURL = vi.fn();
+    const { createObjectURL, revokeObjectURL } = URLMock;
     render(
       <DownloadLink content={FAKE_VALUE} type={FAKE_VALUE} fileName={FAKE_VALUE}>
         <img src={FAKE_VALUE} />
@@ -26,7 +25,7 @@ describe('DownloadLink', () => {
     clickElement(link);
 
     expect(BlobMock).toHaveBeenCalledWith([FAKE_VALUE], { type: FAKE_VALUE });
-    expect(URLMock.createObjectURL).toHaveBeenCalledWith(blob);
-    expect(URLMock.revokeObjectURL).toHaveBeenCalledWith('');
+    expect(createObjectURL).toHaveBeenCalledWith(blob);
+    expect(revokeObjectURL).toHaveBeenCalledWith('');
   });
 });
