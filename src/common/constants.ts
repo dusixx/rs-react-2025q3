@@ -48,8 +48,8 @@ export const UNKNOWN = 'unknown';
 export const DARK_THEME_CLASS = 'dark-theme';
 
 export const LinkProps = {
-  Target: '_blank',
-  Rel: 'noopener noreferrer nofollow',
+  target: '_blank',
+  rel: 'noopener noreferrer nofollow',
 } as const;
 
 export const LocalStorageKey = {

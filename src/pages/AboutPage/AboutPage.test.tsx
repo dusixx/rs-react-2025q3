@@ -10,9 +10,9 @@ describe('AboutPage', () => {
     const links = screen.getAllByRole('link');
     expect(links).toHaveLength(2);
     expect(links[0]).toHaveAttribute('href', AUTHOR_GITHUB_URL);
-    expect(links[0]).toHaveAttribute('rel', LinkProps.Rel);
+    expect(links[0]).toHaveAttribute('rel', LinkProps.rel);
     expect(links[1]).toHaveAttribute('href', COURSE_PAGE_URL);
-    expect(links[1]).toHaveAttribute('rel', LinkProps.Rel);
+    expect(links[1]).toHaveAttribute('rel', LinkProps.rel);
   });
 
   it(`Navigates back on button click`, () => {

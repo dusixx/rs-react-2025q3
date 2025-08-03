@@ -13,7 +13,7 @@ describe('Footer', () => {
     expect(link).toBeInTheDocument();
     expect(logo).toBeInTheDocument();
     expect(link).toHaveAttribute('href', RSS_URL);
-    expect(link).toHaveAttribute('rel', LinkProps.Rel);
+    expect(link).toHaveAttribute('rel', LinkProps.rel);
     expect(logo).toHaveAttribute('src', RSS_LOGO_SRC);
     expect(screen.getByText(COPYRIGHT)).toBeInTheDocument();
   });
