@@ -1,4 +1,4 @@
-import { LINK_REL_PROPS } from '@common/constants.ts';
+import { LinkProps } from '@common/constants.ts';
 import { render, screen } from '@testing-library/react';
 import { navigateMock } from 'src/test-utils/mocks/router-dom-mock.tsx';
 import { clickElement } from 'src/test-utils/utils.ts';
@@ -10,9 +10,9 @@ describe('AboutPage', () => {
     const links = screen.getAllByRole('link');
     expect(links).toHaveLength(2);
     expect(links[0]).toHaveAttribute('href', AUTHOR_GITHUB_URL);
-    expect(links[0]).toHaveAttribute('rel', LINK_REL_PROPS.rel);
+    expect(links[0]).toHaveAttribute('rel', LinkProps.Rel);
     expect(links[1]).toHaveAttribute('href', COURSE_PAGE_URL);
-    expect(links[1]).toHaveAttribute('rel', LINK_REL_PROPS.rel);
+    expect(links[1]).toHaveAttribute('rel', LinkProps.Rel);
   });
 
   it(`Navigates back on button click`, () => {

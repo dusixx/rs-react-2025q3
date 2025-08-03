@@ -1,4 +1,4 @@
-import { LINK_REL_PROPS } from '@common/constants.ts';
+import { LinkProps } from '@common/constants.ts';
 import type { JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Footer.module.scss';
@@ -11,7 +11,7 @@ const RSS_LOGO_ALT = 'RSS logo';
 export const Footer = (): JSX.Element => {
   return (
     <footer data-testid={TestId.Footer} className={styles.footer}>
-      <a data-testid={TestId.FooterLink} className={styles.link} href={RSS_URL} {...LINK_REL_PROPS}>
+      <a data-testid={TestId.FooterLink} className={styles.link} href={RSS_URL} {...LinkProps}>
         <img
           className={styles.logo}
           data-testid={TestId.FooterLogo}

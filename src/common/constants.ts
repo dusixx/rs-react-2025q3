@@ -4,6 +4,7 @@ import {
   IoIosArrowDroprightCircle,
   IoIosFemale,
   IoIosMale,
+  IoMdCheckmark,
   IoMdCloseCircle,
   IoMdCloseCircleOutline,
 } from 'react-icons/io';
@@ -18,7 +19,6 @@ import {
 } from 'react-icons/md';
 import { RiSearchLine } from 'react-icons/ri';
 import { WiDaySunny } from 'react-icons/wi';
-import { IoMdCheckmark } from 'react-icons/io';
 
 export const IconClose = IoClose;
 export const IconCloseCircle = IoMdCloseCircle;
@@ -47,17 +47,19 @@ export const INITIAL_PAGE = 1;
 export const UNKNOWN = 'unknown';
 export const DARK_THEME_CLASS = 'dark-theme';
 
-export const LINK_REL_PROPS = {
-  target: '_blank',
-  rel: 'noopener noreferrer nofollow',
-};
+export const LinkProps = {
+  Target: '_blank',
+  Rel: 'noopener noreferrer nofollow',
+} as const;
+
 export const LocalStorageKey = {
   LastQuery: 'last-query-djh501',
   Theme: 'theme-djh501',
 } as const;
+
 export const RoutePath = {
   Home: '/',
   Search: '/search',
   About: '/about',
-  All: '*',
+  Any: '*',
 } as const;

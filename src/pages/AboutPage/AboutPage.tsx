@@ -1,4 +1,4 @@
-import { LINK_REL_PROPS } from '@common/constants.ts';
+import { LinkProps } from '@common/constants.ts';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './AboutPage.module.scss';
@@ -14,13 +14,13 @@ export default function AboutPage(): JSX.Element {
       <div className={styles.info}>
         <span>
           Made by{' '}
-          <a {...LINK_REL_PROPS} href={AUTHOR_GITHUB_URL}>
+          <a {...LinkProps} href={AUTHOR_GITHUB_URL}>
             dusixx
           </a>
         </span>
         <span>
           as part of the{' '}
-          <a {...LINK_REL_PROPS} href={COURSE_PAGE_URL}>
+          <a {...LinkProps} href={COURSE_PAGE_URL}>
             React Course
           </a>{' '}
           at RSSchool

@@ -15,7 +15,6 @@ describe('DownloadLink', () => {
         {text}
       </DownloadLink>,
     );
-
     const link = screen.getByRole('link');
     expect(link).toHaveAttribute('download', FAKE_VALUE);
     expect(link).toHaveTextContent(text);

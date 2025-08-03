@@ -24,6 +24,7 @@ const renderPage = async (): Promise<void> => {
 
 describe('SearchPage', () => {
   const { setItem, getItem } = localStorageMock;
+  const { createParams } = mockUseCustomSearchResult;
 
   it(`Handles search term from localStorage on initial load`, async () => {
     setItem(LocalStorageKey.LastQuery, FAKE_VALUE);
@@ -43,7 +44,6 @@ describe('SearchPage', () => {
   });
 
   it(`Initiates a search with an empty query`, async () => {
-    const { createParams } = mockUseCustomSearchResult;
     await renderPage();
     await act(() => {
       changeInput(getNestedChild('SearchBarInput'), '');

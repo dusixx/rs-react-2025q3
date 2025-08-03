@@ -8,8 +8,8 @@ describe('ErrorInfo', () => {
     const handleChange = vi.fn();
     render(<Checkbox data-checkbox onChange={handleChange} checked={true} />);
 
-    expect(screen.getByRole('img')).toHaveAttribute('color', ICON_COLOR);
     const btn = screen.getByRole('checkbox');
+    expect(screen.getByRole('img')).toHaveAttribute('color', ICON_COLOR);
     expect(btn).toHaveAttribute('data-checkbox', 'true');
     clickElement(btn);
     expect(handleChange).toHaveBeenCalledWith(false);
