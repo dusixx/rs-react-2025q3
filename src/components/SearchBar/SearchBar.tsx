@@ -15,6 +15,10 @@ type SearchBarProps = {
   onSubmit?: (value: string) => void;
 };
 
+const trimValue = (value: string = ''): string => {
+  return value.trim();
+};
+
 export const SearchBar = ({
   className,
   placeholder,
@@ -26,7 +30,7 @@ export const SearchBar = ({
     onChange?.(value);
   };
   const handleSubmit = (event: SyntheticEvent): void => {
-    onSubmit?.(value?.trim() ?? '');
+    onSubmit?.(trimValue(value));
     event.preventDefault();
   };
   const handleClearClick = (): void => {

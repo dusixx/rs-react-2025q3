@@ -9,6 +9,7 @@ import {
 } from 'src/test-utils/mocks/api-mock.ts';
 import { ITEMS_PER_PAGE } from 'src/test-utils/mocks/character-mock.ts';
 import { localStorageMock } from 'src/test-utils/mocks/local-storage-mock.ts';
+import { mockUseCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { changeInput, clickElement, getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
@@ -39,6 +40,17 @@ describe('SearchPage', () => {
     });
     expect(setItem).toHaveBeenCalledWith(LocalStorageKey.LastQuery, FAKE_VALUE);
     expect(getCharactersByNameMock).toHaveBeenCalledWith(FAKE_VALUE, INITIAL_PAGE);
+  });
+
+  it(`Handles search term from localStorage on initial load`, async () => {
+    const { createParams } = mockUseCustomSearchResult;
+    setItem(LocalStorageKey.LastQuery, FAKE_VALUE);
+    await renderPage();
+    await act(() => {
+      changeInput(getNestedChild('SearchBarInput'), '');
+      return Promise.resolve();
+    });
+    expect(createParams).toHaveBeenCalledWith({ q: '', page: INITIAL_PAGE });
   });
 
   it(`Handles empty query response`, async () => {

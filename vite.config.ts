@@ -63,7 +63,8 @@ export default defineConfig({
         '**/utils',
         'src/main.{ts,tsx,js,jsx}',
         '**/**types**',
-        'src/services/file-saver',
+        '**/hooks',
+        '**/store',
       ],
       thresholds: {
         statements: 80,

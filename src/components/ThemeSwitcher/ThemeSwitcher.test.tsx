@@ -19,5 +19,8 @@ describe('ThemeSwitcher', () => {
     clickElement(btn);
     expect(setItem).toHaveBeenCalledWith(LocalStorageKey.Theme, 'light');
     expect(screen.getByRole('img')).toHaveAttribute('width', ICON_DARK_SIZE.toString());
+
+    clickElement(btn);
+    expect(setItem).toHaveBeenCalledWith(LocalStorageKey.Theme, 'dark');
   });
 });

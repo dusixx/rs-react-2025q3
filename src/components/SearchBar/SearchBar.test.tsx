@@ -19,7 +19,7 @@ describe('SearchBar', () => {
 
   it(`Triggers search callback with correct parameters`, () => {
     const handleSubmit = vi.fn();
-    render(<SearchBar onSubmit={handleSubmit} value={FAKE_VALUE} />);
+    render(<SearchBar onSubmit={handleSubmit} value={`\t${FAKE_VALUE}\t`} />);
     expect(getNestedChild('SearchBarClear', 'SearchBarClearIcon')).toBeInTheDocument();
     clickElement(getNestedChild('SearchBarBtn'));
     expect(handleSubmit).toHaveBeenCalledWith(FAKE_VALUE);
@@ -30,5 +30,12 @@ describe('SearchBar', () => {
     render(<SearchBar onChange={handleChangeMock} />);
     changeInput(getNestedChild('SearchBarInput'), FAKE_VALUE);
     expect(handleChangeMock).toHaveBeenCalledWith(FAKE_VALUE);
+  });
+
+  it(`Triggers change callback on clear click`, () => {
+    const handleChangeMock = vi.fn();
+    render(<SearchBar onChange={handleChangeMock} value={FAKE_VALUE} />);
+    clickElement(getNestedChild('SearchBarClear'));
+    expect(handleChangeMock).toHaveBeenCalledWith('');
   });
 });

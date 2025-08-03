@@ -23,18 +23,19 @@ const renderResults = async (props: SearchResultsProps = { query: '' }): Promise
 };
 
 describe('SearchResults', () => {
-  const { getParams, createParams } = mockUseCustomSearchResult;
+  const { getParams, createParams, setParams } = mockUseCustomSearchResult;
   const [name, page] = ['rick', 3];
-
-  beforeEach(() => {
-    vi.mocked(getParams)?.mockReturnValue([]);
-  });
 
   it(`Displays results if valid params specified`, async () => {
     await renderResults({ query: name, page });
     expect(getCharactersByNameMock).toHaveBeenCalledWith(name, page);
     await act(() => vi.runAllTimers());
     expect(getNestedChild('CardList')).toHaveProperty('children.length', ITEMS_PER_PAGE);
+
+    const cards = screen.getAllByRole('article');
+    expect(cards).toHaveLength(ITEMS_PER_PAGE);
+    clickElement(cards[0]);
+    expect(setParams).toHaveBeenCalledWith({ details: 1 });
   });
 
   it(`Displays error if invalid params specified`, async () => {

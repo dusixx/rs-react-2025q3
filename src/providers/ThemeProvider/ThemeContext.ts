@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-const ERR_USE_OUTSIDE_CONTEXT =
+export const ERR_USE_OUTSIDE_CONTEXT =
   'useTheme() may be used only in the context of a <ThemeProvider> component';
 
 export type Theme = 'dark' | 'light';
