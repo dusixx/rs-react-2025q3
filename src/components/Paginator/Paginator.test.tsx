@@ -1,8 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { clickElement, getNestedChild } from 'src/test-utils/index.ts';
 import { vi } from 'vitest';
-import { ButtonTitle } from './Paginator.constants.ts';
-import { Paginator } from './Paginator.tsx';
+import { ButtonTitle, Paginator } from './Paginator.tsx';
 
 describe('CardList', () => {
   it(`Displays the correct initial counter state`, () => {

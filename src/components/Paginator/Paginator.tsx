@@ -8,7 +8,6 @@ import {
 import clsx from 'clsx';
 import { useEffect, useState, type JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
-import { ButtonTitle, PRIM_BTN_ICON_SIZE, SEC_BTN_ICON_SIZE } from './Paginator.constants.ts';
 import styles from './Paginator.module.scss';
 
 type PaginatorProps = {
@@ -17,6 +16,15 @@ type PaginatorProps = {
   className?: string;
   onClick?: (page: number) => void;
 };
+
+const PRIM_BTN_ICON_SIZE = 32;
+const SEC_BTN_ICON_SIZE = 24;
+export const ButtonTitle = {
+  Next: 'next',
+  Prev: 'prev',
+  Last: 'last',
+  First: 'first',
+} as const;
 
 export const Paginator = ({
   onClick,

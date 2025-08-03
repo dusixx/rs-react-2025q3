@@ -1,9 +1,11 @@
+import { LINK_REL_PROPS } from '@common/constants.ts';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AUTHOR_LINK_PROPS, COURSE_LINK_PROPS } from './AboutPage.constants.ts';
 import styles from './AboutPage.module.scss';
 
 const BTN_TEXT = 'Go Back';
+export const AUTHOR_GITHUB_URL = 'https://github.com/dusixx';
+export const COURSE_PAGE_URL = 'https://rs.school/courses/reactjs';
 
 export default function AboutPage(): JSX.Element {
   const navigate = useNavigate();
@@ -11,10 +13,17 @@ export default function AboutPage(): JSX.Element {
     <div className={styles.wrapper}>
       <div className={styles.info}>
         <span>
-          Made by <a {...AUTHOR_LINK_PROPS}>dusixx</a>
+          Made by{' '}
+          <a {...LINK_REL_PROPS} href={AUTHOR_GITHUB_URL}>
+            dusixx
+          </a>
         </span>
         <span>
-          as part of the <a {...COURSE_LINK_PROPS}>React Course</a> at RSSchool
+          as part of the{' '}
+          <a {...LINK_REL_PROPS} href={COURSE_PAGE_URL}>
+            React Course
+          </a>{' '}
+          at RSSchool
         </span>
       </div>
       <button className={styles.btn} onClick={() => void navigate(-1)}>

@@ -32,6 +32,7 @@ describe('Card', () => {
   it(`Renders full character info`, () => {
     const handleSelect = vi.fn();
     render(<Card info={characterMock} onSelect={handleSelect} />);
+
     testRenderedCard(characterMock);
     clickElement(screen.getByRole('checkbox'));
     expect(handleSelect).toHaveBeenCalled();
@@ -41,6 +42,7 @@ describe('Card', () => {
     const handleClick = vi.fn();
     const infoMock = { id: 1 };
     render(<Card info={infoMock} onClick={handleClick} />);
+
     testRenderedCard(infoMock);
     clickElement(getNestedChild('CardThumb'));
     expect(handleClick).toHaveBeenCalled();
