@@ -3,19 +3,18 @@ import {
   INITIAL_PAGE,
   LOADER_VISIBILITY_DURATION,
 } from '@common/constants.ts';
-import type { CustomSearchParam } from '@common/types.ts';
 import { getErrorInstance, getErrorMessage } from '@common/utils';
 import { CardList } from '@components/CardList/CardList.tsx';
 import { ErrorInfo } from '@components/ErrorInfo/ErrorInfo.tsx';
 import { Loader } from '@components/Loader/Loader';
 import { Paginator } from '@components/Paginator/Paginator.tsx';
-import { useCustomSearchParams } from '@hooks/useCustomSearchParams.ts';
 import { getCharactersByName } from '@services/api/api';
 import type { CharacterInfo } from '@services/api/api.types';
 import clsx from 'clsx';
 import { useEffect, useState, type JSX } from 'react';
 import { Outlet } from 'react-router-dom';
 import styles from './SearchResults.module.scss';
+import { useAppCustomSearchParams } from '@hooks/useAppCustomSearchParams.ts';
 
 export type SearchResultsProps = {
   query: string;
@@ -28,7 +27,7 @@ export const SearchResults = ({ query, page, version }: SearchResultsProps): JSX
   const [totalPages, setTotalPages] = useState(INITIAL_PAGE);
   const [error, setError] = useState<Error>();
   const [loading, setLoading] = useState(false);
-  const { getParams, setParams, createParams } = useCustomSearchParams<CustomSearchParam>();
+  const { getParams, setParams, createParams } = useAppCustomSearchParams();
 
   const [detailsId] = getParams('details');
 

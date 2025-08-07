@@ -4,9 +4,9 @@ import { afterEach, vi } from 'vitest';
 
 beforeAll(() => {
   vi.stubGlobal('console', {
-    log: vi.fn(),
     error: vi.fn(),
     warn: vi.fn(),
+    log: console.log.bind(console),
   });
 });
 

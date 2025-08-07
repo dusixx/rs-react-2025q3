@@ -1,9 +1,8 @@
 import { INITIAL_PAGE } from '@common/constants.ts';
-import type { CustomSearchParam } from '@common/types.ts';
 import { FlyoutPanel } from '@components/FlyoutPanel/FlyoutPanel.tsx';
 import { SearchBar } from '@components/SearchBar/SearchBar.tsx';
 import { SearchResults } from '@components/SearchResults/SearchResults.tsx';
-import { useCustomSearchParams } from '@hooks/useCustomSearchParams.ts';
+import { useAppCustomSearchParams } from '@hooks/useAppCustomSearchParams.ts';
 import { usePersistedSearchQuery } from '@hooks/usePersistedSearchQuery';
 import { useCallback, useEffect, useState, type JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
@@ -16,8 +15,7 @@ export default function SearchPage(): JSX.Element {
   const [page, setPage] = useState(INITIAL_PAGE);
   const [value, setValue] = useState(query);
   const [version, setVersion] = useState(crypto.randomUUID());
-  const { getParams, createParams, deleteParams, hasParams } =
-    useCustomSearchParams<CustomSearchParam>();
+  const { getParams, createParams, deleteParams, hasParams } = useAppCustomSearchParams();
 
   const initSearchParams = useCallback((): void => {
     if (!hasParams('page')) {

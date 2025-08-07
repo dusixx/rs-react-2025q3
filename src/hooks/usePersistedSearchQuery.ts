@@ -18,8 +18,5 @@ export const usePersistedSearchQuery = (): UseSearchQueryResult => {
     localStorage.setItem(LocalStorageKey.LastQuery, value);
   }, []);
 
-  return {
-    setQuery,
-    query,
-  };
+  return { setQuery, query };
 };

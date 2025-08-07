@@ -1,25 +1,18 @@
 import { act, render, screen } from '@testing-library/react';
 import { rndInt } from '@utils/index.ts';
-import { MemoryRouter } from 'react-router-dom';
 import { clickElement, getNestedChild } from 'src/test-utils/index.ts';
 import { ERR_NOT_FOUND, getCharacterByIdMock } from 'src/test-utils/mocks/api-mock.ts';
 import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
-import { mockUseCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
+import { mockUseAppCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
 import { vi } from 'vitest';
 import { DetailedCard } from './DetailedCard.tsx';
 
 const renderCard = async (): Promise<void> => {
-  await act(() =>
-    render(
-      <MemoryRouter>
-        <DetailedCard />
-      </MemoryRouter>,
-    ),
-  );
+  await act(() => render(<DetailedCard />));
 };
 
 describe('DetailedCard', () => {
-  const { getParams, deleteParams } = mockUseCustomSearchResult;
+  const { getParams, deleteParams } = mockUseAppCustomSearchResult;
   const { name, image } = characterMock;
 
   it(`Renders card if valid id is specified`, async () => {

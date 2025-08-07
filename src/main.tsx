@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from './components/App/App.tsx';
 import { ThemeProvider } from './providers/ThemeProvider/ThemeProvider.tsx';
-import { store } from './store/store.ts';
+import { store } from './redux/store.ts';
 import './styles/global.scss';
 
 const ROOT_SELECTOR = '#root';

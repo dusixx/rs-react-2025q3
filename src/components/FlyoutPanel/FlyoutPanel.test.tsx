@@ -1,38 +1,45 @@
 import { render, screen } from '@testing-library/react';
-import { clearInfos } from 'src/store/charactersSlice.ts';
+import { clearInfos } from 'src/redux/charactersSlice.ts';
 import { clickElement, queryNestedChild } from 'src/test-utils/index.ts';
 import { getCharacterInfoListMock } from 'src/test-utils/mocks/character-mock.ts';
+import { initDownloadMock } from 'src/test-utils/mocks/DownloadLinkMock.tsx';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
-import { dispatchMock, mockUseSelector } from 'src/test-utils/mocks/redux-mock.ts';
-import { URLMock } from 'src/test-utils/mocks/url-mock.ts';
-import { vi } from 'vitest';
+import { appDispatchMock, mockUseSelectedInfos } from 'src/test-utils/mocks/redux-hook-mock.ts';
+import { it, vi } from 'vitest';
 import { BTN_UNSELECT_TEXT, FlyoutPanel, ITEMS_COUNT_LABEl } from './FlyoutPanel.tsx';
+import { getDownloadInitProps } from './FlyoutPanel.utils.ts';
 
 const ITEMS_COUNT = 10;
 
 describe('FlyoutPanel', () => {
-  URLMock.revokeObjectURL = vi.fn();
-
-  it(`Renders flyout panel and handles buttons clicks correctly`, () => {
-    const infos = getCharacterInfoListMock(ITEMS_COUNT, ITEMS_COUNT);
-    vi.mocked(mockUseSelector).mockReturnValueOnce(infos);
+  it(`Handles unselect all clicked correctly`, () => {
+    const infos = getCharacterInfoListMock(ITEMS_COUNT);
+    vi.mocked(mockUseSelectedInfos).mockReturnValueOnce(infos);
     render(<FlyoutPanel />, { wrapper: ProvidersMock });
 
-    expect(mockUseSelector).toHaveBeenCalled();
+    expect(mockUseSelectedInfos).toHaveBeenCalled();
     expect(screen.getByText(RegExp(ITEMS_COUNT_LABEl, 'i'))).toHaveTextContent(
       ITEMS_COUNT.toString(),
     );
-    expect(screen.getByRole('link')).toBeInTheDocument();
-
     clickElement(screen.getByText(BTN_UNSELECT_TEXT));
-    expect(dispatchMock).toHaveBeenCalledWith({
+    expect(appDispatchMock).toHaveBeenCalledWith({
       payload: undefined,
       type: clearInfos.type,
     });
   });
 
+  it('Handles download clicked correctly', () => {
+    const infos = getCharacterInfoListMock(ITEMS_COUNT);
+    vi.mocked(mockUseSelectedInfos).mockReturnValueOnce(infos);
+    render(<FlyoutPanel />);
+
+    const downloadButton = screen.getByRole('link');
+    clickElement(downloadButton);
+    expect(initDownloadMock).toHaveBeenCalledWith(getDownloadInitProps(infos));
+  });
+
   it('Renders no flyout panel if no data is provided', () => {
-    vi.mocked(mockUseSelector).mockReturnValueOnce([]);
+    vi.mocked(mockUseSelectedInfos).mockReturnValueOnce([]);
     render(<FlyoutPanel />, { wrapper: ProvidersMock });
     expect(queryNestedChild('FlyoutPanel')).toBeNull();
   });

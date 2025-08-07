@@ -1,9 +1,8 @@
 import type { CharacterInfo } from '@services/api/api.types.ts';
 import clsx from 'clsx';
 import type { JSX } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addInfo, removeInfo } from 'src/store/charactersSlice.ts';
-import type { StoreDispatch, StoreState } from 'src/store/store.ts';
+import { addInfo, removeInfo } from 'src/redux/charactersSlice.ts';
+import { useAppDispatch, useSelectedInfos } from 'src/redux/hooks.ts';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './CardList.module.scss';
 import { Card } from './components/Card/Card.tsx';
@@ -15,10 +14,8 @@ type CardListProps = {
 };
 
 export const CardList = ({ infos, onItemClick, className }: CardListProps): JSX.Element => {
-  const dispatch = useDispatch<StoreDispatch>();
-  const selectedInfos = useSelector<StoreState, CharacterInfo[]>(
-    state => state.selectedCharacters.infos,
-  );
+  const dispatch = useAppDispatch();
+  const selectedInfos = useSelectedInfos();
   const isSelected = ({ id }: CharacterInfo): boolean => {
     return Boolean(selectedInfos.find(info => info.id === id));
   };

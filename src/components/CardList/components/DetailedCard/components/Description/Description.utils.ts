@@ -13,9 +13,13 @@ const stringifyValue = (value: unknown): string => {
   return value && !isObject(value) ? trimBracketsWithContent(String(value)) : UNKNOWN;
 };
 
-export const createDescription = (info: CharacterInfo): Record<string, string> => {
+export const createDescription = (
+  info: CharacterInfo,
+  episodesSplitter: string = ', ',
+): Record<string, string> => {
   return Object.keys(info).reduce<Record<string, string>>((result, key) => {
     const k = key as keyof CharacterInfo;
+
     if (k === 'created' || k === 'image' || k === 'url') {
       return result;
     }
@@ -24,7 +28,7 @@ export const createDescription = (info: CharacterInfo): Record<string, string> =
     if (k === 'location' || k === 'origin') {
       valueStr = getLocationName(info[k], UNKNOWN);
     } else if (k === 'episode' && info[k]?.length) {
-      valueStr = getEpisodes(info[k]).join(', ');
+      valueStr = getEpisodes(info[k]).join(episodesSplitter);
     }
     result[k] = valueStr;
     return result;

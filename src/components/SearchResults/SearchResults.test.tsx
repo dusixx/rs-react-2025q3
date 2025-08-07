@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react';
 import { TestId } from 'src/test-utils/constants.ts';
 import { ERR_NOT_FOUND, getCharactersByNameMock } from 'src/test-utils/mocks/api-mock.ts';
 import { ITEMS_PER_PAGE, PAGES_COUNT } from 'src/test-utils/mocks/character-mock.ts';
-import { mockUseCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
+import { mockUseAppCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { outletElementMock } from 'src/test-utils/mocks/router-dom-mock.tsx';
 import { clickElement, getNestedChild } from 'src/test-utils/utils.ts';
@@ -23,7 +23,7 @@ const renderResults = async (props: SearchResultsProps = { query: '' }): Promise
 };
 
 describe('SearchResults', () => {
-  const { getParams, createParams, setParams } = mockUseCustomSearchResult;
+  const { getParams, createParams, setParams } = mockUseAppCustomSearchResult;
   const [name, page] = ['rick', 3];
 
   it(`Displays results if valid params specified`, async () => {

@@ -9,7 +9,7 @@ import {
 } from 'src/test-utils/mocks/api-mock.ts';
 import { ITEMS_PER_PAGE } from 'src/test-utils/mocks/character-mock.ts';
 import { localStorageMock } from 'src/test-utils/mocks/local-storage-mock.ts';
-import { mockUseCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
+import { mockUseAppCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { changeInput, clickElement, getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
@@ -24,7 +24,7 @@ const renderPage = async (): Promise<void> => {
 
 describe('SearchPage', () => {
   const { setItem, getItem } = localStorageMock;
-  const { createParams } = mockUseCustomSearchResult;
+  const { createParams } = mockUseAppCustomSearchResult;
 
   it(`Handles search term from localStorage on initial load`, async () => {
     setItem(LocalStorageKey.LastQuery, FAKE_VALUE);
