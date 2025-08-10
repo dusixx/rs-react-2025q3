@@ -12,7 +12,7 @@ import { Description } from './components/Description/Description.tsx';
 import styles from './DetailedCard.module.scss';
 
 const CLOSE_BTN_TEXT = 'Close';
-const REFETCH_BTN_TEXT = 'Rerfesh';
+const REFETCH_BTN_TEXT = 'Refetch';
 const INVALIDATE_BTN_TEXT = 'Invalidate';
 const ICON_SIZE = 14;
 

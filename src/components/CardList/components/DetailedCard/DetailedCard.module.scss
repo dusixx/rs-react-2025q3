@@ -50,7 +50,9 @@
 .btn {
   @extend %btn-primary;
 
-  width: 102px;
+  width: 94px;
+  padding-right: 0;
+  padding-left: 0;
 }
 
 [data-invalidate] {
@@ -69,7 +71,7 @@
 .group {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 20px;
   align-items: center;
   justify-content: center;
 

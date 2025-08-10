@@ -39,6 +39,14 @@
   background-color: var(--color-violet-light);
 }
 
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
 .group {
   display: flex;
   flex-wrap: wrap;

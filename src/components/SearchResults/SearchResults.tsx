@@ -13,7 +13,7 @@ import { useAppDispatch } from 'src/redux/store/hooks.ts';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchResults.module.scss';
 
-const REFETCH_BTN_TEXT = 'Rerfesh';
+const REFETCH_BTN_TEXT = 'Refetch';
 const INVALIDATE_BTN_TEXT = 'Invalidate';
 const ICON_SIZE = 14;
 
@@ -51,24 +51,27 @@ export const SearchResults = (): JSX.Element => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.group}>
-        <button
-          data-testid={TestId.RefreshBtn}
-          type='button'
-          className={styles.btn}
-          onClick={() => void refetch()}
-        >
-          <IconRefresh size={ICON_SIZE} />
-          {REFETCH_BTN_TEXT}
-        </button>
-        <button
-          data-testid={TestId.InvalidateBtn}
-          data-invalidate
-          type='button'
-          className={styles.btn}
-          onClick={() => dispatch(rickmortyApi.util.invalidateTags(['name']))}
-        >
-          {INVALIDATE_BTN_TEXT}
-        </button>
+        <div className={styles.btnGroup}>
+          <button
+            data-testid={TestId.RefreshBtn}
+            type='button'
+            className={styles.btn}
+            onClick={() => void refetch()}
+          >
+            <IconRefresh size={ICON_SIZE} />
+            {REFETCH_BTN_TEXT}
+          </button>
+          <button
+            data-testid={TestId.InvalidateBtn}
+            data-invalidate
+            type='button'
+            className={styles.btn}
+            onClick={() => dispatch(rickmortyApi.util.invalidateTags(['name']))}
+          >
+            {INVALIDATE_BTN_TEXT}
+          </button>
+        </div>
+
         <Paginator
           className={styles.paginator}
           totalPages={data.info.pages}
