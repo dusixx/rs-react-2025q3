@@ -1,4 +1,4 @@
-import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
+import { ERR_SOMETHING_WRONG } from '@common/constants/index.ts';
 import { isError, isInteger, isPositiveInteger, isString } from './type-guards.ts';
 
 export * from './type-guards.ts';
@@ -61,4 +61,8 @@ export const mapObjectValues = <T>(
 
 export const capitalize = (str: string, locale: string = navigator.language): string => {
   return str.replace(/^\p{CWU}/u, char => char.toLocaleUpperCase(locale));
+};
+
+export const delay = (delay: number): Promise<void> => {
+  return new Promise(resolve => setTimeout(resolve, delay));
 };
