@@ -52,6 +52,9 @@ describe('SearchResults', () => {
 
     clickElement(cards[0]);
     expect(setParams).toHaveBeenCalledWith({ details: 1 });
+
+    clickElement(getNestedChild('RefreshBtn'));
+    expect(refetch).toHaveBeenCalled();
   });
 
   it(`Displays error if invalid params specified`, async () => {

@@ -9,6 +9,7 @@ import { useEffect, type JSX } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useGetCharactersByNameQuery } from 'src/redux/api/api';
 import { getApiErrorMessage } from 'src/redux/api/api.utils';
+import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchResults.module.scss';
 
 const REFETCH_BTN_TEXT = 'Rerfesh';
@@ -46,7 +47,12 @@ export const SearchResults = (): JSX.Element => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.group}>
-        <button type='button' className={styles.btn} onClick={() => void refetch()}>
+        <button
+          data-testid={TestId.RefreshBtn}
+          type='button'
+          className={styles.btn}
+          onClick={() => void refetch()}
+        >
           <IconRefresh size={ICON_SIZE} />
           {REFETCH_BTN_TEXT}
         </button>
