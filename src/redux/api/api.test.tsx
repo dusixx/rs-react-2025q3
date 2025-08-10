@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
+import { HttpStatus } from '@common/constants/index.ts';
 import { render } from '@testing-library/react';
 import { act, type ReactNode } from 'react';
 import { characterMock, searchResultMock } from 'src/test-utils/mocks/character-mock.ts';
@@ -51,7 +52,7 @@ describe('API tests', () => {
       result = useGetCharactersByNameQuery({ name: 'beth', page: 2 });
       return;
     };
-    fetchMock.mockResolvedValueOnce(searchResultMock, { status: 200 });
+    fetchMock.mockResolvedValueOnce(searchResultMock, { status: HttpStatus.OK });
     await renderMock(<Comp />);
 
     const res = (await fetchMock.mocked.mock.results[0].value) as { json(): Promise<SearchResult> };
@@ -69,7 +70,7 @@ describe('API tests', () => {
       result = useGetCharacterByIdQuery(3);
       return;
     };
-    fetchMock.mockResolvedValueOnce(characterMock, { status: 200 });
+    fetchMock.mockResolvedValueOnce(characterMock, { status: HttpStatus.OK });
     await renderMock(<Comp />);
 
     expect(fetchMock.mocked).toHaveBeenCalled();
@@ -84,14 +85,14 @@ describe('API tests', () => {
       result = useGetCharacterByIdQuery(10);
       return;
     };
-    fetchMock.mockResolvedValueOnce({ error: ERR_NO_RESULTS }, { status: 404 });
+    fetchMock.mockResolvedValueOnce({ error: ERR_NO_RESULTS }, { status: HttpStatus.NotFound });
     await renderMock(<Comp />);
 
     expect(fetchMock.mocked).toHaveBeenCalled();
     await act(() => vi.runAllTimers());
     expect(result).toHaveProperty('status', 'rejected');
     expect(result).toHaveProperty('error', {
-      status: 404,
+      status: HttpStatus.NotFound,
       data: { error: ERR_NO_RESULTS },
     });
   });

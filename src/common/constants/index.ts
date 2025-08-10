@@ -24,3 +24,8 @@ export const RoutePath = {
   About: '/about',
   Any: '*',
 } as const;
+
+export const HttpStatus = {
+  NotFound: 404,
+  OK: 200,
+} as const;
