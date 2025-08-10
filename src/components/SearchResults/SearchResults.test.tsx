@@ -1,6 +1,8 @@
 /* eslint-disable max-lines-per-function */
 import { ERR_SOMETHING_WRONG } from '@common/constants/index.ts';
 import { act, render, screen } from '@testing-library/react';
+import { rickmortyApi } from 'src/redux/api/api.ts';
+import type { useAppDispatch } from 'src/redux/store/hooks.ts';
 import { TestId } from 'src/test-utils/constants.ts';
 import {
   ITEMS_PER_PAGE,
@@ -15,6 +17,14 @@ import { clickElement, getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
 import { SearchResults } from './SearchResults.tsx';
 
+const appDispatchMock = vi.fn();
+vi.mock('src/redux/store/hooks.ts', async () => {
+  const actual = await vi.importActual('src/redux/store/hooks.ts');
+  return {
+    ...actual,
+    useAppDispatch: (): ReturnType<typeof useAppDispatch> => appDispatchMock,
+  };
+});
 vi.mock('./SearchResults.module.scss', () => ({
   default: {
     list: 'mock-list',
@@ -52,9 +62,25 @@ describe('SearchResults', () => {
 
     clickElement(cards[0]);
     expect(setParams).toHaveBeenCalledWith({ details: 1 });
+  });
+
+  it(`Handles button clicks correctly`, async () => {
+    const refetch = vi.fn();
+
+    vi.mocked(mockUseGetCharactersByNameQuery).mockReturnValueOnce({
+      refetch,
+      data: searchResultMock,
+    });
+    await renderResults();
 
     clickElement(getNestedChild('RefreshBtn'));
     expect(refetch).toHaveBeenCalled();
+
+    clickElement(getNestedChild('InvalidateBtn'));
+    expect(appDispatchMock).toHaveBeenCalledWith({
+      payload: ['name'],
+      type: rickmortyApi.util.invalidateTags.type,
+    });
   });
 
   it(`Displays error if invalid params specified`, async () => {

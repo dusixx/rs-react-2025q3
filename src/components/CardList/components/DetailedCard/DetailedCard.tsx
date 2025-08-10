@@ -4,17 +4,20 @@ import { Loader } from '@components/Loader/Loader.tsx';
 import { useAppCustomSearchParams } from '@hooks/index.ts';
 import { type ReactNode } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { useGetCharacterByIdQuery } from 'src/redux/api/api.ts';
+import { rickmortyApi, useGetCharacterByIdQuery } from 'src/redux/api/api.ts';
 import { getApiErrorMessage } from 'src/redux/api/api.utils.ts';
+import { useAppDispatch } from 'src/redux/store/hooks.ts';
 import { TestId } from 'src/test-utils/constants.ts';
 import { Description } from './components/Description/Description.tsx';
 import styles from './DetailedCard.module.scss';
 
 const CLOSE_BTN_TEXT = 'Close';
 const REFETCH_BTN_TEXT = 'Rerfesh';
+const INVALIDATE_BTN_TEXT = 'Invalidate';
 const ICON_SIZE = 14;
 
 export const DetailedCard = (): ReactNode => {
+  const dispatch = useAppDispatch();
   const { deleteParams } = useAppCustomSearchParams();
   const { detailsId } = useOutletContext<{ detailsId: string }>();
   const { data, error, isLoading, isFetching, refetch } = useGetCharacterByIdQuery(detailsId);
@@ -52,6 +55,15 @@ export const DetailedCard = (): ReactNode => {
           >
             <IconRefresh size={ICON_SIZE} />
             {REFETCH_BTN_TEXT}
+          </button>
+          <button
+            data-testid={TestId.InvalidateBtn}
+            data-invalidate
+            type='button'
+            className={styles.btn}
+            onClick={() => dispatch(rickmortyApi.util.invalidateTags(['id']))}
+          >
+            {INVALIDATE_BTN_TEXT}
           </button>
           <button
             data-testid={TestId.CloseBtn}

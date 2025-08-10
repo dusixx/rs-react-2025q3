@@ -24,6 +24,7 @@ const baseQuery = fetchBaseQuery({
 });
 
 export const rickmortyApi = createApi({
+  tagTypes: ['name', 'id'],
   reducerPath: 'rickmortyApi',
   baseQuery,
   refetchOnReconnect: true,
@@ -33,9 +34,11 @@ export const rickmortyApi = createApi({
         url: Endpoint.Character,
         params: { name, page },
       }),
+      providesTags: ['name'],
     }),
     getCharacterById: build.query<CharacterInfo, number | string>({
       query: id => `${Endpoint.Character}/${id.toString()}`,
+      providesTags: ['id'],
     }),
   }),
 });

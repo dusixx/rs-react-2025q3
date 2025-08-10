@@ -35,6 +35,10 @@
   background-color: var(--color-green);
 }
 
+[data-invalidate] {
+  background-color: var(--color-violet-light);
+}
+
 .group {
   display: flex;
   flex-wrap: wrap;

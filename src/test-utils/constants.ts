@@ -51,6 +51,7 @@ export const TestId = {
   DetailedCardEpisode: 'detailed-card-episode',
   CloseBtn: 'close-btn',
   RefreshBtn: 'refresh-btn',
+  InvalidateBtn: 'invalidate-btn',
   SearchResultsOutlet: 'search-results-outlet',
   FlyoutPanel: 'flyout-panel',
   ThemeSwitcher: 'theme-switcher',

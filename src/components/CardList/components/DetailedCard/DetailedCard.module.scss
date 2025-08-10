@@ -50,7 +50,11 @@
 .btn {
   @extend %btn-primary;
 
-  width: 105px;
+  width: 102px;
+}
+
+[data-invalidate] {
+  background-color: var(--color-violet-light);
 }
 
 .error-info,
@@ -65,7 +69,7 @@
 .group {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 16px;
   align-items: center;
   justify-content: center;
 

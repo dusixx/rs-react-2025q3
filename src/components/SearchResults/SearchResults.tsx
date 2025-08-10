@@ -7,19 +7,23 @@ import { useAppCustomSearchParams, usePersistedSearchQuery } from '@hooks/index.
 import clsx from 'clsx';
 import { useEffect, type JSX } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useGetCharactersByNameQuery } from 'src/redux/api/api';
+import { rickmortyApi, useGetCharactersByNameQuery } from 'src/redux/api/api';
 import { getApiErrorMessage } from 'src/redux/api/api.utils';
+import { useAppDispatch } from 'src/redux/store/hooks.ts';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchResults.module.scss';
 
 const REFETCH_BTN_TEXT = 'Rerfesh';
+const INVALIDATE_BTN_TEXT = 'Invalidate';
 const ICON_SIZE = 14;
 
 export const SearchResults = (): JSX.Element => {
+  const dispatch = useAppDispatch();
   const { getQueryVersion } = usePersistedSearchQuery();
   const queryVersion = getQueryVersion();
   const { getParams, setParams, createParams } = useAppCustomSearchParams();
   const [detailsId, page, query] = getParams('details', 'page', 'q');
+
   const { error, refetch, isError, isLoading, isFetching, data } = useGetCharactersByNameQuery({
     name: query,
     page,
@@ -55,6 +59,15 @@ export const SearchResults = (): JSX.Element => {
         >
           <IconRefresh size={ICON_SIZE} />
           {REFETCH_BTN_TEXT}
+        </button>
+        <button
+          data-testid={TestId.InvalidateBtn}
+          data-invalidate
+          type='button'
+          className={styles.btn}
+          onClick={() => dispatch(rickmortyApi.util.invalidateTags(['name']))}
+        >
+          {INVALIDATE_BTN_TEXT}
         </button>
         <Paginator
           className={styles.paginator}

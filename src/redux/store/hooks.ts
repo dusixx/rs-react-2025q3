@@ -6,5 +6,5 @@ export const useAppSelector = useSelector.withTypes<StoreState>();
 export const useAppDispatch = useDispatch.withTypes<StoreDispatch>();
 
 export const useSelectedInfos = (): CharacterInfo[] => {
-  return useAppSelector(state => state.selectedCharacters.infos);
+  return useSelector<StoreState, CharacterInfo[]>(state => state.selectedCharacters.infos);
 };

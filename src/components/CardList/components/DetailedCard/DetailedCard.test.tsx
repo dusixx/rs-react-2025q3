@@ -1,9 +1,11 @@
 import { act, render, screen } from '@testing-library/react';
+import { rickmortyApi } from 'src/redux/api/api.ts';
 import { clickElement, getNestedChild } from 'src/test-utils/index.ts';
 import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
 import { mockUseAppCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { mockUseGetCharacterByIdQuery } from 'src/test-utils/mocks/redux-api-mock.ts';
+import { appDispatchMock } from 'src/test-utils/mocks/redux-hook-mock.ts';
 import { mockUseOutletContext } from 'src/test-utils/mocks/router-dom-mock.tsx';
 import { vi } from 'vitest';
 import { DetailedCard } from './DetailedCard.tsx';
@@ -71,6 +73,12 @@ describe('DetailedCard', () => {
 
     clickElement(getNestedChild('CloseBtn'));
     expect(deleteParams).toHaveBeenCalledWith('details');
+
+    clickElement(getNestedChild('InvalidateBtn'));
+    expect(appDispatchMock).toHaveBeenCalledWith({
+      payload: ['id'],
+      type: rickmortyApi.util.invalidateTags.type,
+    });
   });
 
   it(`Displays nothing if empty id is specified`, async () => {
