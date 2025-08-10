@@ -1,6 +1,6 @@
 import { IconFemale, IconMale, IconMaleFemale } from '@common/constants';
 import type { IconType } from 'react-icons';
-import type { CharacterLocation } from 'src/redux/api.types';
+import type { CharacterLocation } from 'src/redux/api/api.types';
 
 const GENDER_ICONS: Record<string, IconType> = {
   male: IconMale,

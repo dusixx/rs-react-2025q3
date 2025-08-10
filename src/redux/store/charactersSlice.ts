@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { CharacterInfo } from 'src/redux/api.types';
+import type { CharacterInfo } from 'src/redux/api/api.types';
 
 type InfosState = {
   infos: CharacterInfo[];

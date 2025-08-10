@@ -1,6 +1,6 @@
 import { INITIAL_PAGE } from '@common/constants';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { CharacterInfo, SearchResult } from 'src/redux/api.types.ts';
+import type { CharacterInfo, SearchResult } from 'src/redux/api/api.types.ts';
 import { fetchWithDelay } from './api.utils.ts';
 
 const REQUEST_TIMEOUT = 5000;

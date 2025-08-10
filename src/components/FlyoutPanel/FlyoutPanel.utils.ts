@@ -1,7 +1,7 @@
 import { createDescription } from '@components/CardList/index.ts';
 import type { DownloadInitProps } from '@components/DownloadLink/DownloadLink.tsx';
 import { capitalize } from '@utils/index.ts';
-import type { CharacterInfo } from 'src/redux/api.types';
+import type { CharacterInfo } from 'src/redux/api/api.types';
 
 const EOL = '\n';
 const CSV_SPLITTER = ';';

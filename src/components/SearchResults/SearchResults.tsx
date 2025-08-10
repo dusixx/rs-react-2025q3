@@ -7,8 +7,8 @@ import { useAppCustomSearchParams, usePersistedSearchQuery } from '@hooks/index.
 import clsx from 'clsx';
 import { useEffect, type JSX } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useGetCharactersByNameQuery } from 'src/redux/api.ts';
-import { getApiErrorMessage } from 'src/redux/api.utils.ts';
+import { useGetCharactersByNameQuery } from 'src/redux/api/api';
+import { getApiErrorMessage } from 'src/redux/api/api.utils';
 import styles from './SearchResults.module.scss';
 
 const REFETCH_BTN_TEXT = 'Rerfesh';

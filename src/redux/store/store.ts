@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { rickmortyApi } from '../api.ts';
+import { rickmortyApi } from '../api/api.ts';
 import selectedCharactersSlice from './charactersSlice.ts';
 
 export type StoreState = ReturnType<typeof store.getState>;

@@ -7,7 +7,7 @@ import {
   trimBracketsWithContent,
 } from '@components/CardList/components/Card/Card.utils.ts';
 import { isObject } from '@utils/type-guards.ts';
-import type { CharacterInfo } from 'src/redux/api.types';
+import type { CharacterInfo } from 'src/redux/api/api.types';
 
 const stringifyValue = (value: unknown): string => {
   return value && !isObject(value) ? trimBracketsWithContent(String(value)) : UNKNOWN;

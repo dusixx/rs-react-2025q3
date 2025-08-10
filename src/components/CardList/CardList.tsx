@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import type { JSX } from 'react';
-import type { CharacterInfo } from 'src/redux/api.types.ts';
-import { useAppDispatch, useSelectedInfos } from 'src/redux/hooks.ts';
+import type { CharacterInfo } from 'src/redux/api/api.types.ts';
 import { addInfo, removeInfo } from 'src/redux/store/charactersSlice.ts';
+import { useAppDispatch, useSelectedInfos } from 'src/redux/store/hooks.ts';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './CardList.module.scss';
 import { Card } from './components/Card/Card.tsx';
