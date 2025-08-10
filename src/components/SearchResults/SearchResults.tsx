@@ -57,7 +57,6 @@ export const SearchResults = (): JSX.Element => {
           onClick={handlePaginatorClick}
         />
       </div>
-
       <div className={styles.results}>
         <CardList
           className={clsx(detailsId && styles.list)}

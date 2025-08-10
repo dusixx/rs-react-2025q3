@@ -1,8 +1,8 @@
 import type { DownloadInit } from '@components/DownloadLink/DownloadLink.tsx';
 import { DownloadLink } from '@components/DownloadLink/DownloadLink.tsx';
 import { useCallback, type ReactNode } from 'react';
-import { clearInfos } from 'src/redux/charactersSlice.ts';
 import { useAppDispatch, useSelectedInfos } from 'src/redux/hooks.ts';
+import { clearInfos } from 'src/redux/store/charactersSlice.ts';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './FlyoutPanel.module.scss';
 import { getDownloadInitProps } from './FlyoutPanel.utils.ts';

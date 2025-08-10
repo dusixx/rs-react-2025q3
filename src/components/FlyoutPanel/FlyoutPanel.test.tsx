@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { clearInfos } from 'src/redux/charactersSlice.ts';
+import { clearInfos } from 'src/redux/store/charactersSlice.ts';
 import { clickElement, queryNestedChild } from 'src/test-utils/index.ts';
 import { getCharacterInfoListMock } from 'src/test-utils/mocks/character-mock.ts';
 import { initDownloadMock } from 'src/test-utils/mocks/DownloadLinkMock.tsx';

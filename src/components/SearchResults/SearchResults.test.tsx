@@ -1,3 +1,5 @@
+/* eslint-disable max-lines-per-function */
+import { ERR_SOMETHING_WRONG } from '@common/constants/index.ts';
 import { act, render, screen } from '@testing-library/react';
 import { TestId } from 'src/test-utils/constants.ts';
 import {
@@ -31,14 +33,17 @@ describe('SearchResults', () => {
 
   it(`Displays results if valid params specified`, async () => {
     vi.mocked(getParams)?.mockReturnValueOnce(['1', String(page), name]);
+    const refetch = vi.fn();
 
     vi.mocked(mockUseGetCharactersByNameQuery).mockReturnValueOnce({
-      refetch: vi.fn(),
+      refetch,
       data: searchResultMock,
     });
     await renderResults();
 
     expect(mockUseGetCharactersByNameQuery).toHaveBeenCalledWith({ name, page: String(page) });
+    expect(refetch).toHaveBeenCalled();
+
     await act(() => vi.runAllTimers());
 
     expect(getNestedChild('CardList')).toHaveProperty('children.length', ITEMS_PER_PAGE);
@@ -59,6 +64,17 @@ describe('SearchResults', () => {
     await renderResults();
     await act(() => vi.runAllTimers());
     expect(screen.getByText(RegExp(ERR_NOT_FOUND))).toBeInTheDocument();
+  });
+
+  it(`Displays error if empty results where received`, async () => {
+    const data = { ...searchResultMock, results: [] };
+    vi.mocked(mockUseGetCharactersByNameQuery).mockReturnValueOnce({
+      refetch: vi.fn(),
+      data,
+    });
+    await renderResults();
+    await act(() => vi.runAllTimers());
+    expect(screen.getByText(RegExp(ERR_SOMETHING_WRONG))).toBeInTheDocument();
   });
 
   it(`Displays loader`, async () => {

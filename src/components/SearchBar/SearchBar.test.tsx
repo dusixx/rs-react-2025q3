@@ -5,10 +5,16 @@ import { changeInput, clickElement, getNestedChild } from 'src/test-utils/index.
 import { localStorageMock } from 'src/test-utils/mocks/local-storage-mock.ts';
 import { mockUseAppCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
+import type { Mock } from 'vitest';
 import { expect, vi } from 'vitest';
 import { SearchBar } from './SearchBar.tsx';
 
 describe('SearchBar', () => {
+  const expectSubmit = (handleSubmit: Mock, value: string): void => {
+    expect(handleSubmit).toHaveBeenCalledWith(value);
+    expect(setItem).toHaveBeenCalledWith(LocalStorageKey.LastQuery, value);
+    expect(createParams).toHaveBeenCalledWith({ q: value, page: INITIAL_PAGE });
+  };
   const { createParams, getParams } = mockUseAppCustomSearchResult;
   const { setItem } = localStorageMock;
 
@@ -28,14 +34,24 @@ describe('SearchBar', () => {
 
     const submitBtn = getNestedChild('SearchBarBtn');
     clickElement(submitBtn);
-    expect(createParams).toHaveBeenCalledWith({ q: FAKE_VALUE, page: INITIAL_PAGE });
-    expect(handleSubmit).toHaveBeenCalledWith(FAKE_VALUE);
+    expectSubmit(handleSubmit, FAKE_VALUE);
+  });
 
+  it(`Submits empty value`, () => {
+    const handleSubmit = vi.fn();
+    vi.mocked(getParams)?.mockReturnValueOnce([FAKE_VALUE]);
+    render(<SearchBar onSubmit={handleSubmit} />, {
+      wrapper: ProvidersMock,
+    });
+    const input = screen.getByRole('textbox');
+    expect(handleSubmit).not.toHaveBeenCalled();
+
+    changeInput(input, '');
+    expectSubmit(handleSubmit, '');
+
+    changeInput(input, FAKE_VALUE);
     const clearBtn = getNestedChild('SearchBarClear');
     clickElement(clearBtn);
-    expect(input).toHaveValue('');
-    expect(handleSubmit).toHaveBeenCalledWith('');
-    expect(setItem).toHaveBeenCalledWith(LocalStorageKey.LastQuery, '');
-    expect(createParams).toHaveBeenCalledWith({ q: '', page: INITIAL_PAGE });
+    expectSubmit(handleSubmit, '');
   });
 });
