@@ -1,4 +1,4 @@
-import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
+import { ERR_SOMETHING_WRONG } from '@common/constants';
 import type { JSX } from 'react';
 import { TestId } from '../constants.ts';
 

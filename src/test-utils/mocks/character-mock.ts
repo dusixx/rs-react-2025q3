@@ -1,6 +1,6 @@
-import { Endpoint } from '@services/api/api';
-import type { CharacterInfo, SearchResult } from '@services/api/api.types';
 import { rndInt } from '@utils/index.ts';
+import { Endpoint } from 'src/redux/api.ts';
+import type { CharacterInfo, SearchResult } from 'src/redux/api.types';
 
 export const ITEMS_PER_PAGE = 20;
 export const PAGES_COUNT = 10;

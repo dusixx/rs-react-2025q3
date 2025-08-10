@@ -12,10 +12,10 @@ export const mockUseAppCustomSearchResult: T = {
   hasParams: vi.fn(),
 };
 
-vi.mock('@hooks/useCustomSearchParams.ts', async importOriginal => {
-  const actual = await importOriginal<typeof import('@hooks/useCustomSearchParams.ts')>();
+vi.mock('@hooks/index.ts', async importOriginal => {
+  const actual = await importOriginal<typeof import('@hooks/index.ts')>();
   return {
     ...actual,
-    useCustomSearchParams: (): T => mockUseAppCustomSearchResult,
+    useAppCustomSearchParams: (): T => mockUseAppCustomSearchResult,
   };
 });
