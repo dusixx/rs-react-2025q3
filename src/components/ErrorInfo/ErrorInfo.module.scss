@@ -1,13 +1,23 @@
 .error-info {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   align-items: center;
+  justify-content: center;
 
   padding: 10px 30px;
   border-radius: var(--border-radius);
 
   font-family: inherit;
   font-size: 12px;
+  font-weight: bold;
+  white-space: pre-wrap;
 
   background-color: var(--color-error-bg);
+}
+
+[data-heading] {
+  display: flex;
+  gap: 4px;
+  align-items: center;
 }

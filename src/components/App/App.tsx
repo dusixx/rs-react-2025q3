@@ -1,4 +1,4 @@
-import { RoutePath } from '@common/constants.ts';
+import { RoutePath } from '@common/constants';
 import { DetailedCard } from '@components/CardList/components/DetailedCard/DetailedCard.tsx';
 import { Layout } from '@components/Layout/Layout.tsx';
 import AboutPage from '@pages/AboutPage/AboutPage.tsx';

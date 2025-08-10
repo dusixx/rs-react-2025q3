@@ -1,4 +1,4 @@
-import { RoutePath } from '@common/constants.ts';
+import { RoutePath } from '@common/constants';
 import { ThemeSwitcher } from '@components/ThemeSwitcher/ThemeSwitcher.tsx';
 import type { JSX } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';

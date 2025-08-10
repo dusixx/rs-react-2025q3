@@ -1,7 +1,7 @@
-import { UNKNOWN } from '@common/constants.ts';
+import { UNKNOWN } from '@common/constants/index.ts';
 import { serializeStyle } from '@common/utils/index.ts';
-import type { CharacterInfo } from '@services/api/api.types.ts';
 import { render, screen } from '@testing-library/react';
+import type { CharacterInfo } from 'src/redux/api.types.ts';
 import { clickElement, getNestedChild, queryNestedChild } from 'src/test-utils/index.ts';
 import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
 import { vi } from 'vitest';

@@ -1,4 +1,4 @@
-import { LinkProps } from '@common/constants.ts';
+import { LinkProps } from '@common/constants/index.ts';
 import { render, screen } from '@testing-library/react';
 import { getNestedChild } from 'src/test-utils/index.ts';
 import { COPYRIGHT, Footer, RSS_LOGO_SRC, RSS_URL } from './Footer.tsx';

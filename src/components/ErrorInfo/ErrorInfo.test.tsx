@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 import { FAKE_VALUE, getNestedChild } from 'src/test-utils/index.ts';
-import { ERR_NOT_FOUND } from 'src/test-utils/mocks/api-mock.ts';
 import { ErrorInfo, ICON_COLOR } from './ErrorInfo.tsx';
 
 describe('ErrorInfo', () => {
   it(`Renders error info correctly`, () => {
+    const ERR_NOT_FOUND = 'not found';
     render(<ErrorInfo message={ERR_NOT_FOUND} className={FAKE_VALUE} />);
 
     const errorInfo = getNestedChild('ErrorInfo');

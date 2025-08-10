@@ -4,7 +4,7 @@ import {
   IconArrowRight,
   IconArrowRightDouble,
   INITIAL_PAGE,
-} from '@common/constants.ts';
+} from '@common/constants';
 import clsx from 'clsx';
 import { useEffect, useState, type JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';

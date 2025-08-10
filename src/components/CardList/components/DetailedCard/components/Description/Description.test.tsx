@@ -1,4 +1,4 @@
-import { UNKNOWN } from '@common/constants.ts';
+import { UNKNOWN } from '@common/constants/index.ts';
 import { render, screen } from '@testing-library/react';
 import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
 import { getNestedChild } from 'src/test-utils/utils.ts';

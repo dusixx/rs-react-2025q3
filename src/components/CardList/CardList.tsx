@@ -1,6 +1,6 @@
-import type { CharacterInfo } from '@services/api/api.types.ts';
 import clsx from 'clsx';
 import type { JSX } from 'react';
+import type { CharacterInfo } from 'src/redux/api.types.ts';
 import { addInfo, removeInfo } from 'src/redux/charactersSlice.ts';
 import { useAppDispatch, useSelectedInfos } from 'src/redux/hooks.ts';
 import { TestId } from 'src/test-utils/constants.ts';

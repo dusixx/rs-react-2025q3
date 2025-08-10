@@ -1,4 +1,4 @@
-import { DARK_THEME_CLASS, LocalStorageKey } from '@common/constants.ts';
+import { DARK_THEME_CLASS, LocalStorageKey } from '@common/constants/index.ts';
 import type { JSX, PropsWithChildren } from 'react';
 import { useEffect, useState } from 'react';
 import { ThemeContext, type Theme } from './ThemeContext.ts';

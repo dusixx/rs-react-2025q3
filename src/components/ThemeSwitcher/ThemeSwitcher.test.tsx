@@ -1,4 +1,4 @@
-import { LocalStorageKey } from '@common/constants.ts';
+import { LocalStorageKey } from '@common/constants/index.ts';
 import { render, screen } from '@testing-library/react';
 import { localStorageMock } from 'src/test-utils/mocks/local-storage-mock.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';

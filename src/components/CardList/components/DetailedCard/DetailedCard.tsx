@@ -1,71 +1,69 @@
-import { ERR_SOMETHING_WRONG, LOADER_VISIBILITY_DURATION } from '@common/constants.ts';
+import { ERR_SOMETHING_WRONG, IconRefresh } from '@common/constants/index.ts';
 import { ErrorInfo } from '@components/ErrorInfo/ErrorInfo.tsx';
 import { Loader } from '@components/Loader/Loader.tsx';
-import { useAppCustomSearchParams } from '@hooks/useAppCustomSearchParams.ts';
-import { getCharacterById } from '@services/api/api.ts';
-import type { CharacterInfo } from '@services/api/api.types.ts';
-import { getErrorInstance, getErrorMessage, isNumericInteger } from '@utils/index.ts';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useAppCustomSearchParams } from '@hooks/index.ts';
+import { type ReactNode } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { useGetCharacterByIdQuery } from 'src/redux/api.ts';
+import { getApiErrorMessage } from 'src/redux/api.utils.ts';
 import { TestId } from 'src/test-utils/constants.ts';
 import { Description } from './components/Description/Description.tsx';
 import styles from './DetailedCard.module.scss';
 
 const CLOSE_BTN_TEXT = 'Close';
+const REFETCH_BTN_TEXT = 'Rerfesh';
+const ICON_SIZE = 14;
 
 export const DetailedCard = (): ReactNode => {
-  const [info, setInfo] = useState<CharacterInfo | null>(null);
-  const [error, setError] = useState<Error>();
-  const [loading, setLoading] = useState(false);
-  const { getParams, deleteParams } = useAppCustomSearchParams();
+  const { deleteParams } = useAppCustomSearchParams();
+  const { detailsId } = useOutletContext<{ detailsId: string }>();
+  const { data, error, isLoading, isFetching, refetch } = useGetCharacterByIdQuery(detailsId);
 
-  const [id = ''] = getParams('details');
-
-  useEffect(() => {
-    if (isNumericInteger(id)) {
-      setLoading(true);
-
-      void getCharacterById(id)
-        .then(setInfo)
-        .catch((error: unknown) => {
-          setError(getErrorInstance(error, ERR_SOMETHING_WRONG));
-          setInfo(null);
-        })
-        .finally(() => {
-          setTimeout(() => {
-            setLoading(false);
-          }, LOADER_VISIBILITY_DURATION);
-        });
-    }
-  }, [id]);
-
-  const handleCloseClick = (): void => {
-    deleteParams('details');
-  };
-
-  if (!id) {
+  if (!detailsId) {
     return;
   }
+  const loading = isFetching || isLoading;
+
   return (
     <article data-testid={TestId.DetailedCard} className={styles.card}>
       {loading && <Loader className={styles.loader} />}
-      {!loading && info && (
+      {!loading && data && (
         <div className={styles.info}>
           <div className={styles.thumb}>
-            <img className={styles.image} src={info.image} alt={info.name} />
+            <img className={styles.image} src={data.image} alt={data.name} />
           </div>
-          <Description info={info} />
+          <Description info={data} />
         </div>
       )}
-      {!loading && !info && (
+      {!loading && !data && (
         <ErrorInfo
           className={styles.errorInfo}
-          message={getErrorMessage(error, ERR_SOMETHING_WRONG)}
+          message={getApiErrorMessage(error, ERR_SOMETHING_WRONG)}
         />
       )}
       {!loading && (
-        <button className={styles.btn} type='button' onClick={handleCloseClick}>
-          {CLOSE_BTN_TEXT}
-        </button>
+        <div className={styles.group}>
+          <button
+            data-testid={TestId.RefreshBtn}
+            type='button'
+            className={styles.btn}
+            onClick={() => void refetch()}
+            data-refresh
+          >
+            <IconRefresh size={ICON_SIZE} />
+            {REFETCH_BTN_TEXT}
+          </button>
+          <button
+            data-testid={TestId.CloseBtn}
+            className={styles.btn}
+            type='button'
+            onClick={() => {
+              deleteParams('details');
+            }}
+          >
+            {CLOSE_BTN_TEXT}
+          </button>
+        </div>
       )}
     </article>
   );

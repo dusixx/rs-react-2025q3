@@ -1,4 +1,4 @@
-import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
+import { ERR_SOMETHING_WRONG } from '@common/constants/index.ts';
 import { render } from '@testing-library/react';
 import { FAKE_VALUE } from 'src/test-utils/constants.ts';
 import { clickElement, getNestedChild } from 'src/test-utils/utils.ts';

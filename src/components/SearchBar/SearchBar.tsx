@@ -1,15 +1,13 @@
-import { IconClose, IconSearch } from '@common/constants.ts';
+import { IconClose, IconSearch, INITIAL_PAGE } from '@common/constants';
+import { useAppCustomSearchParams, usePersistedSearchQuery } from '@hooks/index.ts';
 import type { ChangeEvent, ComponentPropsWithRef, JSX } from 'react';
-import { type SyntheticEvent } from 'react';
+import { useCallback, useEffect, type SyntheticEvent } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchBar.module.scss';
 
 const ICON_SIZE = 20;
-const INITIAL_VALUE = '';
 
 type SearchBarProps = Omit<ComponentPropsWithRef<'input'>, 'onSubmit' | 'onChange' | 'value'> & {
-  value?: string;
-  onChange?: (value: string) => void;
   onSubmit?: (value: string) => void;
 };
 
@@ -20,20 +18,44 @@ const trimValue = (value: string = ''): string => {
 export const SearchBar = ({
   className,
   placeholder,
-  value,
-  onChange,
   onSubmit,
   ...restProps
 }: SearchBarProps): JSX.Element => {
-  const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>): void => {
-    onChange?.(value);
+  const { query, setQuery, persistQuery, getPersistedQuery } = usePersistedSearchQuery();
+  const { getParams, createParams, setParams } = useAppCustomSearchParams();
+
+  const updateQuery = useCallback(
+    (value: string): string => {
+      const trimmed = trimValue(value);
+      setQuery(trimmed);
+      persistQuery(trimmed);
+      return trimmed;
+    },
+    [persistQuery, setQuery],
+  );
+
+  useEffect(() => {
+    const [q = ''] = getParams('q');
+    updateQuery(q);
+  }, [getParams, updateQuery, setParams, getPersistedQuery]);
+
+  const submit = (value: string): void => {
+    const trimmed = updateQuery(value);
+    createParams({ q: trimmed, page: INITIAL_PAGE });
+    onSubmit?.(trimmed);
   };
   const handleSubmit = (event: SyntheticEvent): void => {
-    onSubmit?.(trimValue(value));
+    submit(query);
     event.preventDefault();
   };
   const handleClearClick = (): void => {
-    onChange?.(INITIAL_VALUE);
+    submit('');
+  };
+  const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>): void => {
+    setQuery(value);
+    if (!value) {
+      submit(value);
+    }
   };
 
   return (
@@ -42,12 +64,12 @@ export const SearchBar = ({
         <input
           data-testid={TestId.SearchBarInput}
           className={styles.input}
-          value={value}
+          value={query}
           placeholder={placeholder}
           onChange={handleChange}
           {...restProps}
         />
-        {value && (
+        {query && (
           <button
             data-testid={TestId.SearchBarClear}
             className={styles.clearBtn}
@@ -61,7 +83,7 @@ export const SearchBar = ({
           data-testid={TestId.SearchBarBtn}
           className={styles.btn}
           type='submit'
-          disabled={!value}
+          disabled={!query}
         >
           <IconSearch data-testid={TestId.SearchBarBtnIcon} size={ICON_SIZE} />
         </button>

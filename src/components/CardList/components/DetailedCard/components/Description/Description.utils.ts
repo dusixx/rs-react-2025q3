@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 /* eslint-disable @typescript-eslint/no-base-to-string */
-import { UNKNOWN } from '@common/constants.ts';
+import { UNKNOWN } from '@common/constants';
 import {
   getEpisodes,
   getLocationName,
   trimBracketsWithContent,
 } from '@components/CardList/components/Card/Card.utils.ts';
-import type { CharacterInfo } from '@services/api/api.types';
 import { isObject } from '@utils/type-guards.ts';
+import type { CharacterInfo } from 'src/redux/api.types';
 
 const stringifyValue = (value: unknown): string => {
   return value && !isObject(value) ? trimBracketsWithContent(String(value)) : UNKNOWN;

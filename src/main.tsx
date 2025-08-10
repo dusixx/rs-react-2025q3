@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ErrorBoundary, ErrorFallback } from '@components/ErrorBoundary/index.ts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -11,7 +10,12 @@ import './styles/global.scss';
 
 const ROOT_SELECTOR = '#root';
 
-createRoot(document.querySelector(ROOT_SELECTOR)!).render(
+const root = document.querySelector(ROOT_SELECTOR);
+if (!root) {
+  throw new Error(`Root element with ID ${ROOT_SELECTOR} was not found in the document`);
+}
+
+createRoot(root).render(
   <StrictMode>
     <BrowserRouter>
       <ErrorBoundary FallbackComponent={ErrorFallback}>

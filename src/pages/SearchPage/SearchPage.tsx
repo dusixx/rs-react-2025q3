@@ -1,21 +1,18 @@
-import { INITIAL_PAGE } from '@common/constants.ts';
+import { INITIAL_PAGE } from '@common/constants';
 import { FlyoutPanel } from '@components/FlyoutPanel/FlyoutPanel.tsx';
 import { SearchBar } from '@components/SearchBar/SearchBar.tsx';
+
 import { SearchResults } from '@components/SearchResults/SearchResults.tsx';
-import { useAppCustomSearchParams } from '@hooks/useAppCustomSearchParams.ts';
-import { usePersistedSearchQuery } from '@hooks/usePersistedSearchQuery';
-import { useCallback, useEffect, useState, type JSX } from 'react';
+import { useAppCustomSearchParams, usePersistedSearchQuery } from '@hooks/index.ts';
+import { useCallback, useEffect, type JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchPage.module.scss';
 
 export const QUERY_PLACEHOLDER = 'Character name...';
 
 export default function SearchPage(): JSX.Element {
-  const { query, setQuery } = usePersistedSearchQuery();
-  const [page, setPage] = useState(INITIAL_PAGE);
-  const [value, setValue] = useState(query);
-  const [version, setVersion] = useState(crypto.randomUUID());
-  const { getParams, createParams, deleteParams, hasParams } = useAppCustomSearchParams();
+  const { query, updateQueryVersion } = usePersistedSearchQuery();
+  const { createParams, hasParams } = useAppCustomSearchParams();
 
   const initSearchParams = useCallback((): void => {
     if (!hasParams('page')) {
@@ -28,36 +25,17 @@ export default function SearchPage(): JSX.Element {
 
   useEffect(() => {
     initSearchParams();
+  }, [initSearchParams]);
 
-    const [q = query, p = INITIAL_PAGE] = getParams('q', 'page');
-    setQuery(q);
-    setValue(q);
-    setPage(Number(p));
-  }, [getParams, setQuery, setValue, deleteParams, query, initSearchParams]);
-
-  const handleSubmit = (value: string): void => {
-    createParams({ q: value, page: INITIAL_PAGE });
-    if (page === INITIAL_PAGE && value === query) {
-      setVersion(crypto.randomUUID());
-    }
-  };
-  const handleChange = (value: string): void => {
-    setValue(value);
-    if (!value) {
-      handleSubmit(value);
-    }
-  };
   return (
     <div data-testid={TestId.SearchPage}>
       <div className={styles.wrapper}>
         <SearchBar
           className={styles.searchBar}
           placeholder={QUERY_PLACEHOLDER}
-          onSubmit={handleSubmit}
-          onChange={handleChange}
-          value={value}
+          onSubmit={updateQueryVersion}
         />
-        <SearchResults query={query} page={page} version={version} />
+        <SearchResults />
         <FlyoutPanel />
       </div>
     </div>

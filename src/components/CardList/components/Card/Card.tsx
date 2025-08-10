@@ -1,8 +1,8 @@
-import { IconLocation, UNKNOWN } from '@common/constants.ts';
+import { IconLocation, UNKNOWN } from '@common/constants/index.ts';
 import { Checkbox } from '@components/Checkbox/Checkbox.tsx';
-import type { CharacterInfo } from '@services/api/api.types.ts';
 import clsx from 'clsx';
 import { type JSX, type SyntheticEvent } from 'react';
+import type { CharacterInfo } from 'src/redux/api.types.ts';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Card.module.scss';
 import {

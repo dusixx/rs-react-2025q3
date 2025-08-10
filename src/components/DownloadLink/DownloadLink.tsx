@@ -1,4 +1,4 @@
-import { IconDownload } from '@common/constants.ts';
+import { IconDownload } from '@common/constants';
 import type { PropsWithChildren } from 'react';
 import { useCallback, useEffect, useState, type JSX } from 'react';
 import styles from './DownloadLink.module.scss';
