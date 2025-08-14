@@ -2,11 +2,8 @@ export type CharacterLocation = {
   name: string;
   url?: string;
 };
-export const CHARACTER_STATUS = ['alive', 'dead', 'unknown'] as const;
-export const CHARACTER_GENDER = ['male', 'female', 'unknown'] as const;
-
-export type CharacterStatus = (typeof CHARACTER_STATUS)[number];
-export type CharacterGender = (typeof CHARACTER_GENDER)[number];
+export type CharacterStatus = 'alive' | 'dead' | 'unknown';
+export type CharacterGender = 'male' | 'female' | 'unknown';
 export type CharacterInfo = {
   id: number;
   name?: string;

@@ -1,13 +1,10 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { ERR_SOMETHING_WRONG, LOADER_VISIBILITY_DURATION } from '@common/constants';
-import { every, hasOwnKeys, isInteger, isString } from '@common/utils/index.ts';
+import { every, hasOwnKeys, isInteger, isOneOf, isString } from '@common/utils/index.ts';
 import type { SerializedError } from '@reduxjs/toolkit';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { delay } from '@utils/index.ts';
 import type { CharacterStatus } from './api.types.ts';
 import {
-  CHARACTER_GENDER,
-  CHARACTER_STATUS,
   type CharacterGender,
   type CharacterInfo,
   type SearchResult,
@@ -76,9 +73,9 @@ export const isLikeSearchResultInfo = (obj: unknown): obj is SearchResultInfo =>
 };
 
 export const isLikeCharacterStatus = (v: unknown): v is CharacterStatus => {
-  return CHARACTER_STATUS.includes(v as CharacterStatus);
+  return isOneOf<CharacterStatus>(v, 'alive', 'dead', 'unknown');
 };
 
 export const isLikeCharacterGender = (v: unknown): v is CharacterGender => {
-  return CHARACTER_GENDER.includes(v as CharacterGender);
+  return isOneOf<CharacterGender>(v, 'female', 'male', 'unknown');
 };

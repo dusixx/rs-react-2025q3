@@ -32,7 +32,7 @@ export const every = <T>(
   return _every<T>(typeGuard, args);
 };
 
-export const isEqualToOneOf = <T extends object>(key: string, ...keys: (keyof T)[]): boolean => {
+export const isOneOf = <T>(key: unknown, ...keys: T[]): boolean => {
   return keys.some(k => Object.is(k, key));
 };
 
