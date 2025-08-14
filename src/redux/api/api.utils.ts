@@ -1,9 +1,18 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { ERR_SOMETHING_WRONG, LOADER_VISIBILITY_DURATION } from '@common/constants';
 import { every, hasOwnKeys, isInteger, isString } from '@common/utils/index.ts';
 import type { SerializedError } from '@reduxjs/toolkit';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { delay } from '@utils/index.ts';
-import type { CharacterInfo, SearchResult, SearchResultInfo } from './api.types.ts';
+import type { CharacterStatus } from './api.types.ts';
+import {
+  CHARACTER_GENDER,
+  CHARACTER_STATUS,
+  type CharacterGender,
+  type CharacterInfo,
+  type SearchResult,
+  type SearchResultInfo,
+} from './api.types.ts';
 
 export const fetchWithDelay = async (
   ...args: Parameters<typeof fetch>
@@ -64,4 +73,12 @@ export const isLikeSearchResultInfo = (obj: unknown): obj is SearchResultInfo =>
     hasOwnKeys<SearchResultInfo>(obj, 'count', 'pages', 'next', 'prev') &&
     every(isInteger, obj.count, obj.pages)
   );
+};
+
+export const isLikeCharacterStatus = (v: unknown): v is CharacterStatus => {
+  return CHARACTER_STATUS.includes(v as CharacterStatus);
+};
+
+export const isLikeCharacterGender = (v: unknown): v is CharacterGender => {
+  return CHARACTER_GENDER.includes(v as CharacterGender);
 };
