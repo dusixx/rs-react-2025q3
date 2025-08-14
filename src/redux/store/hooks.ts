@@ -5,6 +5,6 @@ import type { StoreDispatch, StoreState } from './store.ts';
 export const useAppSelector = useSelector.withTypes<StoreState>();
 export const useAppDispatch = useDispatch.withTypes<StoreDispatch>();
 
-export const useSelectedInfos = (): CharacterInfo[] => {
-  return useSelector<StoreState, CharacterInfo[]>(state => state.selectedCharacters.infos);
+export const useSelectedInfos = (): Record<number, CharacterInfo> | undefined => {
+  return useAppSelector(state => state.selectedCharacters.infos);
 };

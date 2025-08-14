@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import { ERR_SOMETHING_WRONG } from '@common/constants/index.ts';
 import { act, render, screen } from '@testing-library/react';
 import { rickmortyApi } from 'src/redux/api/api.ts';

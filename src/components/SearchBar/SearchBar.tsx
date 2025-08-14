@@ -21,8 +21,8 @@ export const SearchBar = ({
   onSubmit,
   ...restProps
 }: SearchBarProps): JSX.Element => {
-  const { query, setQuery, persistQuery, getPersistedQuery } = usePersistedSearchQuery();
-  const { getParams, createParams, setParams } = useAppCustomSearchParams();
+  const { query, setQuery, persistQuery } = usePersistedSearchQuery();
+  const { getParams, createParams } = useAppCustomSearchParams();
 
   const updateQuery = useCallback(
     (value: string): string => {
@@ -37,7 +37,7 @@ export const SearchBar = ({
   useEffect(() => {
     const [q = ''] = getParams('q');
     updateQuery(q);
-  }, [getParams, updateQuery, setParams, getPersistedQuery]);
+  }, [getParams, updateQuery]);
 
   const submit = (value: string): void => {
     const trimmed = updateQuery(value);

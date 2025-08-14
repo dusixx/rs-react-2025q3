@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { HttpStatus } from '@common/constants/index.ts';
 import { render } from '@testing-library/react';
 import { act, type ReactNode } from 'react';

@@ -1,11 +1,12 @@
 import { DARK_THEME_CLASS, LocalStorageKey } from '@common/constants/index.ts';
+import { isTheme } from '@utils/type-guards.ts';
 import type { JSX, PropsWithChildren } from 'react';
 import { useEffect, useState } from 'react';
 import { ThemeContext, type Theme } from './ThemeContext.ts';
 
 const getPersistedTheme = (defaultTheme: Theme = 'light'): Theme => {
   const persisted = localStorage.getItem(LocalStorageKey.Theme);
-  return persisted !== 'dark' && persisted !== 'light' ? defaultTheme : persisted;
+  return isTheme(persisted) ? persisted : defaultTheme;
 };
 
 const toggleTheme = (theme: Theme): void => {

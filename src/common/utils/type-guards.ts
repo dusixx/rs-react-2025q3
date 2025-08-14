@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-parameters */
+import type { Theme } from '@providers/ThemeProvider/ThemeContext.ts';
+
 export const isObject = (obj: unknown): obj is Record<string, unknown> => {
   return obj != null && typeof obj === 'object';
 };
@@ -36,4 +38,8 @@ export const isEqualToOneOf = <T extends object>(key: string, ...keys: (keyof T)
 
 export const hasOwnKeys = <T extends object>(obj: unknown, ...keys: (keyof T)[]): obj is T => {
   return isObject(obj) && keys.every(key => Object.prototype.hasOwnProperty.call(obj, key));
+};
+
+export const isTheme = (v: unknown): v is Theme => {
+  return v === 'dark' || v === 'light';
 };

@@ -1,4 +1,4 @@
-import { ERR_SOMETHING_WRONG } from '@common/constants/index.ts';
+import { ERR_SOMETHING_WRONG } from '@common/constants';
 import { isError, isInteger, isPositiveInteger, isString } from './type-guards.ts';
 
 export * from './type-guards.ts';

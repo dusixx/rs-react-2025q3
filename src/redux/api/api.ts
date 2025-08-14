@@ -4,12 +4,12 @@ import type { CharacterInfo, SearchResult } from 'src/redux/api/api.types.ts';
 import { fetchWithDelay } from './api.utils.ts';
 
 const REQUEST_TIMEOUT = 5000;
-export const BASE_URL = 'https://rickandmortyapi.com/api/';
+export const BASE_URL = 'https://rickandmortyapi.com/api';
 export const ALL_INFOS = '';
 
 export const Endpoint = {
-  Character: `${BASE_URL}character/`,
-  Episode: `${BASE_URL}episode/`,
+  Character: `${BASE_URL}/character`,
+  Episode: `${BASE_URL}/episode`,
 } as const;
 
 type GetCharacterByNameProps = {

@@ -12,7 +12,7 @@ export const ITEMS_COUNT_LABEl = 'Total selected';
 
 export const FlyoutPanel = (): ReactNode => {
   const dispatch = useAppDispatch();
-  const selectedInfos = useSelectedInfos();
+  const selectedInfos = Object.values(useSelectedInfos() ?? {});
 
   const handleDownloadClick = useCallback(
     (initDownload: DownloadInit): void => {

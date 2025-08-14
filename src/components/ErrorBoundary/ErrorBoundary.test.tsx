@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
 import { ERR_SOMETHING_WRONG } from '@common/constants';
 import { getErrorInstance } from '@common/utils';
 import {

@@ -1,5 +1,5 @@
 import { IconLocation, UNKNOWN } from '@common/constants/index.ts';
-import { Checkbox } from '@components/Checkbox/Checkbox.tsx';
+import { AddToFav } from '@components/CardList/components/Card/components/AddToFav/AddToFav.tsx';
 import clsx from 'clsx';
 import { type JSX, type SyntheticEvent } from 'react';
 import type { CharacterInfo } from 'src/redux/api/api.types.ts';
@@ -20,12 +20,10 @@ const ICON_PROPS = {
 type CardProps = {
   info: CharacterInfo;
   onClick?: (id: number) => void;
-  onSelect?: (info: CharacterInfo) => void;
-  selected?: boolean;
   className?: string;
 };
 
-export const Card = ({ info, onClick, onSelect, selected, className }: CardProps): JSX.Element => {
+export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
   const {
     id,
     image,
@@ -37,13 +35,10 @@ export const Card = ({ info, onClick, onSelect, selected, className }: CardProps
   } = info;
 
   const handleCardClick = ({ target }: SyntheticEvent): void => {
-    if (target instanceof Element && target.closest('[data-checkbox]')) {
+    if (target instanceof Element && target.closest('[data-name=addtofav]')) {
       return;
     }
     onClick?.(id);
-  };
-  const handleChange = (): void => {
-    onSelect?.(info);
   };
   const IconGender = getGenderIcon(gender);
 
@@ -56,7 +51,7 @@ export const Card = ({ info, onClick, onSelect, selected, className }: CardProps
       </div>
       <ul className={styles.desc}>
         <li>
-          <Checkbox data-checkbox onChange={handleChange} checked={selected} />
+          <AddToFav info={info} data-name='addtofav' />
         </li>
         <li data-name>
           <p data-testid={TestId.CardName}>{name}</p>

@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react';
 import type { CharacterInfo } from 'src/redux/api/api.types.ts';
 import { clickElement, getNestedChild, queryNestedChild } from 'src/test-utils/index.ts';
 import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
+import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { vi } from 'vitest';
 import { Card } from './Card.tsx';
 import { getLocationName, getStatusIndicatorStyle, getThumbStyle } from './Card.utils.ts';
@@ -30,18 +31,15 @@ const testRenderedCard = (info: CharacterInfo): void => {
 
 describe('Card', () => {
   it(`Renders full character info`, () => {
-    const handleSelect = vi.fn();
-    render(<Card info={characterMock} onSelect={handleSelect} />);
-
+    render(<Card info={characterMock} />, { wrapper: ProvidersMock });
     testRenderedCard(characterMock);
     clickElement(screen.getByRole('checkbox'));
-    expect(handleSelect).toHaveBeenCalled();
   });
 
   it(`Renders incomplete character info`, () => {
     const handleClick = vi.fn();
     const infoMock = { id: 1 };
-    render(<Card info={infoMock} onClick={handleClick} />);
+    render(<Card info={infoMock} onClick={handleClick} />, { wrapper: ProvidersMock });
 
     testRenderedCard(infoMock);
     clickElement(getNestedChild('CardThumb'));

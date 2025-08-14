@@ -1,4 +1,5 @@
 import { ErrorBoundary, ErrorFallback } from '@components/ErrorBoundary/index.ts';
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -14,7 +15,6 @@ const root = document.querySelector(ROOT_SELECTOR);
 if (!root) {
   throw new Error(`Root element with ID ${ROOT_SELECTOR} was not found in the document`);
 }
-
 createRoot(root).render(
   <StrictMode>
     <BrowserRouter>
