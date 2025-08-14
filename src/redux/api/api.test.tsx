@@ -18,15 +18,14 @@ vi.mock('@utils/index.ts', async () => {
     delay: vi.fn(),
   };
 });
+const renderMock = async (Comp: ReactNode): Promise<void> => {
+  await act(async () => {
+    render(Comp, { wrapper: ProvidersMock });
+    return Promise.resolve();
+  });
+};
 
 describe('API tests', () => {
-  const renderMock = async (Comp: ReactNode): Promise<void> => {
-    await act(async () => {
-      render(Comp, { wrapper: ProvidersMock });
-      return Promise.resolve();
-    });
-  };
-
   it(`Handles fetch rejection`, async () => {
     let result = {};
     const Comp = (): ReactNode => {

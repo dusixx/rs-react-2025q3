@@ -9,10 +9,10 @@ const FAKE_ERROR = Error(FAKE_VALUE);
 const FAKE_ERROR_INFO = {
   componentStack: FAKE_VALUE,
 };
+const resetMock = vi.fn();
 
 describe('ErrorFallback', () => {
   it(`Renders error fallback correctly`, () => {
-    const resetMock = vi.fn();
     const { rerender } = render(
       <ErrorFallback
         error={FAKE_ERROR}

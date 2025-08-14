@@ -3,7 +3,7 @@ import { addInfo, removeInfo } from 'src/redux/store/charactersSlice.ts';
 import { clickElement, FAKE_VALUE } from 'src/test-utils/index.ts';
 import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
-import { appDispatchMock, mockUseSelectedInfos } from 'src/test-utils/mocks/redux-hook-mock.ts';
+import { appDispatchMock, mockUseSelectedInfos } from 'src/test-utils/mocks/redux-mock.ts';
 import { vi } from 'vitest';
 import { AddToFav } from './AddToFav.tsx';
 

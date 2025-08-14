@@ -9,6 +9,9 @@ import { getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
 import SearchPage from './SearchPage.tsx';
 
+const { setItem, getItem } = localStorageMock;
+const { createParams, hasParams } = mockUseAppCustomSearchResult;
+
 const renderPage = async (): Promise<void> => {
   await act(() => {
     render(<SearchPage />, { wrapper: ProvidersMock });
@@ -17,13 +20,11 @@ const renderPage = async (): Promise<void> => {
 };
 
 describe('SearchPage', () => {
-  const { setItem, getItem } = localStorageMock;
-  const { createParams, hasParams } = mockUseAppCustomSearchResult;
-
   it(`Handles search term from localStorage on initial load`, async () => {
     vi.mocked(hasParams)?.mockReturnValueOnce(false);
     setItem(LocalStorageKey.LastQuery, FAKE_VALUE);
     await renderPage();
+
     expect(createParams).toHaveBeenCalledWith({ q: FAKE_VALUE, page: INITIAL_PAGE });
     expect(getItem).toHaveBeenCalledWith(LocalStorageKey.LastQuery);
     expect(getItem).toHaveReturnedWith(FAKE_VALUE);

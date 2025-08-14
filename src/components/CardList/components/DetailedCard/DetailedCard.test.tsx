@@ -4,11 +4,14 @@ import { clickElement, getNestedChild } from 'src/test-utils/index.ts';
 import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
 import { mockUseAppCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
-import { mockUseGetCharacterByIdQuery } from 'src/test-utils/mocks/redux-api-mock.ts';
-import { appDispatchMock } from 'src/test-utils/mocks/redux-hook-mock.ts';
+import { appDispatchMock, mockUseGetCharacterByIdQuery } from 'src/test-utils/mocks/redux-mock.ts';
 import { mockUseOutletContext } from 'src/test-utils/mocks/router-dom-mock.tsx';
 import { vi } from 'vitest';
 import { DetailedCard } from './DetailedCard.tsx';
+
+const detailsId = 12;
+const { deleteParams } = mockUseAppCustomSearchResult;
+const { name, image } = characterMock;
 
 const renderCard = async (): Promise<void> => {
   act(() => render(<DetailedCard />, { wrapper: ProvidersMock }));
@@ -16,10 +19,6 @@ const renderCard = async (): Promise<void> => {
 };
 
 describe('DetailedCard', () => {
-  const detailsId = 12;
-  const { deleteParams } = mockUseAppCustomSearchResult;
-  const { name, image } = characterMock;
-
   it(`Renders card if valid id is specified`, async () => {
     vi.mocked(mockUseOutletContext).mockReturnValue({ detailsId });
     vi.mocked(mockUseGetCharacterByIdQuery).mockReturnValueOnce({
@@ -29,8 +28,6 @@ describe('DetailedCard', () => {
     await renderCard();
 
     expect(mockUseGetCharacterByIdQuery).toHaveBeenCalledWith(detailsId);
-
-    await act(() => vi.runAllTimers());
     expect(screen.getByRole('article')).toBeInTheDocument();
     expect(screen.getByRole('img')).toHaveAttribute('src', image);
     expect(screen.getByText(name)).toBeInTheDocument();
@@ -45,7 +42,6 @@ describe('DetailedCard', () => {
       error: { message: ERR_NOT_FOUND },
     });
     await renderCard();
-    await act(() => vi.runAllTimers());
     expect(screen.getByText(RegExp(ERR_NOT_FOUND))).toBeInTheDocument();
   });
 
@@ -66,7 +62,6 @@ describe('DetailedCard', () => {
       refetch: mockRefetch,
     });
     await renderCard();
-    await act(() => vi.runAllTimers());
 
     clickElement(getNestedChild('RefreshBtn'));
     expect(mockRefetch).toHaveBeenCalled();

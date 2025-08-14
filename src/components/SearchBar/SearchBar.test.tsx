@@ -9,15 +9,16 @@ import type { Mock } from 'vitest';
 import { expect, vi } from 'vitest';
 import { SearchBar } from './SearchBar.tsx';
 
-describe('SearchBar', () => {
-  const expectSubmit = (handleSubmit: Mock, value: string): void => {
-    expect(handleSubmit).toHaveBeenCalledWith(value);
-    expect(setItem).toHaveBeenCalledWith(LocalStorageKey.LastQuery, value);
-    expect(createParams).toHaveBeenCalledWith({ q: value, page: INITIAL_PAGE });
-  };
-  const { createParams, getParams } = mockUseAppCustomSearchResult;
-  const { setItem } = localStorageMock;
+const { createParams, getParams } = mockUseAppCustomSearchResult;
+const { setItem } = localStorageMock;
 
+const expectSubmit = (handleSubmit: Mock, value: string): void => {
+  expect(handleSubmit).toHaveBeenCalledWith(value);
+  expect(setItem).toHaveBeenCalledWith(LocalStorageKey.LastQuery, value);
+  expect(createParams).toHaveBeenCalledWith({ q: value, page: INITIAL_PAGE });
+};
+
+describe('SearchBar', () => {
   it(`Functions correctly`, () => {
     const handleSubmit = vi.fn();
     vi.mocked(getParams)?.mockReturnValueOnce([FAKE_VALUE]);

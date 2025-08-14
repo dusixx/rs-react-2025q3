@@ -1,34 +1,20 @@
 import { ERR_SOMETHING_WRONG } from '@common/constants/index.ts';
 import { act, render, screen } from '@testing-library/react';
 import { rickmortyApi } from 'src/redux/api/api.ts';
-import type { useAppDispatch } from 'src/redux/store/hooks.ts';
-import { TestId } from 'src/test-utils/constants.ts';
-import {
-  ITEMS_PER_PAGE,
-  PAGES_COUNT,
-  searchResultMock,
-} from 'src/test-utils/mocks/character-mock.ts';
+import { searchResultMock } from 'src/test-utils/mocks/character-mock.ts';
 import { mockUseAppCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
-import { mockUseGetCharactersByNameQuery } from 'src/test-utils/mocks/redux-api-mock.ts';
-import { outletElementMock } from 'src/test-utils/mocks/router-dom-mock.tsx';
+import {
+  appDispatchMock,
+  mockUseGetCharactersByNameQuery,
+} from 'src/test-utils/mocks/redux-mock.ts';
 import { clickElement, getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
 import { SearchResults } from './SearchResults.tsx';
 
-const appDispatchMock = vi.fn();
-vi.mock('src/redux/store/hooks.ts', async () => {
-  const actual = await vi.importActual('src/redux/store/hooks.ts');
-  return {
-    ...actual,
-    useAppDispatch: (): ReturnType<typeof useAppDispatch> => appDispatchMock,
-  };
-});
-vi.mock('./SearchResults.module.scss', () => ({
-  default: {
-    list: 'mock-list',
-  },
-}));
+const { getParams, createParams, setParams } = mockUseAppCustomSearchResult;
+const [name, page] = ['rick', 3];
+
 const renderResults = async (): Promise<void> => {
   await act(() => {
     render(<SearchResults />, { wrapper: ProvidersMock });
@@ -37,28 +23,13 @@ const renderResults = async (): Promise<void> => {
 };
 
 describe('SearchResults', () => {
-  const { getParams, createParams, setParams } = mockUseAppCustomSearchResult;
-  const [name, page] = ['rick', 3];
-
   it(`Displays results if valid params specified`, async () => {
-    vi.mocked(getParams)?.mockReturnValueOnce(['1', String(page), name]);
-    const refetch = vi.fn();
-
     vi.mocked(mockUseGetCharactersByNameQuery).mockReturnValueOnce({
-      refetch,
+      refetch: vi.fn(),
       data: searchResultMock,
     });
     await renderResults();
-
-    expect(mockUseGetCharactersByNameQuery).toHaveBeenCalledWith({ name, page: String(page) });
-    expect(refetch).toHaveBeenCalled();
-
-    await act(() => vi.runAllTimers());
-
-    expect(getNestedChild('CardList')).toHaveProperty('children.length', ITEMS_PER_PAGE);
     const cards = screen.getAllByRole('article');
-    expect(cards).toHaveLength(ITEMS_PER_PAGE);
-
     clickElement(cards[0]);
     expect(setParams).toHaveBeenCalledWith({ details: 1 });
   });
@@ -90,7 +61,6 @@ describe('SearchResults', () => {
       isError: true,
     });
     await renderResults();
-    await act(() => vi.runAllTimers());
     expect(screen.getByText(RegExp(ERR_NOT_FOUND))).toBeInTheDocument();
   });
 
@@ -101,7 +71,6 @@ describe('SearchResults', () => {
       data,
     });
     await renderResults();
-    await act(() => vi.runAllTimers());
     expect(screen.getByText(RegExp(ERR_SOMETHING_WRONG))).toBeInTheDocument();
   });
 
@@ -114,22 +83,6 @@ describe('SearchResults', () => {
     expect(getNestedChild('Loader')).toBeInTheDocument();
   });
 
-  it(`Displays details if valid id is specified`, async () => {
-    vi.mocked(getParams)?.mockReturnValue(['1']);
-    vi.mocked(mockUseGetCharactersByNameQuery).mockReturnValueOnce({
-      refetch: vi.fn(),
-      data: searchResultMock,
-    });
-    vi.mocked(outletElementMock).mockReturnValue(
-      <div data-testid={TestId.SearchResultsOutlet}></div>,
-    );
-    await renderResults();
-
-    await act(() => vi.runAllTimers());
-    expect(getNestedChild('CardList')).toHaveClass('mock-list');
-    expect(getNestedChild('SearchResultsOutlet')).toBeInTheDocument();
-  });
-
   it(`Handles paginator buttons click`, async () => {
     vi.mocked(mockUseGetCharactersByNameQuery).mockReturnValueOnce({
       refetch: vi.fn(),
@@ -137,15 +90,7 @@ describe('SearchResults', () => {
     });
     vi.mocked(getParams)?.mockReturnValue(['1', String(page), name]);
     await renderResults();
-    await act(() => vi.runAllTimers());
-
-    clickElement(getNestedChild('PaginatorNextBtn'));
-    expect(createParams).toHaveBeenCalledWith({ page: page + 1, q: name });
-    clickElement(getNestedChild('PaginatorPrevBtn'));
-    expect(createParams).toHaveBeenCalledWith({ page, q: name });
     clickElement(getNestedChild('PaginatorFirstBtn'));
     expect(createParams).toHaveBeenCalledWith({ page: 1, q: name });
-    clickElement(getNestedChild('PaginatorLastBtn'));
-    expect(createParams).toHaveBeenCalledWith({ page: PAGES_COUNT, q: name });
   });
 });

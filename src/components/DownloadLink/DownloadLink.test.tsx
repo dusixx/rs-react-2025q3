@@ -5,9 +5,9 @@ import { vi } from 'vitest';
 import type { DownloadInit } from './DownloadLink.tsx';
 import { DEFAULT_TEXT, DownloadLink } from './DownloadLink.tsx';
 
-describe('DownloadLink', () => {
-  const { createObjectURL, revokeObjectURL } = URLMock;
+const { createObjectURL, revokeObjectURL } = URLMock;
 
+describe('DownloadLink', () => {
   it(`Renders link correctly`, () => {
     const text = crypto.randomUUID();
     const { rerender } = render(

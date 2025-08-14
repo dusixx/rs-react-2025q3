@@ -4,7 +4,7 @@ import { clickElement, queryNestedChild } from 'src/test-utils/index.ts';
 import { getCharacterInfosMock, ITEMS_PER_PAGE } from 'src/test-utils/mocks/character-mock.ts';
 import { initDownloadMock } from 'src/test-utils/mocks/DownloadLinkMock.tsx';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
-import { appDispatchMock, mockUseSelectedInfos } from 'src/test-utils/mocks/redux-hook-mock.ts';
+import { appDispatchMock, mockUseSelectedInfos } from 'src/test-utils/mocks/redux-mock.ts';
 import { it, vi } from 'vitest';
 import { BTN_UNSELECT_TEXT, FlyoutPanel, ITEMS_COUNT_LABEl } from './FlyoutPanel.tsx';
 import { getDownloadInitProps } from './FlyoutPanel.utils.ts';
