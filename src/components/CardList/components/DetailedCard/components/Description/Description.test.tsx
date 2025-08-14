@@ -1,17 +1,16 @@
-import { UNKNOWN } from '@common/constants.ts';
+import { UNKNOWN } from '@common/constants/index.ts';
 import { render, screen } from '@testing-library/react';
 import { characterMock } from 'src/test-utils/mocks/character-mock.ts';
 import { getNestedChild } from 'src/test-utils/utils.ts';
 import { getEpisodes, getLocationName } from '../../../Card/Card.utils.ts';
 import { Description, EPISODES_DATA_ATTR } from './Description.tsx';
 
+const { id, name, status, species, origin, location, created, image, episode, url } = characterMock;
+const episodes = getEpisodes(episode).join(', ');
+
 describe('Description', () => {
   it(`Renders description correctly`, () => {
     render(<Description info={characterMock} />);
-
-    const { id, name, status, species, origin, location, created, image, episode, url } =
-      characterMock;
-    const episodes = getEpisodes(episode).join(', ');
 
     expect(getNestedChild('DetailedCardDesc')).toBeInTheDocument();
 

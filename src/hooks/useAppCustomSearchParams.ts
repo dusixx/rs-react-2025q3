@@ -6,6 +6,8 @@ export type AppCustomSearchParam = Partial<{
   q: string;
 }>;
 
-export const useAppCustomSearchParams = (): ReturnType<typeof useCustomSearchParams> => {
+export const useAppCustomSearchParams = (): ReturnType<
+  typeof useCustomSearchParams<AppCustomSearchParam>
+> => {
   return useCustomSearchParams<AppCustomSearchParam>();
 };

@@ -1,4 +1,4 @@
-import { IconDarkTheme, IconLightTheme } from '@common/constants.ts';
+import { IconDarkTheme, IconLightTheme } from '@common/constants';
 import { useTheme } from '@providers/ThemeProvider/ThemeContext.ts';
 import type { JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';

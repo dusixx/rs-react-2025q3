@@ -50,12 +50,31 @@
 .btn {
   @extend %btn-primary;
 
-  margin-bottom: 40px;
-  padding-right: 30px;
-  padding-left: 30px;
+  width: 94px;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+[data-invalidate] {
+  background-color: var(--color-violet-light);
 }
 
 .error-info,
 .loader {
-  margin: auto 0;
+  margin: auto 20px;
+}
+
+[data-refresh] {
+  background-color: var(--color-green);
+}
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  margin-bottom: 40px;
 }

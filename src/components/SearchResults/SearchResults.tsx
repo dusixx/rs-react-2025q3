@@ -1,54 +1,36 @@
-import {
-  ERR_SOMETHING_WRONG,
-  INITIAL_PAGE,
-  LOADER_VISIBILITY_DURATION,
-} from '@common/constants.ts';
-import { getErrorInstance, getErrorMessage } from '@common/utils';
+import { ERR_SOMETHING_WRONG, IconRefresh, INITIAL_PAGE } from '@common/constants';
 import { CardList } from '@components/CardList/CardList.tsx';
 import { ErrorInfo } from '@components/ErrorInfo/ErrorInfo.tsx';
 import { Loader } from '@components/Loader/Loader';
 import { Paginator } from '@components/Paginator/Paginator.tsx';
-import { getCharactersByName } from '@services/api/api';
-import type { CharacterInfo } from '@services/api/api.types';
+import { useAppCustomSearchParams, usePersistedSearchQuery } from '@hooks/index.ts';
 import clsx from 'clsx';
-import { useEffect, useState, type JSX } from 'react';
+import { useEffect, type JSX } from 'react';
 import { Outlet } from 'react-router-dom';
+import { rickmortyApi, useGetCharactersByNameQuery } from 'src/redux/api/api';
+import { getApiErrorMessage } from 'src/redux/api/api.utils';
+import { useAppDispatch } from 'src/redux/store/hooks.ts';
+import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchResults.module.scss';
-import { useAppCustomSearchParams } from '@hooks/useAppCustomSearchParams.ts';
 
-export type SearchResultsProps = {
-  query: string;
-  page?: number;
-  version?: string;
-};
+const REFETCH_BTN_TEXT = 'Refetch';
+const INVALIDATE_BTN_TEXT = 'Invalidate';
+const ICON_SIZE = 14;
 
-export const SearchResults = ({ query, page, version }: SearchResultsProps): JSX.Element => {
-  const [results, setResults] = useState<CharacterInfo[] | null>([]);
-  const [totalPages, setTotalPages] = useState(INITIAL_PAGE);
-  const [error, setError] = useState<Error>();
-  const [loading, setLoading] = useState(false);
+export const SearchResults = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const { getQueryVersion } = usePersistedSearchQuery();
+  const queryVersion = getQueryVersion();
   const { getParams, setParams, createParams } = useAppCustomSearchParams();
+  const [detailsId, page, query] = getParams('details', 'page', 'q');
 
-  const [detailsId] = getParams('details');
-
+  const { error, refetch, isError, isLoading, isFetching, data } = useGetCharactersByNameQuery({
+    name: query,
+    page,
+  });
   useEffect(() => {
-    setLoading(true);
-
-    void getCharactersByName(query, page)
-      .then(result => {
-        setResults(result.results);
-        setTotalPages(result.info.pages);
-      })
-      .catch((error: unknown) => {
-        setError(getErrorInstance(error, ERR_SOMETHING_WRONG));
-        setResults(null);
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setLoading(false);
-        }, LOADER_VISIBILITY_DURATION);
-      });
-  }, [query, page, version]);
+    void refetch();
+  }, [refetch, queryVersion]);
 
   const handlePaginatorClick = (page: number): void => {
     createParams({ q: query, page });
@@ -57,30 +39,54 @@ export const SearchResults = ({ query, page, version }: SearchResultsProps): JSX
     setParams({ details: id });
   };
 
-  if (!results) {
-    return <ErrorInfo message={getErrorMessage(error, ERR_SOMETHING_WRONG)} />;
+  if (isFetching || isLoading) {
+    return <Loader />;
+  }
+  if (isError) {
+    return <ErrorInfo message={getApiErrorMessage(error, ERR_SOMETHING_WRONG)} />;
+  }
+  if (!data?.results.length) {
+    return <ErrorInfo message={ERR_SOMETHING_WRONG} />;
   }
   return (
     <div className={styles.wrapper}>
-      {!loading && (
+      <div className={styles.group}>
+        <div className={styles.btnGroup}>
+          <button
+            data-testid={TestId.RefreshBtn}
+            type='button'
+            className={styles.btn}
+            onClick={() => void refetch()}
+          >
+            <IconRefresh size={ICON_SIZE} />
+            {REFETCH_BTN_TEXT}
+          </button>
+          <button
+            data-testid={TestId.InvalidateBtn}
+            data-invalidate
+            type='button'
+            className={styles.btn}
+            onClick={() => dispatch(rickmortyApi.util.invalidateTags(['name']))}
+          >
+            {INVALIDATE_BTN_TEXT}
+          </button>
+        </div>
+
         <Paginator
           className={styles.paginator}
-          totalPages={totalPages}
-          initialPage={page || INITIAL_PAGE}
+          totalPages={data.info.pages}
+          initialPage={Number(page) || INITIAL_PAGE}
           onClick={handlePaginatorClick}
         />
-      )}
-      {loading && <Loader />}
-      {!loading && (
-        <div className={styles.results}>
-          <CardList
-            className={clsx(detailsId && styles.list)}
-            infos={results}
-            onItemClick={handleItemClick}
-          />
-          {detailsId && <Outlet />}
-        </div>
-      )}
+      </div>
+      <div className={styles.results}>
+        <CardList
+          className={clsx(detailsId && styles.list)}
+          infos={data.results}
+          onItemClick={handleItemClick}
+        />
+        {detailsId && <Outlet context={{ detailsId }} />}
+      </div>
     </div>
   );
 };

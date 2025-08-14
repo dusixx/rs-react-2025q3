@@ -1,4 +1,4 @@
-import { RoutePath } from '@common/constants.ts';
+import { RoutePath } from '@common/constants';
 import type { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ErrorPage.module.scss';

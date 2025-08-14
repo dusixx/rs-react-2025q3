@@ -1,13 +1,15 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 /* eslint-disable @typescript-eslint/no-base-to-string */
-import { UNKNOWN } from '@common/constants.ts';
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+import { UNKNOWN } from '@common/constants';
 import {
   getEpisodes,
   getLocationName,
   trimBracketsWithContent,
 } from '@components/CardList/components/Card/Card.utils.ts';
-import type { CharacterInfo } from '@services/api/api.types';
 import { isObject } from '@utils/type-guards.ts';
+import type { CharacterInfo } from 'src/redux/api/api.types';
+
+const EPISODES_SPLITTER = ', ';
 
 const stringifyValue = (value: unknown): string => {
   return value && !isObject(value) ? trimBracketsWithContent(String(value)) : UNKNOWN;
@@ -15,22 +17,30 @@ const stringifyValue = (value: unknown): string => {
 
 export const createDescription = (
   info: CharacterInfo,
-  episodesSplitter: string = ', ',
+  episodesSplitter: string = EPISODES_SPLITTER,
 ): Record<string, string> => {
   return Object.keys(info).reduce<Record<string, string>>((result, key) => {
     const k = key as keyof CharacterInfo;
+    let stringifiedValue = stringifyValue(info[k]);
 
-    if (k === 'created' || k === 'image' || k === 'url') {
-      return result;
+    switch (k) {
+      case 'created':
+      case 'image':
+      case 'url': {
+        return result;
+      }
+      case 'location':
+      case 'origin': {
+        stringifiedValue = getLocationName(info[k], UNKNOWN);
+        break;
+      }
+      case 'episode': {
+        if (info[k]) {
+          stringifiedValue = getEpisodes(info[k]).join(episodesSplitter);
+        }
+      }
     }
-    let valueStr = stringifyValue(info[k]);
-
-    if (k === 'location' || k === 'origin') {
-      valueStr = getLocationName(info[k], UNKNOWN);
-    } else if (k === 'episode' && info[k]?.length) {
-      valueStr = getEpisodes(info[k]).join(episodesSplitter);
-    }
-    result[k] = valueStr;
+    result[k] = stringifiedValue;
     return result;
   }, {});
 };

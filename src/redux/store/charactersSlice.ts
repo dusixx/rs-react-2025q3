@@ -1,25 +1,26 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { CharacterInfo } from '@services/api/api.types';
+import type { CharacterInfo } from 'src/redux/api/api.types';
 
-type InfosState = {
-  infos: CharacterInfo[];
+export type InfosState = {
+  infos: Record<number, CharacterInfo>;
 };
 const initialState: InfosState = {
-  infos: [],
+  infos: {},
 };
 const selectedCharactersSlice = createSlice({
   name: 'selectedCharacters',
   initialState,
   reducers: {
     addInfo: (state, { payload }: PayloadAction<CharacterInfo>) => {
-      state.infos.push(payload);
+      state.infos[payload.id] = payload;
     },
     removeInfo: (state, { payload }: PayloadAction<CharacterInfo>) => {
-      state.infos = state.infos.filter(({ id }) => id !== payload.id);
+      const { [payload.id]: _, ...newInfos } = state.infos;
+      state.infos = newInfos;
     },
     clearInfos: state => {
-      state.infos = [];
+      state.infos = {};
     },
   },
 });

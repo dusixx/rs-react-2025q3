@@ -1,4 +1,4 @@
-import { LinkProps } from '@common/constants.ts';
+import { LinkProps } from '@common/constants';
 import type { JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Footer.module.scss';

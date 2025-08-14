@@ -27,5 +27,33 @@
 .paginator {
   display: flex;
   justify-content: center;
+}
+
+.btn {
+  @extend %btn-primary;
+
+  background-color: var(--color-green);
+}
+
+[data-invalidate] {
+  background-color: var(--color-violet-light);
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
   margin-bottom: 32px;
 }

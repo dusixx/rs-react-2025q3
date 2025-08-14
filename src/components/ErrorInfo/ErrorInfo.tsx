@@ -1,4 +1,4 @@
-import { ERR_SOMETHING_WRONG, IconCloseCircleOutline } from '@common/constants.ts';
+import { ERR_SOMETHING_WRONG, IconCloseCircleOutline } from '@common/constants';
 import clsx from 'clsx';
 import type { JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
@@ -18,12 +18,15 @@ export const ErrorInfo = ({
 }: ErrorInfoProps): JSX.Element => {
   return (
     <pre data-testid={TestId.ErrorInfo} className={clsx(styles.errorInfo, className)}>
-      <IconCloseCircleOutline
-        data-testid={TestId.ErrorInfoIcon}
-        size={ICON_SIZE}
-        color={ICON_COLOR}
-      />
-      <b data-testid={TestId.ErrorInfoMessage}>Error: {message}</b>
+      <div data-heading>
+        <IconCloseCircleOutline
+          data-testid={TestId.ErrorInfoIcon}
+          size={ICON_SIZE}
+          color={ICON_COLOR}
+        />
+        <span>Error: </span>
+      </div>
+      <p data-testid={TestId.ErrorInfoMessage}>{message}</p>
     </pre>
   );
 };

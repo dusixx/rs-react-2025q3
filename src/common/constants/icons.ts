@@ -18,6 +18,7 @@ import {
   MdOutlineLightMode,
 } from 'react-icons/md';
 import { RiSearchLine } from 'react-icons/ri';
+import { TbRefresh } from 'react-icons/tb';
 import { WiDaySunny } from 'react-icons/wi';
 
 export const IconClose = IoClose;
@@ -39,27 +40,4 @@ export const IconLightTheme2 = MdOutlineLightMode;
 export const IconDarkTheme = LuMoonStar;
 export const IconCheckMark = IoMdCheckmark;
 export const IconInfo = HiOutlineInformationCircle;
-
-export const ERR_SOMETHING_WRONG = 'Something went wrong';
-export const LOADER_VISIBILITY_DURATION = 350;
-export const INITIAL_QUERY = '';
-export const INITIAL_PAGE = 1;
-export const UNKNOWN = 'unknown';
-export const DARK_THEME_CLASS = 'dark-theme';
-
-export const LinkProps = {
-  target: '_blank',
-  rel: 'noopener noreferrer nofollow',
-} as const;
-
-export const LocalStorageKey = {
-  LastQuery: 'last-query-djh501',
-  Theme: 'theme-djh501',
-} as const;
-
-export const RoutePath = {
-  Home: '/',
-  Search: '/search',
-  About: '/about',
-  Any: '*',
-} as const;
+export const IconRefresh = TbRefresh;

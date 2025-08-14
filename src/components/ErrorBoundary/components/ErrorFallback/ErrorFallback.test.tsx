@@ -1,4 +1,4 @@
-import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
+import { ERR_SOMETHING_WRONG } from '@common/constants/index.ts';
 import { render } from '@testing-library/react';
 import { FAKE_VALUE } from 'src/test-utils/constants.ts';
 import { clickElement, getNestedChild } from 'src/test-utils/utils.ts';
@@ -9,10 +9,10 @@ const FAKE_ERROR = Error(FAKE_VALUE);
 const FAKE_ERROR_INFO = {
   componentStack: FAKE_VALUE,
 };
+const resetMock = vi.fn();
 
 describe('ErrorFallback', () => {
   it(`Renders error fallback correctly`, () => {
-    const resetMock = vi.fn();
     const { rerender } = render(
       <ErrorFallback
         error={FAKE_ERROR}

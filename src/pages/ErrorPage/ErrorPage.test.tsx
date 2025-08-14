@@ -1,4 +1,4 @@
-import { RoutePath } from '@common/constants.ts';
+import { RoutePath } from '@common/constants/index.ts';
 import { render, screen } from '@testing-library/react';
 import { navigateMock } from 'src/test-utils/mocks/router-dom-mock.tsx';
 import { clickElement } from 'src/test-utils/utils.ts';

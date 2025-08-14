@@ -1,4 +1,4 @@
-import { RoutePath } from '@common/constants.ts';
+import { RoutePath } from '@common/constants/index.ts';
 import { render, screen } from '@testing-library/react';
 import { clickElement } from 'src/test-utils/index.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';

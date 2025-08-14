@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { act, render, screen } from '@testing-library/react';
 import { clickElement, FAKE_VALUE } from 'src/test-utils/index.ts';
 import { BlobMock, URLMock } from 'src/test-utils/mocks/url-mock.ts';
@@ -6,9 +5,9 @@ import { vi } from 'vitest';
 import type { DownloadInit } from './DownloadLink.tsx';
 import { DEFAULT_TEXT, DownloadLink } from './DownloadLink.tsx';
 
-describe('DownloadLink', () => {
-  const { createObjectURL, revokeObjectURL } = URLMock;
+const { createObjectURL, revokeObjectURL } = URLMock;
 
+describe('DownloadLink', () => {
   it(`Renders link correctly`, () => {
     const text = crypto.randomUUID();
     const { rerender } = render(

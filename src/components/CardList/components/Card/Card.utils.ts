@@ -1,28 +1,30 @@
-import { IconFemale, IconMale, IconMaleFemale } from '@common/constants.ts';
-import type { CharacterLocation } from '@services/api/api.types';
+import { IconFemale, IconMale, IconMaleFemale } from '@common/constants';
 import type { IconType } from 'react-icons';
+import type { CharacterGender, CharacterLocation, CharacterStatus } from 'src/redux/api/api.types';
+import { isLikeCharacterGender, isLikeCharacterStatus } from 'src/redux/api/api.utils.ts';
 
-const GENDER_ICONS: Record<string, IconType> = {
+const GENDER_ICONS: Record<CharacterGender, IconType> = {
   male: IconMale,
   female: IconFemale,
   unknown: IconMaleFemale,
 } as const;
 
-const STATUS_INDICATOR_COLOR: Record<string, string> = {
+const STATUS_INDICATOR_COLOR: Record<CharacterStatus, string> = {
   alive: 'var(--color-green)',
   dead: 'var(--color-accent)',
   unknown: 'var(--color-violet-light)',
 } as const;
 
 export const getStatusIndicatorStyle = (status: string = 'unknown'): object => {
+  const st = status.toLowerCase();
   return {
-    backgroundColor:
-      STATUS_INDICATOR_COLOR[status.toLowerCase()] ?? STATUS_INDICATOR_COLOR['unknown'],
+    backgroundColor: STATUS_INDICATOR_COLOR[isLikeCharacterStatus(st) ? st : 'unknown'],
   };
 };
 
 export const getGenderIcon = (gender: string = 'unknown'): IconType => {
-  return GENDER_ICONS[gender.toLowerCase()] ?? GENDER_ICONS['unknown'];
+  const gen = gender.toLowerCase();
+  return GENDER_ICONS[isLikeCharacterGender(gen) ? gen : 'unknown'];
 };
 
 export const trimBracketsWithContent = (text: string): string => {

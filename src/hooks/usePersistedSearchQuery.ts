@@ -1,22 +1,45 @@
-import { INITIAL_QUERY, LocalStorageKey } from '@common/constants.ts';
+import { INITIAL_QUERY, LocalStorageKey } from '@common/constants';
+import type { Dispatch, SetStateAction } from 'react';
 import { useCallback, useState } from 'react';
 
 type UseSearchQueryResult = {
   query: string;
-  setQuery: (value: string) => void;
+  setQuery: Dispatch<SetStateAction<string>>;
+  persistQuery: (value: string) => void;
+  updateQueryVersion: () => void;
+  getQueryVersion: () => string | null;
+  getPersistedQuery: () => string;
 };
 
-const getPersistedQuery = (): string => {
+const _getPersistedQuery = (): string => {
   return localStorage.getItem(LocalStorageKey.LastQuery) ?? INITIAL_QUERY;
 };
 
 export const usePersistedSearchQuery = (): UseSearchQueryResult => {
-  const [query, setSearchQuery] = useState(getPersistedQuery());
+  const [query, setQuery] = useState(_getPersistedQuery());
 
-  const setQuery = useCallback((value: string): void => {
-    setSearchQuery(value);
+  const getPersistedQuery = useCallback((): string => {
+    return _getPersistedQuery();
+  }, []);
+
+  const persistQuery = useCallback((value: string): void => {
     localStorage.setItem(LocalStorageKey.LastQuery, value);
   }, []);
 
-  return { setQuery, query };
+  const getQueryVersion = useCallback((): string | null => {
+    return localStorage.getItem(LocalStorageKey.QueryVersion);
+  }, []);
+
+  const updateQueryVersion = useCallback((): void => {
+    localStorage.setItem(LocalStorageKey.QueryVersion, crypto.randomUUID());
+  }, []);
+
+  return {
+    setQuery,
+    persistQuery,
+    query,
+    getQueryVersion,
+    updateQueryVersion,
+    getPersistedQuery,
+  };
 };

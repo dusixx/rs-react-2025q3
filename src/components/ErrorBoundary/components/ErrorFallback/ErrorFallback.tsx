@@ -1,4 +1,4 @@
-import { ERR_SOMETHING_WRONG, IconCloseCircleOutline } from '@common/constants.ts';
+import { ERR_SOMETHING_WRONG, IconCloseCircleOutline } from '@common/constants';
 import type { ErrorInfo, JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './ErrorFallback.module.scss';
