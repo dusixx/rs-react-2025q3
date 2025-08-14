@@ -1,8 +1,7 @@
-import { isLikeCharacterGender, isLikeCharacterStatus } from './../../../../redux/api/api.utils';
-
 import { IconFemale, IconMale, IconMaleFemale } from '@common/constants';
 import type { IconType } from 'react-icons';
 import type { CharacterGender, CharacterLocation, CharacterStatus } from 'src/redux/api/api.types';
+import { isLikeCharacterGender, isLikeCharacterStatus } from 'src/redux/api/api.utils.ts';
 
 const GENDER_ICONS: Record<CharacterGender, IconType> = {
   male: IconMale,
