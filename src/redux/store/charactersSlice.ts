@@ -8,7 +8,6 @@ export type InfosState = {
 const initialState: InfosState = {
   infos: {},
 };
-
 const selectedCharactersSlice = createSlice({
   name: 'selectedCharacters',
   initialState,

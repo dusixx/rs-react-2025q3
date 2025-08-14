@@ -38,7 +38,6 @@ export const createDescription = (
         if (info[k]) {
           stringifiedValue = getEpisodes(info[k]).join(episodesSplitter);
         }
-        break;
       }
     }
     result[k] = stringifiedValue;
