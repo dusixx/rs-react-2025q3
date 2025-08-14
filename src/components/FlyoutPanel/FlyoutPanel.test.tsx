@@ -1,7 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { clearInfos } from 'src/redux/store/charactersSlice.ts';
 import { clickElement, queryNestedChild } from 'src/test-utils/index.ts';
-import { getCharacterInfoListMock, ITEMS_PER_PAGE } from 'src/test-utils/mocks/character-mock.ts';
+import {
+  getCharacterInfoListMock,
+  getCharacterInfosMock,
+  ITEMS_PER_PAGE,
+} from 'src/test-utils/mocks/character-mock.ts';
 import { initDownloadMock } from 'src/test-utils/mocks/DownloadLinkMock.tsx';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { appDispatchMock, mockUseSelectedInfos } from 'src/test-utils/mocks/redux-hook-mock.ts';
@@ -9,10 +13,11 @@ import { it, vi } from 'vitest';
 import { BTN_UNSELECT_TEXT, FlyoutPanel, ITEMS_COUNT_LABEl } from './FlyoutPanel.tsx';
 import { getDownloadInitProps } from './FlyoutPanel.utils.ts';
 
+const { array: infosArray, record: infosRecord } = getCharacterInfosMock(ITEMS_PER_PAGE);
+
 describe('FlyoutPanel', () => {
   it(`Handles unselect all clicked correctly`, () => {
-    const infos = getCharacterInfoListMock(ITEMS_PER_PAGE);
-    vi.mocked(mockUseSelectedInfos).mockReturnValueOnce(infos);
+    vi.mocked(mockUseSelectedInfos).mockReturnValueOnce(infosRecord);
     render(<FlyoutPanel />, { wrapper: ProvidersMock });
 
     expect(mockUseSelectedInfos).toHaveBeenCalled();
@@ -27,13 +32,12 @@ describe('FlyoutPanel', () => {
   });
 
   it('Handles download clicked correctly', () => {
-    const infos = getCharacterInfoListMock(ITEMS_PER_PAGE);
-    vi.mocked(mockUseSelectedInfos).mockReturnValueOnce(infos);
+    vi.mocked(mockUseSelectedInfos).mockReturnValueOnce(infosRecord);
     render(<FlyoutPanel />);
 
     const downloadButton = screen.getByRole('link');
     clickElement(downloadButton);
-    expect(initDownloadMock).toHaveBeenCalledWith(getDownloadInitProps(infos));
+    expect(initDownloadMock).toHaveBeenCalledWith(getDownloadInitProps(infosArray));
   });
 
   it('Renders no flyout panel if no data is provided', () => {
