@@ -1,11 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { clearInfos } from 'src/redux/store/charactersSlice.ts';
 import { clickElement, queryNestedChild } from 'src/test-utils/index.ts';
-import {
-  getCharacterInfoListMock,
-  getCharacterInfosMock,
-  ITEMS_PER_PAGE,
-} from 'src/test-utils/mocks/character-mock.ts';
+import { getCharacterInfosMock, ITEMS_PER_PAGE } from 'src/test-utils/mocks/character-mock.ts';
 import { initDownloadMock } from 'src/test-utils/mocks/DownloadLinkMock.tsx';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { appDispatchMock, mockUseSelectedInfos } from 'src/test-utils/mocks/redux-hook-mock.ts';
