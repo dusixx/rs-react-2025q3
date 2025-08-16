@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-parameters */
-import type { Theme } from '@providers/ThemeProvider/ThemeContext.ts';
+import type { Theme } from '@/components/ThemeProvider/ThemeContext';
 
 export const isObject = (obj: unknown): obj is Record<string, unknown> => {
   return obj != null && typeof obj === 'object';

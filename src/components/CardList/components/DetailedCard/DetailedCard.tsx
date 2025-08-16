@@ -7,7 +7,6 @@ import { useOutletContext } from 'react-router-dom';
 import { rickmortyApi, useGetCharacterByIdQuery } from 'src/redux/api/api.ts';
 import { getApiErrorMessage } from 'src/redux/api/api.utils.ts';
 import { useAppDispatch } from 'src/redux/store/hooks.ts';
-import { TestId } from 'src/test-utils/constants.ts';
 import { Description } from './components/Description/Description.tsx';
 import styles from './DetailedCard.module.scss';
 
@@ -28,7 +27,7 @@ export const DetailedCard = (): ReactNode => {
   const loading = isFetching || isLoading;
 
   return (
-    <article data-testid={TestId.DetailedCard} className={styles.card}>
+    <article className={styles.card}>
       {loading && <Loader className={styles.loader} />}
       {!loading && data && (
         <div className={styles.info}>
@@ -46,18 +45,11 @@ export const DetailedCard = (): ReactNode => {
       )}
       {!loading && (
         <div className={styles.group}>
-          <button
-            data-testid={TestId.RefreshBtn}
-            type='button'
-            className={styles.btn}
-            onClick={() => void refetch()}
-            data-refresh
-          >
+          <button type='button' className={styles.btn} onClick={() => void refetch()} data-refresh>
             <IconRefresh size={ICON_SIZE} />
             {REFETCH_BTN_TEXT}
           </button>
           <button
-            data-testid={TestId.InvalidateBtn}
             data-invalidate
             type='button'
             className={styles.btn}
@@ -66,7 +58,6 @@ export const DetailedCard = (): ReactNode => {
             {INVALIDATE_BTN_TEXT}
           </button>
           <button
-            data-testid={TestId.CloseBtn}
             className={styles.btn}
             type='button'
             onClick={() => {

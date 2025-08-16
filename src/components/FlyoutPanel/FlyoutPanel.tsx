@@ -3,7 +3,6 @@ import { DownloadLink } from '@components/DownloadLink/DownloadLink.tsx';
 import { useCallback, type ReactNode } from 'react';
 import { clearInfos } from 'src/redux/store/charactersSlice.ts';
 import { useAppDispatch, useSelectedInfos } from 'src/redux/store/hooks.ts';
-import { TestId } from 'src/test-utils/constants.ts';
 import styles from './FlyoutPanel.module.scss';
 import { getDownloadInitProps } from './FlyoutPanel.utils.ts';
 
@@ -24,8 +23,8 @@ export const FlyoutPanel = (): ReactNode => {
     return;
   }
   return (
-    <div className={styles.panel} data-testid={TestId.FlyoutPanel}>
-      <div className={styles.innerWrapper}>
+    <div className={styles.panel}>
+      <div className={styles['inner-wrapper']}>
         <span>
           {ITEMS_COUNT_LABEl}: <b>{selectedInfos.length}</b>
         </span>

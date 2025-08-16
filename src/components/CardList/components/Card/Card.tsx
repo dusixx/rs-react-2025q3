@@ -3,7 +3,6 @@ import { AddToFav } from '@components/CardList/components/Card/components/AddToF
 import clsx from 'clsx';
 import { type JSX, type SyntheticEvent } from 'react';
 import type { CharacterInfo } from 'src/redux/api/api.types.ts';
-import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Card.module.scss';
 import {
   getGenderIcon,
@@ -44,32 +43,27 @@ export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
 
   return (
     <article className={clsx(styles.card, className)} onClick={handleCardClick}>
-      <div data-testid={TestId.CardThumb} className={styles.thumb} style={getThumbStyle(image)}>
-        {image && (
-          <img data-testid={TestId.CardImage} className={styles.image} src={image} alt={name} />
-        )}
+      <div className={styles.thumb} style={getThumbStyle(image)}>
+        {image && <img className={styles.image} src={image} alt={name} />}
       </div>
       <ul className={styles.desc}>
         <li>
           <AddToFav info={info} data-name='addtofav' />
         </li>
-        <li data-name>
-          <p data-testid={TestId.CardName}>{name}</p>
+        <li className={styles['name-item']}>
+          <p>{name}</p>
         </li>
-        <li data-status>
-          <div
-            data-testid={TestId.CardStatusIndicator}
-            style={getStatusIndicatorStyle(status)}
-          ></div>
-          <span data-testid={TestId.CardStatus}>{status}</span>
+        <li className={styles['status-item']}>
+          <div style={getStatusIndicatorStyle(status)}></div>
+          <span>{status}</span>
         </li>
-        <li data-species>
-          <IconGender data-testid={TestId.CardIconGender} {...ICON_PROPS} />
-          <span data-testid={TestId.CardSpecies}>{species}</span>
+        <li>
+          <IconGender {...ICON_PROPS} />
+          <span>{species}</span>
         </li>
-        <li data-location>
-          <IconLocation data-testid={TestId.CardIconLocation} {...ICON_PROPS} />
-          <p data-testid={TestId.CardLocation}>{getLocationName(location) || UNKNOWN}</p>
+        <li>
+          <IconLocation {...ICON_PROPS} />
+          <p>{getLocationName(location) || UNKNOWN}</p>
         </li>
       </ul>
     </article>

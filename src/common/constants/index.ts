@@ -29,3 +29,8 @@ export const HttpStatus = {
   NotFound: 404,
   OK: 200,
 } as const;
+
+export const AppLocales = {
+  EN: 'en',
+  RU: 'ru',
+} as const;

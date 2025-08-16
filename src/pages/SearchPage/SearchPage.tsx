@@ -1,3 +1,5 @@
+'use client';
+
 import { INITIAL_PAGE } from '@common/constants';
 import { FlyoutPanel } from '@components/FlyoutPanel/FlyoutPanel.tsx';
 import { SearchBar } from '@components/SearchBar/SearchBar.tsx';
@@ -5,7 +7,6 @@ import { SearchBar } from '@components/SearchBar/SearchBar.tsx';
 import { SearchResults } from '@components/SearchResults/SearchResults.tsx';
 import { useAppCustomSearchParams, usePersistedSearchQuery } from '@hooks/index.ts';
 import { useCallback, useEffect, type JSX } from 'react';
-import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchPage.module.scss';
 
 export const QUERY_PLACEHOLDER = 'Character name...';
@@ -28,10 +29,10 @@ export default function SearchPage(): JSX.Element {
   }, [initSearchParams]);
 
   return (
-    <div data-testid={TestId.SearchPage}>
+    <div>
       <div className={styles.wrapper}>
         <SearchBar
-          className={styles.searchBar}
+          className={styles['search-bar']}
           placeholder={QUERY_PLACEHOLDER}
           onSubmit={updateQueryVersion}
         />

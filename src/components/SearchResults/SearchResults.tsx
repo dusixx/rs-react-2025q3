@@ -10,7 +10,6 @@ import { Outlet } from 'react-router-dom';
 import { rickmortyApi, useGetCharactersByNameQuery } from 'src/redux/api/api';
 import { getApiErrorMessage } from 'src/redux/api/api.utils';
 import { useAppDispatch } from 'src/redux/store/hooks.ts';
-import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchResults.module.scss';
 
 const REFETCH_BTN_TEXT = 'Refetch';
@@ -51,21 +50,14 @@ export const SearchResults = (): JSX.Element => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.group}>
-        <div className={styles.btnGroup}>
-          <button
-            data-testid={TestId.RefreshBtn}
-            type='button'
-            className={styles.btn}
-            onClick={() => void refetch()}
-          >
+        <div className={styles['btn-group']}>
+          <button type='button' className={styles.btn} onClick={() => void refetch()}>
             <IconRefresh size={ICON_SIZE} />
             {REFETCH_BTN_TEXT}
           </button>
           <button
-            data-testid={TestId.InvalidateBtn}
-            data-invalidate
             type='button'
-            className={styles.btn}
+            className={clsx(styles.btn, styles.invalidate)}
             onClick={() => dispatch(rickmortyApi.util.invalidateTags(['name']))}
           >
             {INVALIDATE_BTN_TEXT}
