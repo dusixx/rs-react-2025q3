@@ -7,8 +7,9 @@ const nextConfig = {
     prependData: `@use "/src/styles/utils/placeholders" as *; @use "/src/styles/utils/vars" as *;`,
   },
   images: {
-    domains: ['rickandmortyapi.com'],
+    remotePatterns: [new URL('https://rickandmortyapi.com/**')],
   },
+  transpilePackages: ['next-intl'],
 };
 const withNextIntl = createNextIntlPlugin();
 export default withNextIntl(nextConfig);

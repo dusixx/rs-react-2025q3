@@ -16,12 +16,12 @@ const trimValue = (value: string = ''): string => {
   return value.trim();
 };
 
-export const SearchBar = ({
+export function SearchBar({
   className,
   placeholder,
   onSubmit,
   ...restProps
-}: SearchBarProps): JSX.Element => {
+}: SearchBarProps): JSX.Element {
   const { query, setQuery, persistQuery } = usePersistedSearchQuery();
   const { getParams, createParams } = useAppCustomSearchParams();
 
@@ -80,4 +80,4 @@ export const SearchBar = ({
       </form>
     </div>
   );
-};
+}

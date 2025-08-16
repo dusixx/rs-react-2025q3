@@ -23,13 +23,11 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "preserve",
-
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["src/components/*"],
@@ -44,6 +42,6 @@
       "@common/*": ["src/common/*"]
     }
   },
-  "include": ["src", "./dist/types/**/*.ts", "./next-env.d.ts"],
+  "include": ["./dist/types/**/*.ts", "./next-env.d.ts", "src", ".next/types/**/*.ts"],
   "exclude": ["./node_modules"]
 }

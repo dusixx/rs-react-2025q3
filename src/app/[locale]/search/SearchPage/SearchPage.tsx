@@ -1,6 +1,6 @@
+import { SearchBar } from '@/components/SearchBar/SearchBar.tsx';
 import type { PropsWithAppSearchParams } from '@/hooks/useAppCustomSearchParams.ts';
 import { FlyoutPanel } from '@components/FlyoutPanel/FlyoutPanel.tsx';
-import { SearchBar } from '@components/SearchBar/SearchBar.tsx';
 import { SearchResults } from '@components/SearchResults/SearchResults';
 import { type ReactNode } from 'react';
 import styles from './SearchPage.module.scss';

@@ -29,7 +29,7 @@ export const useCustomSearchParams = <
 
   const hasParams = useCallback(
     (...keys: (keyof P)[]): boolean => {
-      return keys.every(key => searchParams?.has(key.toString()));
+      return keys.every(key => searchParams.has(key.toString()));
     },
     [searchParams],
   );
@@ -44,7 +44,7 @@ export const useCustomSearchParams = <
 
   const setParams = useCallback(
     (props: P): void => {
-      const params = new URLSearchParams(searchParams?.toString());
+      const params = new URLSearchParams(searchParams.toString());
       Object.entries(props).forEach(([key, value]) => {
         params.set(key, stringify(value));
       });
@@ -55,7 +55,7 @@ export const useCustomSearchParams = <
 
   const getParams = useCallback(
     (...keys: (keyof P)[]): (string | undefined)[] => {
-      const params = new URLSearchParams(searchParams?.toString());
+      const params = new URLSearchParams(searchParams.toString());
       return keys.map(key => params.get(key.toString()) ?? undefined);
     },
     [searchParams],
@@ -63,7 +63,7 @@ export const useCustomSearchParams = <
 
   const deleteParams = useCallback(
     (...keys: (keyof P)[]): void => {
-      const params = new URLSearchParams(searchParams?.toString());
+      const params = new URLSearchParams(searchParams.toString());
       keys.forEach(key => {
         params.delete(key.toString());
       });
