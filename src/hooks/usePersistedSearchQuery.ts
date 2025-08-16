@@ -1,4 +1,3 @@
-/* eslint-disable no-empty */
 'use client';
 
 import { INITIAL_QUERY, LocalStorageKey } from '@common/constants';
@@ -14,20 +13,8 @@ type UseSearchQueryResult = {
   getPersistedQuery: () => string;
 };
 
-const setItem = (key: string, value: string): void => {
-  try {
-    localStorage.setItem(key, value);
-  } catch {}
-};
-const getItem = (key: string): string | null => {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
-};
 const _getPersistedQuery = (): string => {
-  return getItem(LocalStorageKey.LastQuery) ?? INITIAL_QUERY;
+  return localStorage.getItem(LocalStorageKey.LastQuery) ?? INITIAL_QUERY;
 };
 
 export const usePersistedSearchQuery = (): UseSearchQueryResult => {
@@ -38,15 +25,15 @@ export const usePersistedSearchQuery = (): UseSearchQueryResult => {
   }, []);
 
   const persistQuery = useCallback((value: string): void => {
-    setItem(LocalStorageKey.LastQuery, value);
+    localStorage.setItem(LocalStorageKey.LastQuery, value);
   }, []);
 
   const getQueryVersion = useCallback((): string | null => {
-    return getItem(LocalStorageKey.QueryVersion);
+    return localStorage.getItem(LocalStorageKey.QueryVersion);
   }, []);
 
   const updateQueryVersion = useCallback((): void => {
-    setItem(LocalStorageKey.QueryVersion, crypto.randomUUID());
+    localStorage.setItem(LocalStorageKey.QueryVersion, crypto.randomUUID());
   }, []);
 
   return {

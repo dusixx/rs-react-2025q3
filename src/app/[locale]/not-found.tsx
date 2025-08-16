@@ -1,6 +1,6 @@
+import ErrorPage from '@/components/pages/ErrorPage/ErrorPage.tsx';
 import { NextIntlClientProvider, useLocale, useMessages } from 'next-intl';
 import type { ReactNode } from 'react';
-import ErrorPage from './ErrorPage/ErrorPage.tsx';
 
 export default function NotFound(): ReactNode {
   const messages = useMessages();

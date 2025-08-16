@@ -9,7 +9,7 @@ const nextConfig = {
   images: {
     remotePatterns: [new URL('https://rickandmortyapi.com/**')],
   },
-  transpilePackages: ['next-intl'],
+  // transpilePackages: ['next-intl'],
 };
 const withNextIntl = createNextIntlPlugin();
 export default withNextIntl(nextConfig);
