@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
 'use client';
 
+import { usePathname, useRouter } from '@/i18n/navigation.ts';
 import { mapObjectValues } from '@utils/index.ts';
-import type { ReadonlyURLSearchParams } from 'next/navigation';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams, type ReadonlyURLSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
-
-const EMPTY_PATHNAME = '';
 
 export type UseCustomSearchParamsResult<P extends Record<string, unknown>> = {
   searchParams: ReadonlyURLSearchParams | null;
@@ -35,23 +33,26 @@ export const useCustomSearchParams = <
     },
     [searchParams],
   );
+
   const createParams = useCallback(
     (props: P): void => {
       const params = new URLSearchParams(mapObjectValues(props, stringify));
-      router.push(`${pathname ?? EMPTY_PATHNAME}?${params.toString()}`);
+      router.push(`${pathname}?${params.toString()}`);
     },
     [router, pathname],
   );
+
   const setParams = useCallback(
     (props: P): void => {
-      const params = new URLSearchParams(mapObjectValues(props, stringify));
+      const params = new URLSearchParams(searchParams?.toString());
       Object.entries(props).forEach(([key, value]) => {
         params.set(key, stringify(value));
       });
-      router.push(`${pathname ?? EMPTY_PATHNAME}?${params.toString()}`);
+      router.push(`${pathname}?${params.toString()}`);
     },
-    [pathname, router],
+    [pathname, router, searchParams],
   );
+
   const getParams = useCallback(
     (...keys: (keyof P)[]): (string | undefined)[] => {
       const params = new URLSearchParams(searchParams?.toString());
@@ -59,18 +60,20 @@ export const useCustomSearchParams = <
     },
     [searchParams],
   );
+
   const deleteParams = useCallback(
     (...keys: (keyof P)[]): void => {
       const params = new URLSearchParams(searchParams?.toString());
       keys.forEach(key => {
         params.delete(key.toString());
       });
-      router.push(`${pathname ?? EMPTY_PATHNAME}?${params.toString()}`);
+      router.push(`${pathname}?${params.toString()}`);
     },
     [searchParams, router, pathname],
   );
+
   const clearParams = useCallback((): void => {
-    router.replace(pathname ?? EMPTY_PATHNAME);
+    router.push(pathname);
   }, [router, pathname]);
 
   return {

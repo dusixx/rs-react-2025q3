@@ -1,22 +1,20 @@
+'use server';
+
 import { ERR_SOMETHING_WRONG, INITIAL_PAGE } from '@/common/constants';
+import { ALL_INFOS, Endpoint } from './api.constants.ts';
 import type { CharacterInfo, SearchResult } from './api.types.ts';
 import { isLikeCharacterInfo, isLikeErrorResult, isLikeSearchResult } from './api.utils.ts';
 
-const BASE_URL = 'https://rickandmortyapi.com/api/';
-const ALL_INFOS = '';
-
-export const Endpoint = {
-  Character: `${BASE_URL}character/`,
-  Episode: `${BASE_URL}episode/`,
-} as const;
+const FETCH_OPTIONS: RequestInit = {
+  cache: 'force-cache',
+};
 
 export const getCharactersByName = async (
   name: string = ALL_INFOS,
   page: string | number = INITIAL_PAGE,
 ): Promise<SearchResult> => {
-  const response = await fetch(
-    `${Endpoint.Character}?name=${encodeURIComponent(name)}&page=${page.toString()}`,
-  );
+  const url = `${Endpoint.Character}?name=${encodeURIComponent(name)}&page=${page.toString()}`;
+  const response = await fetch(url, FETCH_OPTIONS);
   const result: unknown = await response.json();
 
   if (!isLikeSearchResult(result)) {
@@ -26,7 +24,8 @@ export const getCharactersByName = async (
 };
 
 export const getCharacterById = async (id: number | string): Promise<CharacterInfo> => {
-  const response = await fetch(`${Endpoint.Character}/${id.toString()}`);
+  const url = `${Endpoint.Character}/${id.toString()}`;
+  const response = await fetch(url, FETCH_OPTIONS);
   const info: unknown = await response.json();
 
   if (!isLikeCharacterInfo(info)) {

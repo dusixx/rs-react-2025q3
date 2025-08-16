@@ -7,7 +7,10 @@ export const INITIAL_PAGE = 1;
 export const UNKNOWN = 'unknown';
 export const DARK_THEME_CLASS = 'dark-theme';
 
-export const LinkProps = {
+export const AUTHOR_GITHUB_URL = 'https://github.com/dusixx';
+export const COURSE_PAGE_URL = 'https://rs.school/courses/reactjs';
+
+export const LINK_PROPS = {
   target: '_blank',
   rel: 'noopener noreferrer nofollow',
 } as const;

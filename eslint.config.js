@@ -1,4 +1,5 @@
 import js from '@eslint/js';
+import eslintNextPlugin from '@next/eslint-plugin-next';
 import tsParser from '@typescript-eslint/parser';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import eslintPluginReact from 'eslint-plugin-react';
@@ -39,8 +40,11 @@ export default tseslint.config(
       'react-hooks': eslintPluginReactHooks,
       'react-refresh': eslintPluginReactRefresh,
       'react-compiler': eslintPluginReactCompiler,
+      '@next/next': eslintNextPlugin,
     },
     rules: {
+      ...eslintNextPlugin.configs.recommended.rules,
+      ...eslintNextPlugin.configs['core-web-vitals'].rules,
       ...eslintPluginReact.configs.recommended.rules,
       ...eslintPluginReactHooks.configs.recommended.rules,
       ...eslintPluginReact.configs['jsx-runtime'].rules,

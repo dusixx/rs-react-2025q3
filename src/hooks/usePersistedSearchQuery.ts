@@ -1,3 +1,5 @@
+'use client';
+
 import { INITIAL_QUERY, LocalStorageKey } from '@common/constants';
 import type { Dispatch, SetStateAction } from 'react';
 import { useCallback, useState } from 'react';

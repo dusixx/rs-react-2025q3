@@ -1,6 +1,7 @@
-import SearchPage from '@/pages/SearchPage/SearchPage.tsx';
-import type { ReactNode } from 'react';
+import type { PropsWithAppSearchParams } from '@/hooks/useAppCustomSearchParams.ts';
+import Search from '@/pages/SearchPage/SearchPage.tsx';
+import { type ReactNode } from 'react';
 
-export default function MainPage(): ReactNode {
-  return <SearchPage />;
+export default function SearchPage({ searchParams }: PropsWithAppSearchParams): ReactNode {
+  return <Search searchParams={searchParams} />;
 }

@@ -1,3 +1,5 @@
+'use client';
+
 import { IconClose, IconSearch, INITIAL_PAGE } from '@common/constants';
 import { useAppCustomSearchParams, usePersistedSearchQuery } from '@hooks/index.ts';
 import type { ChangeEvent, ComponentPropsWithRef, JSX } from 'react';

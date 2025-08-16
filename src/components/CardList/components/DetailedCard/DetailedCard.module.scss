@@ -55,17 +55,9 @@
   padding-left: 0;
 }
 
-[data-invalidate] {
-  background-color: var(--color-violet-light);
-}
-
 .error-info,
 .loader {
   margin: auto 20px;
-}
-
-[data-refresh] {
-  background-color: var(--color-green);
 }
 
 .group {

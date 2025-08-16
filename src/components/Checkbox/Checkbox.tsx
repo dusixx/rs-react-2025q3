@@ -1,3 +1,5 @@
+'use client';
+
 import { IconCheckMark } from '@common/constants';
 import { useEffect, useState, type JSX } from 'react';
 import styles from './Checkbox.module.scss';

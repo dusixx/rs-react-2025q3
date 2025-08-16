@@ -1,3 +1,5 @@
+'use client';
+
 import type { DownloadInit } from '@components/DownloadLink/DownloadLink.tsx';
 import { DownloadLink } from '@components/DownloadLink/DownloadLink.tsx';
 import { useCallback, type ReactNode } from 'react';

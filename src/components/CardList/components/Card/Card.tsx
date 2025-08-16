@@ -1,8 +1,12 @@
+'use client';
+
 import { IconLocation, UNKNOWN } from '@common/constants/index.ts';
 import { AddToFav } from '@components/CardList/components/Card/components/AddToFav/AddToFav.tsx';
+import { useAppCustomSearchParams } from '@hooks/useAppCustomSearchParams.ts';
+import type { CharacterInfo } from '@services/api.types.ts';
 import clsx from 'clsx';
+import Image from 'next/image';
 import { type JSX, type SyntheticEvent } from 'react';
-import type { CharacterInfo } from 'src/redux/api/api.types.ts';
 import styles from './Card.module.scss';
 import {
   getGenderIcon,
@@ -11,11 +15,11 @@ import {
   getThumbStyle,
 } from './Card.utils.ts';
 
+const ADD_TO_FAV_ID = 'add-to-fav-button';
 const ICON_PROPS = {
   size: 16,
   color: 'var(--color-green-gray)',
 };
-
 type CardProps = {
   info: CharacterInfo;
   onClick?: (id: number) => void;
@@ -23,6 +27,7 @@ type CardProps = {
 };
 
 export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
+  const { setParams } = useAppCustomSearchParams();
   const {
     id,
     image,
@@ -34,9 +39,10 @@ export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
   } = info;
 
   const handleCardClick = ({ target }: SyntheticEvent): void => {
-    if (target instanceof Element && target.closest('[data-name=addtofav]')) {
+    if (target instanceof Element && target.closest(`#${ADD_TO_FAV_ID}`)) {
       return;
     }
+    setParams({ details: id });
     onClick?.(id);
   };
   const IconGender = getGenderIcon(gender);
@@ -44,11 +50,21 @@ export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
   return (
     <article className={clsx(styles.card, className)} onClick={handleCardClick}>
       <div className={styles.thumb} style={getThumbStyle(image)}>
-        {image && <img className={styles.image} src={image} alt={name} />}
+        {image && (
+          <Image
+            className={styles.image}
+            src={image}
+            alt={name}
+            width={0}
+            height={0}
+            sizes='100vw'
+            style={{ width: '100%', height: 'auto' }}
+          />
+        )}
       </div>
       <ul className={styles.desc}>
         <li>
-          <AddToFav info={info} data-name='addtofav' />
+          <AddToFav info={info} id={ADD_TO_FAV_ID} />
         </li>
         <li className={styles['name-item']}>
           <p>{name}</p>

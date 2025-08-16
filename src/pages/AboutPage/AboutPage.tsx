@@ -1,34 +1,30 @@
-import { LinkProps } from '@common/constants';
-import type { JSX } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavButton } from '@/components/NavButton/NavButton.tsx';
+import { Link } from '@/i18n/navigation.ts';
+import { AUTHOR_GITHUB_URL, COURSE_PAGE_URL, LINK_PROPS } from '@common/constants';
+import type { ReactNode } from 'react';
 import styles from './AboutPage.module.scss';
 
 const BTN_TEXT = 'Go Back';
-export const AUTHOR_GITHUB_URL = 'https://github.com/dusixx';
-export const COURSE_PAGE_URL = 'https://rs.school/courses/reactjs';
 
-export default function AboutPage(): JSX.Element {
-  const navigate = useNavigate();
+export default function AboutPage(): ReactNode {
   return (
     <div className={styles.wrapper}>
       <div className={styles.info}>
         <span>
           Made by{' '}
-          <a {...LinkProps} href={AUTHOR_GITHUB_URL}>
+          <Link {...LINK_PROPS} href={AUTHOR_GITHUB_URL}>
             dusixx
-          </a>
+          </Link>
         </span>
         <span>
           as part of the{' '}
-          <a {...LinkProps} href={COURSE_PAGE_URL}>
+          <Link {...LINK_PROPS} href={COURSE_PAGE_URL}>
             React Course
-          </a>{' '}
+          </Link>{' '}
           at RSSchool
         </span>
       </div>
-      <button className={styles.btn} onClick={() => void navigate(-1)}>
-        {BTN_TEXT}
-      </button>
+      <NavButton action='back' text={BTN_TEXT} className={styles.btn} />
     </div>
   );
 }

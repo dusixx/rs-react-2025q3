@@ -6,6 +6,9 @@ const nextConfig = {
   sassOptions: {
     prependData: `@use "/src/styles/utils/placeholders" as *; @use "/src/styles/utils/vars" as *;`,
   },
+  images: {
+    domains: ['rickandmortyapi.com'],
+  },
 };
 const withNextIntl = createNextIntlPlugin();
 export default withNextIntl(nextConfig);

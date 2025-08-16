@@ -1,3 +1,5 @@
+'use client';
+
 import { IconDownload } from '@common/constants';
 import type { PropsWithChildren } from 'react';
 import { useCallback, useEffect, useState, type JSX } from 'react';
@@ -49,7 +51,13 @@ export const DownloadLink = ({ onClick, children }: DownloadLinkProps): JSX.Elem
     resetState();
   };
   return (
-    <a className={styles.btn} href={url} download={download} onClick={handleClick} role='link'>
+    <a
+      className={styles.btn}
+      href={url ?? ''}
+      download={download}
+      onClick={handleClick}
+      role='link'
+    >
       {children ? (
         children
       ) : (

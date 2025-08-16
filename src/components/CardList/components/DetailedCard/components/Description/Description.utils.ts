@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
+import type { CharacterInfo } from '@/services/api.types.ts';
 import { UNKNOWN } from '@common/constants';
 import {
   getEpisodes,
@@ -7,7 +8,6 @@ import {
   trimBracketsWithContent,
 } from '@components/CardList/components/Card/Card.utils.ts';
 import { isObject } from '@utils/type-guards.ts';
-import type { CharacterInfo } from 'src/redux/api/api.types';
 
 const EPISODES_SPLITTER = ', ';
 

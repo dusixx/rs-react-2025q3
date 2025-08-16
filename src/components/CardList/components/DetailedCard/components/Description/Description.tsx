@@ -1,5 +1,5 @@
+import type { CharacterInfo } from '@/services/api.types.ts';
 import type { ReactNode } from 'react';
-import type { CharacterInfo } from 'src/redux/api/api.types.ts';
 import styles from './Description.module.scss';
 import { createDescription } from './Description.utils.ts';
 

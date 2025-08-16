@@ -1,3 +1,4 @@
+import { useAppCustomSearchParams } from '@/hooks/useAppCustomSearchParams.ts';
 import {
   IconArrowLeft,
   IconArrowLeftDouble,
@@ -9,7 +10,7 @@ import clsx from 'clsx';
 import { useEffect, useState, type JSX } from 'react';
 import styles from './Paginator.module.scss';
 
-type PaginatorProps = {
+export type PaginatorProps = {
   totalPages?: number;
   initialPage?: number;
   className?: string;
@@ -32,6 +33,7 @@ export const Paginator = ({
   initialPage = INITIAL_PAGE,
 }: PaginatorProps): JSX.Element => {
   const [currentPage, setCurrentPage] = useState(initialPage);
+  const { setParams } = useAppCustomSearchParams();
 
   useEffect(() => {
     setCurrentPage(initialPage);
@@ -39,6 +41,7 @@ export const Paginator = ({
 
   const updatePage = (page: number): void => {
     setCurrentPage(page);
+    setParams({ page });
     onClick?.(page);
   };
   const handlePrevClick = (): void => {

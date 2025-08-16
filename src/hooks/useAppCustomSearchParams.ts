@@ -6,6 +6,10 @@ export type AppCustomSearchParam = Partial<{
   q: string;
 }>;
 
+export type PropsWithAppSearchParams = {
+  searchParams?: Promise<AppCustomSearchParam>;
+};
+
 export const useAppCustomSearchParams = (): ReturnType<
   typeof useCustomSearchParams<AppCustomSearchParam>
 > => {
