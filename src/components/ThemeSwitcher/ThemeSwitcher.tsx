@@ -5,8 +5,8 @@ import { IconDarkTheme, IconLightTheme } from '@common/constants';
 import type { JSX } from 'react';
 import styles from './ThemeSwitcher.module.scss';
 
-export const ICON_DARK_SIZE = 18;
-export const ICON_LIGHT_SIZE = 28;
+const ICON_DARK_SIZE = 18;
+const ICON_LIGHT_SIZE = 28;
 
 export const ThemeSwitcher = (): JSX.Element => {
   const { theme, toggleTheme } = useTheme();
