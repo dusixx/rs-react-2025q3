@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import type { CharacterInfo } from '@/services/api.types.ts';
+import type { CharacterInfo } from '@/services/server-actions/api/api.types';
 import { UNKNOWN } from '@common/constants';
 import {
   getEpisodes,

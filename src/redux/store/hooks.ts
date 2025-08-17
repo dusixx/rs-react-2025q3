@@ -1,4 +1,4 @@
-import type { CharacterInfo } from '@/services/api.types.ts';
+import type { CharacterInfo } from '@/services/server-actions/api/api.types.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import type { StoreDispatch, StoreState } from './store.ts';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import type { CharacterInfo } from '@/services/api.types.ts';
+import type { CharacterInfo } from '@/services/server-actions/api/api.types';
 import { Checkbox } from '@components/Checkbox/Checkbox.tsx';
 import type { ComponentPropsWithRef, JSX } from 'react';
 import { addInfo, removeInfo } from 'src/redux/store/charactersSlice.ts';

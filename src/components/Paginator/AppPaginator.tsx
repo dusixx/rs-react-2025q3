@@ -10,7 +10,7 @@ import { Paginator } from './Paginator.tsx';
 type AppPaginatorProps = Pick<PaginatorProps, 'totalPages' | 'className'>;
 
 const getPage = (page?: string): number => {
-  return isNumericPositiveInteger(String(page)) ? Number(page) : INITIAL_PAGE;
+  return isNumericPositiveInteger(page ?? '') ? Number(page) : INITIAL_PAGE;
 };
 
 export const AppPaginator = ({ totalPages }: AppPaginatorProps): ReactNode => {

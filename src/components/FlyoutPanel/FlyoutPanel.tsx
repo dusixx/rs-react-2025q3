@@ -1,25 +1,20 @@
 'use client';
 
-import type { DownloadInit } from '@components/DownloadLink/DownloadLink.tsx';
-import { DownloadLink } from '@components/DownloadLink/DownloadLink.tsx';
+import { IconDownload } from '@/common/constants/icons.ts';
 import { useTranslations } from 'next-intl';
-import { useCallback, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { clearInfos } from 'src/redux/store/charactersSlice.ts';
 import { useAppDispatch, useSelectedInfos } from 'src/redux/store/hooks.ts';
 import styles from './FlyoutPanel.module.scss';
-import { getDownloadInitProps } from './FlyoutPanel.utils.ts';
+import { saveInfosToCSVFile } from './FlyoutPanel.utils.ts';
+
+const ICON_SIZE = 16;
 
 export const FlyoutPanel = (): ReactNode => {
   const dispatch = useAppDispatch();
   const selectedInfos = Object.values(useSelectedInfos() ?? {});
   const t = useTranslations();
 
-  const handleDownloadClick = useCallback(
-    (initDownload: DownloadInit): void => {
-      initDownload(getDownloadInitProps(selectedInfos));
-    },
-    [selectedInfos],
-  );
   if (!selectedInfos.length) {
     return;
   }
@@ -33,7 +28,17 @@ export const FlyoutPanel = (): ReactNode => {
           <button className={styles.btn} type='button' onClick={() => dispatch(clearInfos())}>
             {t('Button.Unselect')}
           </button>
-          <DownloadLink onClick={handleDownloadClick} />
+          <button
+            className={styles.btn}
+            type='button'
+            style={{ backgroundColor: 'var(--color-accent)' }}
+            onClick={() => {
+              void saveInfosToCSVFile(selectedInfos);
+            }}
+          >
+            <IconDownload size={ICON_SIZE} role='img' />
+            {t('Button.Download')}
+          </button>
         </div>
       </div>
     </div>

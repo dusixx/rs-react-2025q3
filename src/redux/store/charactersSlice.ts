@@ -1,4 +1,4 @@
-import type { CharacterInfo } from '@/services/api.types.ts';
+import type { CharacterInfo } from '@/services/server-actions/api/api.types';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 

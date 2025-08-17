@@ -1,6 +1,6 @@
 import { AddToFav } from '@/components/CardList/components/Card/components/AddToFav.tsx';
+import type { CharacterInfo } from '@/services/server-actions/api/api.types.ts';
 import { IconLocation, UNKNOWN } from '@common/constants/index.ts';
-import type { CharacterInfo } from '@services/api.types.ts';
 import clsx from 'clsx';
 import Image from 'next/image';
 import type { ReactNode } from 'react';

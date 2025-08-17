@@ -2,7 +2,6 @@ import AppLayout from '@/components/AppLayout/AppLayout';
 import ProvidersWrapper from '@/components/ProvidersWrapper/ProvidersWrapper.tsx';
 import { routing } from '@/i18n/routing';
 import '@/styles/global.scss';
-import type { useMessages } from 'next-intl';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { Geist } from 'next/font/google';
 import { notFound } from 'next/navigation';
@@ -16,7 +15,7 @@ const geist = Geist({
 
 type LocaleLayoutProps = {
   children: React.ReactNode;
-  params: Promise<{ locale: string; messages: ReturnType<typeof useMessages> }>;
+  params: Promise<{ locale: string }>;
 };
 
 export default async function LocaleLayout({
@@ -24,9 +23,11 @@ export default async function LocaleLayout({
   params,
 }: LocaleLayoutProps): Promise<ReactNode> {
   const { locale } = await params;
+
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+
   return (
     <html lang={locale} className={geist.className} data-scroll-behavior='smooth'>
       <body>

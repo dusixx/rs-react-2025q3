@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
-import SearchPage from '@/components/pages/SearchPage/SearchPage.tsx';
 import type { PropsWithAppSearchParams } from '@/hooks/useAppCustomSearchParams.ts';
+import SearchPage from '@components/pages/SearchPage/SearchPage';
 import type { Metadata } from 'next';
 import { type ReactNode } from 'react';
 

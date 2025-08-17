@@ -1,12 +1,12 @@
 import { NavButton } from '@/components/NavButton/NavButton.tsx';
 import { Link } from '@/i18n/navigation.ts';
 import { AUTHOR_GITHUB_URL, COURSE_PAGE_URL, LINK_PROPS } from '@common/constants';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import styles from './AboutPage.module.scss';
 
-export default async function AboutPage(): Promise<ReactNode> {
-  const t = await getTranslations();
+export default function AboutPage(): ReactNode {
+  const t = useTranslations();
   return (
     <div className={styles.wrapper}>
       <div className={styles.info}>

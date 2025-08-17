@@ -2,14 +2,12 @@ import { AppLocales, ERR_SOMETHING_WRONG, RoutePath } from '@/common/constants/i
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
-export default function GlobalNotFound(): ReactNode {
+export default function NotFoundGlobal(): ReactNode {
   return (
     <html lang={AppLocales.EN}>
       <body>
         <div>{ERR_SOMETHING_WRONG}</div>
-        <Link href={RoutePath.Home} style={{ color: 'var(--color-accent)' }}>
-          Go Home
-        </Link>
+        <Link href={RoutePath.Home}>Go Home</Link>
       </body>
     </html>
   );

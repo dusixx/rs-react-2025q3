@@ -9,16 +9,10 @@ export const ICON_DARK_SIZE = 18;
 export const ICON_LIGHT_SIZE = 28;
 
 export const ThemeSwitcher = (): JSX.Element => {
-  const { theme, setTheme } = useTheme();
-
+  const { theme, toggleTheme } = useTheme();
   return (
     <div className={styles.switcher}>
-      <button
-        className={styles.btn}
-        onClick={() => {
-          setTheme(theme === 'dark' ? 'light' : 'dark');
-        }}
-      >
+      <button className={styles.btn} onClick={toggleTheme}>
         {theme === 'light' ? (
           <IconDarkTheme size={ICON_DARK_SIZE} role='img' />
         ) : (

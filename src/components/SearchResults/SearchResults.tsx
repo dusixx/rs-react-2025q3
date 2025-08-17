@@ -1,6 +1,6 @@
 import { getErrorMessage } from '@/common/utils/index.ts';
 import type { PropsWithAppSearchParams } from '@/hooks/useAppCustomSearchParams.ts';
-import { getCharactersByName } from '@/services/api.ts';
+import { getCharactersByName } from '@/services/server-actions/api/api.ts';
 import { ERR_SOMETHING_WRONG, INITIAL_PAGE } from '@common/constants';
 import { CardList } from '@components/CardList/CardList.tsx';
 import { ErrorInfo } from '@components/ErrorInfo/ErrorInfo.tsx';

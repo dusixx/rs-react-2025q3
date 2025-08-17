@@ -11,7 +11,7 @@ const getPersistedTheme = (defaultTheme: Theme = 'light'): Theme => {
   return isTheme(persisted) ? persisted : defaultTheme;
 };
 
-const toggleTheme = (theme: Theme): void => {
+const toggleClass = (theme: Theme): void => {
   document.documentElement.classList.toggle(DARK_THEME_CLASS, theme === 'dark');
 };
 
@@ -19,12 +19,15 @@ export default function ThemeProvider({ children }: PropsWithChildren): JSX.Elem
   const [theme, _setTheme] = useState<Theme>(getPersistedTheme());
 
   useEffect(() => {
-    toggleTheme(theme);
+    toggleClass(theme);
   }, [theme]);
 
   const setTheme = (theme: Theme): void => {
     _setTheme(theme);
     localStorage.setItem(LocalStorageKey.Theme, theme);
   };
-  return <ThemeContext value={{ theme, setTheme }}>{children}</ThemeContext>;
+  const toggleTheme = (): void => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+  return <ThemeContext value={{ theme, setTheme, toggleTheme }}>{children}</ThemeContext>;
 }

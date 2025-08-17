@@ -1,5 +1,5 @@
 import { getErrorMessage } from '@/common/utils/index.ts';
-import { getCharacterById } from '@/services/api.ts';
+import { getCharacterById } from '@/services/server-actions/api/api.ts';
 import { ERR_SOMETHING_WRONG } from '@common/constants/index.ts';
 import { ErrorInfo } from '@components/ErrorInfo/ErrorInfo.tsx';
 import Image from 'next/image';

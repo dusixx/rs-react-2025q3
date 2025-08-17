@@ -1,5 +1,12 @@
-import type { CharacterGender, CharacterLocation, CharacterStatus } from '@/services/api.types.ts';
-import { isLikeCharacterGender, isLikeCharacterStatus } from '@/services/api.utils.ts';
+import type {
+  CharacterGender,
+  CharacterLocation,
+  CharacterStatus,
+} from '@/services/server-actions/api/api.types';
+import {
+  isLikeCharacterGender,
+  isLikeCharacterStatus,
+} from '@/services/server-actions/api/api.utils';
 import { IconFemale, IconMale, IconMaleFemale } from '@common/constants';
 import type { IconType } from 'react-icons';
 

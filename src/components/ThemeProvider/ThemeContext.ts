@@ -9,6 +9,7 @@ export type Theme = 'dark' | 'light';
 export type ThemeContextProps = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  toggleTheme: () => void;
 };
 export const ThemeContext = createContext<ThemeContextProps | null>(null);
 
