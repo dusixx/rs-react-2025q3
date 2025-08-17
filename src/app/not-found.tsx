@@ -1,5 +1,3 @@
-'use client';
-
 import { AppLocales, ERR_SOMETHING_WRONG, RoutePath } from '@/common/constants/index.ts';
 import Link from 'next/link';
 import type { ReactNode } from 'react';

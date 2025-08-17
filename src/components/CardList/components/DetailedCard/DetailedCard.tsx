@@ -4,7 +4,7 @@ import { ERR_SOMETHING_WRONG } from '@common/constants/index.ts';
 import { ErrorInfo } from '@components/ErrorInfo/ErrorInfo.tsx';
 import Image from 'next/image';
 import { type ReactNode } from 'react';
-import { CloseBtn } from './components/CloseBtn/CloseBtn.tsx';
+import { CloseBtn } from './components/CloseBtn.tsx';
 import { Description } from './components/Description/Description.tsx';
 import styles from './DetailedCard.module.scss';
 

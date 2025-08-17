@@ -1,30 +1,30 @@
 import { NavButton } from '@/components/NavButton/NavButton.tsx';
 import { Link } from '@/i18n/navigation.ts';
 import { AUTHOR_GITHUB_URL, COURSE_PAGE_URL, LINK_PROPS } from '@common/constants';
+import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
 import styles from './AboutPage.module.scss';
 
-const BTN_TEXT = 'Go Back';
-
-export default function AboutPage(): ReactNode {
+export default async function AboutPage(): Promise<ReactNode> {
+  const t = await getTranslations();
   return (
     <div className={styles.wrapper}>
       <div className={styles.info}>
         <span>
-          Made by{' '}
+          {t('AboutPage.MadeBy')}{' '}
           <Link {...LINK_PROPS} href={AUTHOR_GITHUB_URL}>
             dusixx
           </Link>
         </span>
         <span>
-          as part of the{' '}
+          {t('AboutPage.AsPart')}{' '}
           <Link {...LINK_PROPS} href={COURSE_PAGE_URL}>
-            React Course
+            {t('AboutPage.ReactCourse')}
           </Link>{' '}
-          at RSSchool
+          {t('AboutPage.AtRSSchool')}
         </span>
       </div>
-      <NavButton action='back' text={BTN_TEXT} className={styles.btn} />
+      <NavButton action='back' text={t('Button.Back')} className={styles.btn} />
     </div>
   );
 }

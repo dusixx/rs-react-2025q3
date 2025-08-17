@@ -1,11 +1,11 @@
 'use client';
 
 import { IconDownload } from '@common/constants';
+import { useTranslations } from 'next-intl';
 import type { PropsWithChildren } from 'react';
 import { useCallback, useEffect, useState, type JSX } from 'react';
 import styles from './DownloadLink.module.scss';
 
-export const DEFAULT_TEXT = 'Download';
 export const DEFAULT_TYPE = 'text/plain;charset=utf-8;';
 const DEFAULT_FILENAME = crypto.randomUUID().replace(/-/g, '').slice(0, 10);
 const ICON_SIZE = 16;
@@ -24,6 +24,7 @@ export type DownloadLinkProps = PropsWithChildren & {
 export const DownloadLink = ({ onClick, children }: DownloadLinkProps): JSX.Element => {
   const [url, setUrl] = useState<string>();
   const [download, setDownload] = useState<string>();
+  const t = useTranslations();
 
   useEffect(() => {
     return (): void => {
@@ -63,7 +64,7 @@ export const DownloadLink = ({ onClick, children }: DownloadLinkProps): JSX.Elem
       ) : (
         <>
           <IconDownload size={ICON_SIZE} role='img' />
-          {DEFAULT_TEXT}
+          {t('Button.Download')}
         </>
       )}
     </a>

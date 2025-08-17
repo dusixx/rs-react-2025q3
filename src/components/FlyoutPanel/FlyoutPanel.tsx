@@ -2,18 +2,17 @@
 
 import type { DownloadInit } from '@components/DownloadLink/DownloadLink.tsx';
 import { DownloadLink } from '@components/DownloadLink/DownloadLink.tsx';
+import { useTranslations } from 'next-intl';
 import { useCallback, type ReactNode } from 'react';
 import { clearInfos } from 'src/redux/store/charactersSlice.ts';
 import { useAppDispatch, useSelectedInfos } from 'src/redux/store/hooks.ts';
 import styles from './FlyoutPanel.module.scss';
 import { getDownloadInitProps } from './FlyoutPanel.utils.ts';
 
-export const BTN_UNSELECT_TEXT = 'Unselect All';
-export const ITEMS_COUNT_LABEl = 'Total selected';
-
 export const FlyoutPanel = (): ReactNode => {
   const dispatch = useAppDispatch();
   const selectedInfos = Object.values(useSelectedInfos() ?? {});
+  const t = useTranslations();
 
   const handleDownloadClick = useCallback(
     (initDownload: DownloadInit): void => {
@@ -28,11 +27,11 @@ export const FlyoutPanel = (): ReactNode => {
     <div className={styles.panel}>
       <div className={styles['inner-wrapper']}>
         <span>
-          {ITEMS_COUNT_LABEl}: <b>{selectedInfos.length}</b>
+          {t('FlyoutPanel.TotalSelected')}: <b>{selectedInfos.length}</b>
         </span>
         <div className={styles.group}>
           <button className={styles.btn} type='button' onClick={() => dispatch(clearInfos())}>
-            {BTN_UNSELECT_TEXT}
+            {t('Button.Unselect')}
           </button>
           <DownloadLink onClick={handleDownloadClick} />
         </div>

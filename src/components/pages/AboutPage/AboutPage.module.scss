@@ -17,13 +17,6 @@
   flex-direction: column;
   gap: 8px;
   align-items: center;
-
-  a {
-    @extend %link;
-
-    font-style: italic;
-    text-decoration: underline;
-  }
 }
 
 .btn {

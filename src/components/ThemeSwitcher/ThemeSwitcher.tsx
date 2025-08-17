@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '@/components/ThemeProvider/ThemeContext';
 import { IconDarkTheme, IconLightTheme } from '@common/constants';
 import type { JSX } from 'react';

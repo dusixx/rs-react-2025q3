@@ -9,14 +9,17 @@ import { Paginator } from './Paginator.tsx';
 
 type AppPaginatorProps = Pick<PaginatorProps, 'totalPages' | 'className'>;
 
+const getPage = (page?: string): number => {
+  return isNumericPositiveInteger(String(page)) ? Number(page) : INITIAL_PAGE;
+};
+
 export const AppPaginator = ({ totalPages }: AppPaginatorProps): ReactNode => {
   const { setParams, getParams } = useAppCustomSearchParams();
-  const [initialPage = INITIAL_PAGE] = getParams('page');
-
+  const [initialPage] = getParams('page');
   return (
     <Paginator
       totalPages={totalPages}
-      initialPage={isNumericPositiveInteger(initialPage) ? Number(initialPage) : INITIAL_PAGE}
+      initialPage={getPage(initialPage)}
       onClick={page => {
         setParams({ page });
       }}

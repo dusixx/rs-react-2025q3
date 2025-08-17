@@ -1,11 +1,14 @@
-import { Footer } from '@/components/Layout/components/Footer/Footer.tsx';
-import { Header } from '@/components/Layout/components/Header/Header.tsx';
+import AppLayout from '@/components/AppLayout/AppLayout';
+import ProvidersWrapper from '@/components/ProvidersWrapper/ProvidersWrapper.tsx';
 import { routing } from '@/i18n/routing';
-import { hasLocale } from 'next-intl';
+import '@/styles/global.scss';
+import type { useMessages } from 'next-intl';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { Geist } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
-import Providers from './providers.tsx';
+
+const ROOT_ID = 'root';
 
 const geist = Geist({
   subsets: ['latin'],
@@ -13,7 +16,7 @@ const geist = Geist({
 
 type LocaleLayoutProps = {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: string; messages: ReturnType<typeof useMessages> }>;
 };
 
 export default async function LocaleLayout({
@@ -27,12 +30,12 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={geist.className} data-scroll-behavior='smooth'>
       <body>
-        <div id='root'>
-          <Providers locale={locale}>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </Providers>
+        <div id={ROOT_ID}>
+          <ProvidersWrapper>
+            <NextIntlClientProvider>
+              <AppLayout>{children}</AppLayout>
+            </NextIntlClientProvider>
+          </ProvidersWrapper>
         </div>
       </body>
     </html>

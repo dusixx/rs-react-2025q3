@@ -1,9 +1,8 @@
 'use client';
 
 import { useAppCustomSearchParams } from '@/hooks/useAppCustomSearchParams.ts';
+import { useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
-
-const CLOSE_BTN_TEXT = 'Close';
 
 type CloseBtnProps = {
   className?: string;
@@ -11,7 +10,7 @@ type CloseBtnProps = {
 
 export const CloseBtn = ({ className }: CloseBtnProps): ReactNode => {
   const { deleteParams } = useAppCustomSearchParams();
-
+  const t = useTranslations();
   return (
     <button
       className={className}
@@ -20,7 +19,7 @@ export const CloseBtn = ({ className }: CloseBtnProps): ReactNode => {
         deleteParams('details');
       }}
     >
-      {CLOSE_BTN_TEXT}
+      {t('Button.Close')}
     </button>
   );
 };

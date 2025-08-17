@@ -1,5 +1,3 @@
-'use client';
-
 import type { CharacterInfo } from '@/services/api.types.ts';
 import clsx from 'clsx';
 import type { JSX } from 'react';

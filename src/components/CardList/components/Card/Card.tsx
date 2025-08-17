@@ -1,12 +1,9 @@
-'use client';
-
+import { AddToFav } from '@/components/CardList/components/Card/components/AddToFav.tsx';
 import { IconLocation, UNKNOWN } from '@common/constants/index.ts';
-import { AddToFav } from '@components/CardList/components/Card/components/AddToFav/AddToFav.tsx';
-import { useAppCustomSearchParams } from '@hooks/useAppCustomSearchParams.ts';
 import type { CharacterInfo } from '@services/api.types.ts';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { type JSX, type SyntheticEvent } from 'react';
+import type { ReactNode } from 'react';
 import styles from './Card.module.scss';
 import {
   getGenderIcon,
@@ -14,8 +11,9 @@ import {
   getStatusIndicatorStyle,
   getThumbStyle,
 } from './Card.utils.ts';
+import { CardWrapper } from './components/CardWrapper.tsx';
 
-const ADD_TO_FAV_ID = 'add-to-fav-button';
+export const ADD_TO_FAV_ID = 'add-to-fav-button';
 const ICON_PROPS = {
   size: 16,
   color: 'var(--color-green-gray)',
@@ -26,8 +24,7 @@ type CardProps = {
   className?: string;
 };
 
-export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
-  const { setParams } = useAppCustomSearchParams();
+export const Card = ({ info, className }: CardProps): ReactNode => {
   const {
     id,
     image,
@@ -37,18 +34,10 @@ export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
     gender = UNKNOWN,
     species = UNKNOWN,
   } = info;
-
-  const handleCardClick = ({ target }: SyntheticEvent): void => {
-    if (target instanceof Element && target.closest(`#${ADD_TO_FAV_ID}`)) {
-      return;
-    }
-    setParams({ details: id });
-    onClick?.(id);
-  };
   const IconGender = getGenderIcon(gender);
 
   return (
-    <article className={clsx(styles.card, className)} onClick={handleCardClick}>
+    <CardWrapper className={clsx(styles.card, className)} cardId={id}>
       <div className={styles.thumb} style={getThumbStyle(image)}>
         {image && (
           <Image
@@ -82,6 +71,6 @@ export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
           <p>{getLocationName(location) || UNKNOWN}</p>
         </li>
       </ul>
-    </article>
+    </CardWrapper>
   );
 };

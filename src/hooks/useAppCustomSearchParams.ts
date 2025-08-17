@@ -1,3 +1,5 @@
+'use client';
+
 import { useCustomSearchParams } from './useCustomSearchParams.ts';
 
 export type AppCustomSearchParam = Partial<{
@@ -6,7 +8,7 @@ export type AppCustomSearchParam = Partial<{
   q: string;
 }>;
 
-export type PropsWithAppSearchParams = {
+export type PropsWithAppSearchParams<P = unknown> = P & {
   searchParams?: Promise<AppCustomSearchParam>;
 };
 

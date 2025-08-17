@@ -1,1 +1,29 @@
-{}
+{
+  "Button": {
+    "About": "About",
+    "Back": "Go Back",
+    "Home": "Go Home",
+    "Close": "Close",
+    "Download": "Download",
+    "Unselect": "Unselect all"
+  },
+  "AboutPage": {
+    "MadeBy": "Made by",
+    "AsPart": "as part of the",
+    "ReactCourse": "React Course",
+    "AtRSSchool": "at RSSchool"
+  },
+  "ErrorPage": {
+    "NotFound": "The requested page was not found"
+  },
+  "SearchPage": {
+    "InputPlaceholder": "Character name..."
+  },
+  "FlyoutPanel": {
+    "TotalSelected": "Total selected"
+  },
+  "Hint": {
+    "NoNeed": "There is no need",
+    "Action": "to translate the data that comes from the API"
+  }
+}
