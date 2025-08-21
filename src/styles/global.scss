@@ -1,0 +1,27 @@
+@use './utils/reset';
+@use './utils/mixins' as mix;
+
+body {
+  overflow-y: scroll;
+
+  font-family: 'Open sans', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text);
+
+  background-color: var(--color-body-bg);
+
+  @include mix.main-transition;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0 16px;
+}
