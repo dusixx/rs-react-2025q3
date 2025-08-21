@@ -1,9 +1,9 @@
 'use client';
 
 import { AppLocales } from '@/common/constants/index.ts';
+import { useAppCustomSearchParams } from '@/hooks/useAppCustomSearchParams.ts';
 import { usePathname, useRouter } from '@/i18n/navigation.ts';
 import { useLocale } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import { useTransition, type ReactNode } from 'react';
 import styles from './LangSwitcher.module.scss';
 
@@ -16,15 +16,12 @@ export const LangSwitcher = (): ReactNode => {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const { getQueryParams } = useAppCustomSearchParams();
   const [isPending, startTransition] = useTransition();
 
   const toggleLang = (): void => {
     startTransition(() => {
-      router.replace(
-        { pathname, query: Object.fromEntries(searchParams.entries()) },
-        { locale: getLocale(locale) },
-      );
+      router.replace({ pathname, query: getQueryParams() }, { locale: getLocale(locale) });
     });
   };
   return (

@@ -14,7 +14,7 @@ type NavButtonProps = PropsWithChildren & {
   text?: string;
 } & (RedirectProps | RouterAction);
 
-export const NavButton = ({ className, text, children, ...rest }: NavButtonProps): ReactNode => {
+export const NavBtn = ({ className, text, children, ...rest }: NavButtonProps): ReactNode => {
   const router = useRouter();
   const locale = useLocale();
 

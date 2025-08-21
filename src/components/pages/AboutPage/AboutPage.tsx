@@ -1,4 +1,4 @@
-import { NavButton } from '@/components/NavButton/NavButton.tsx';
+import { NavBtn } from '@/components/NavButton/NavBtn';
 import { Link } from '@/i18n/navigation.ts';
 import { AUTHOR_GITHUB_URL, COURSE_PAGE_URL, LINK_PROPS } from '@common/constants';
 import { useTranslations } from 'next-intl';
@@ -24,7 +24,7 @@ export default function AboutPage(): ReactNode {
           {t('AboutPage.AtRSSchool')}
         </span>
       </div>
-      <NavButton action='back' text={t('Button.Back')} className={styles.btn} />
+      <NavBtn action='back' text={t('Button.Back')} className={styles.btn} />
     </div>
   );
 }

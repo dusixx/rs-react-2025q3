@@ -5,8 +5,9 @@ import { ERR_SOMETHING_WRONG, INITIAL_PAGE } from '@common/constants';
 import { CardList } from '@components/CardList/CardList.tsx';
 import { ErrorInfo } from '@components/ErrorInfo/ErrorInfo.tsx';
 import clsx from 'clsx';
-import type { ReactNode } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import { DetailedCard } from '../CardList/components/DetailedCard/DetailedCard.tsx';
+import { Loader } from '../Loader/Loader.tsx';
 import { AppPaginator } from '../Paginator/AppPaginator.tsx';
 import styles from './SearchResults.module.scss';
 
@@ -35,7 +36,11 @@ export const SearchResults = async ({
       </div>
       <div className={styles.results}>
         <CardList className={clsx(details && styles.list)} infos={data.results} />
-        {details && <DetailedCard id={details} />}
+        {details && (
+          <Suspense fallback={<Loader />}>
+            <DetailedCard id={details} />
+          </Suspense>
+        )}
       </div>
     </div>
   );

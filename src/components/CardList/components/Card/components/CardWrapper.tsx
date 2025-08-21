@@ -1,5 +1,6 @@
 'use client';
 
+import { isClosestTo } from '@/common/utils/type-guards.ts';
 import { useAppCustomSearchParams } from '@/hooks/useAppCustomSearchParams.ts';
 import clsx from 'clsx';
 import type { PropsWithChildren, ReactNode, SyntheticEvent } from 'react';
@@ -15,7 +16,8 @@ export const CardWrapper = ({ children, className, cardId }: CardWrapperProps): 
   const { setParams } = useAppCustomSearchParams();
 
   const handleClick = ({ target }: SyntheticEvent): void => {
-    if (target instanceof Element && target.closest(`#${ADD_TO_FAV_ID}`)) {
+    if (isClosestTo(target, `#${ADD_TO_FAV_ID}`)) {
+      console.log(target);
       return;
     }
     setParams({ details: cardId });

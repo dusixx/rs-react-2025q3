@@ -1,21 +1,28 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
 import { usePathname, useRouter } from '@/i18n/navigation.ts';
-import { mapObjectValues } from '@utils/index.ts';
+import { hasOwnKeys, mapObjectValues } from '@utils/index.ts';
 import { useSearchParams, type ReadonlyURLSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
 export type UseCustomSearchParamsResult<P extends Record<string, unknown>> = {
   searchParams: ReadonlyURLSearchParams | null;
-  setParams: (props: P) => void;
-  createParams: (props: P) => void;
+  getQueryParams: () => Record<string, string>;
+  setParams: (props: P, opts?: Options) => void;
+  createParams: (props: P, opts?: Options) => void;
   getParams: (...keys: (keyof P)[]) => (string | undefined)[];
-  deleteParams: (...keys: (keyof P)[]) => void;
+  deleteParams: (...keys: (keyof P | Options)[]) => void;
   hasParams: (...keys: (keyof P)[]) => boolean;
-  clearParams: () => void;
+  clearParams: (opts?: Options) => void;
 };
 
+type Options = {
+  replace?: boolean;
+};
 const stringify = (value: unknown): string => {
   return value != null ? String(value) : '';
+};
+const isOptions = (v: unknown): v is Options => {
+  return hasOwnKeys<Options>(v, 'replace');
 };
 
 export const useCustomSearchParams = <
@@ -33,20 +40,23 @@ export const useCustomSearchParams = <
   );
 
   const createParams = useCallback(
-    (props: P): void => {
+    (props: P, opts?: Options): void => {
+      const action = opts?.replace ? 'replace' : 'push';
       const params = new URLSearchParams(mapObjectValues(props, stringify));
-      router.push(`${pathname}?${params.toString()}`);
+      router[action](`${pathname}?${params.toString()}`);
     },
     [router, pathname],
   );
 
   const setParams = useCallback(
-    (props: P): void => {
+    (props: P, opts?: Options): void => {
+      const action = opts?.replace ? 'replace' : 'push';
       const params = new URLSearchParams(searchParams.toString());
+
       Object.entries(props).forEach(([key, value]) => {
         params.set(key, stringify(value));
       });
-      router.push(`${pathname}?${params.toString()}`);
+      router[action](`${pathname}?${params.toString()}`);
     },
     [pathname, router, searchParams],
   );
@@ -60,19 +70,31 @@ export const useCustomSearchParams = <
   );
 
   const deleteParams = useCallback(
-    (...keys: (keyof P)[]): void => {
+    (...keys: (keyof P | Options)[]): void => {
+      const action = isOptions(keys[keys.length - 1]) ? 'replace' : 'push';
       const params = new URLSearchParams(searchParams.toString());
+
       keys.forEach(key => {
-        params.delete(key.toString());
+        if (!isOptions(key)) {
+          params.delete(key.toString());
+        }
       });
-      router.push(`${pathname}?${params.toString()}`);
+      router[action](`${pathname}?${params.toString()}`);
     },
     [searchParams, router, pathname],
   );
 
-  const clearParams = useCallback((): void => {
-    router.push(pathname);
-  }, [router, pathname]);
+  const clearParams = useCallback(
+    (opts?: Options): void => {
+      const action = opts?.replace ? 'replace' : 'push';
+      router[action](pathname);
+    },
+    [router, pathname],
+  );
+
+  const getQueryParams = useCallback((): Record<string, string> => {
+    return Object.fromEntries(searchParams.entries());
+  }, [searchParams]);
 
   return {
     searchParams,
@@ -82,5 +104,6 @@ export const useCustomSearchParams = <
     createParams,
     hasParams,
     clearParams,
+    getQueryParams,
   };
 };
