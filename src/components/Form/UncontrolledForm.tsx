@@ -8,7 +8,12 @@ import type { FormEvent } from 'react';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import styles from './styles.module.scss';
 import { VALID_FILE_TYPES } from './validation/validation.constants.ts';
-import { validateUserFormData, type UserFieldErrors } from './validation/validation.ts';
+import type { PasswordStrength } from './validation/validation.utils.ts';
+import {
+  getPasswordStrength,
+  validateUserFormData,
+  type UserFieldErrors,
+} from './validation/validation.utils.ts';
 
 const ERR_EMAIL_ALREADY_EXISTS = 'User with this email already exists';
 const AGREEMENT = 'Accept the terms of the agreement ';
@@ -19,8 +24,12 @@ export const UncontrolledForm = (): ReactNode => {
   const [errors, setErrors] = useState<UserFieldErrors>({});
   const [exists, setExists] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState<PasswordStrength>('weak');
+
   const nameInputRef = useRef<HTMLInputElement>(null);
   const maleInputRef = useRef<HTMLInputElement>(null);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
+
   const countryList = useCountries();
   const dispatch = useAppDispatch();
   const users = useUsers();
@@ -38,6 +47,8 @@ export const UncontrolledForm = (): ReactNode => {
     e.preventDefault();
     const result = validateUserFormData(getFormData(e));
 
+    setPasswordStrength(getPasswordStrength(passwordInputRef.current?.value ?? ''));
+
     if (result.success) {
       const user = {
         ...result.data,
@@ -45,11 +56,10 @@ export const UncontrolledForm = (): ReactNode => {
       };
       const alreadyExists = Boolean(users[user.email]);
       setExists(alreadyExists);
-
       if (!alreadyExists) {
         dispatch(addUser(user));
-        setErrors({});
       }
+      setErrors({});
     } else {
       setErrors(result.fieldErrors);
     }
@@ -75,8 +85,18 @@ export const UncontrolledForm = (): ReactNode => {
       <fieldset className={styles.group}>
         <label>
           <span>{LabelName.Password}</span>
-          <input type={showPassword ? 'text' : 'password'} name={LabelName.Password} />
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name={LabelName.Password}
+            ref={passwordInputRef}
+          />
           {errors.password && <p className={styles.error}>{errors.password[0]}</p>}
+          {passwordStrength !== 'weak' && (
+            <p
+              className={styles.error}
+              style={{ color: 'var(--color-green)' }}
+            >{`Password: ${passwordStrength}`}</p>
+          )}
         </label>
         <label>
           <span>{LabelName.Confirm}</span>
