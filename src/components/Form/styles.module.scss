@@ -1,0 +1,75 @@
+$fields-gap: 28px;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $fields-gap;
+
+  width: 380px;
+  padding: 20px;
+  border-radius: var(--border-radius);
+
+  background-color: white;
+
+  label {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    span {
+      margin-bottom: 2px;
+      font-size: 12px;
+      text-transform: capitalize;
+    }
+  }
+
+  input[type='text'],
+  input[type='number'],
+  input[type='password'],
+  input[list] {
+    @extend %text-input;
+
+    height: 32px;
+  }
+}
+
+.btn {
+  @extend %btn-primary;
+
+  margin-top: 4px;
+  background-color: var(--color-accent);
+}
+
+.gender {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+label.label {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+}
+
+.terms {
+  margin-top: 12px;
+}
+
+.error {
+  position: absolute;
+  bottom: -16px;
+  font-size: 10px;
+  color: var(--color-accent);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: $fields-gap;
+
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+}
