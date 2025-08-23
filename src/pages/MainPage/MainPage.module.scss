@@ -29,5 +29,12 @@
 .btn {
   @extend %btn-primary;
 
+  width: 200px;
+}
+
+.group {
+  display: flex;
+  gap: 20px;
+  margin: auto;
   margin-top: 24px;
 }
