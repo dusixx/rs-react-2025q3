@@ -87,6 +87,12 @@
   &::placeholder {
     opacity: 0.7;
   }
+
+  @include mix.main-transition('border-color');
+
+  &:focus {
+    border-color: var(--color-green-gray);
+  }
 }
 
 %bottom-line {
