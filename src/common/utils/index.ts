@@ -65,7 +65,7 @@ export const capitalize = (str: string, locale: string = navigator.language): st
   return str.replace(/^\p{CWU}/u, char => char.toLocaleUpperCase(locale));
 };
 
-export const isKeyPressed = (key: KeyboardEventKey, event: Event): boolean => {
+export const isKeyPressed = (key: keyof typeof KeyboardEventKey, event: Event): boolean => {
   if (!(event instanceof KeyboardEvent)) {
     return false;
   }
@@ -94,7 +94,7 @@ export const fileToBase64 = async (file: File): Promise<string> => {
   });
 };
 
-export const getOrCreateElementById = (
+export const getOrCreateElementWithId = (
   id: string,
   tag: keyof HTMLElementTagNameMap = 'div',
 ): HTMLElement => {

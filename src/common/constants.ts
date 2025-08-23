@@ -47,7 +47,13 @@ export const LinkProps = {
   rel: 'noopener noreferrer nofollow',
 } as const;
 
-export enum KeyboardEventKey {
-  Escape = 'Escape',
-  Enter = 'Enter',
-}
+export const KeyboardEventKey = {
+  Escape: 'Escape',
+  Enter: 'Enter',
+} as const;
+
+export const MouseButton = {
+  Left: 0,
+  Middle: 1,
+  Right: 2,
+} as const;

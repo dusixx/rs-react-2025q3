@@ -52,4 +52,5 @@ export const TestId = {
   SearchResultsOutlet: 'search-results-outlet',
   FlyoutPanel: 'flyout-panel',
   ThemeSwitcher: 'theme-switcher',
+  ModalBackdrop: 'modal-backdrop',
 } as const;
