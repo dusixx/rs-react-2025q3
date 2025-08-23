@@ -1,14 +1,25 @@
-export const AGE_LIMIT = 18;
-export const GOOD_PASSWORD_LEN = 8;
-export const MIN_PASSWORD_LEN = 3;
-export const MAX_FILE_SIZE_MB = 2;
-export const MAX_FILE_SIZE_BYTES = 1024 ** 2 * MAX_FILE_SIZE_MB;
-export const VALID_FILE_TYPES = ['.png', '.jpg', '.jpeg'];
+/* eslint-disable max-len */
+export const AGE_MIN = 18;
+export const AGE_MAX = 80;
 
-const SPECIAL_CHARS = '!@#$%^&*';
+export const PASSWORD_MIN_LEN = 3;
+export const PASSWORD_GOOD_LEN = 6;
+export const PASSWORD_MAX_LEN = 12;
+
+export const NAME_MIN_LEN = 2;
+export const NAME_MAX_LEN = 15;
+
+export const FILE_MAX_SIZE_MB = 2;
+export const FILE_MAX_SIZE_BYTES = 1024 ** 2 * FILE_MAX_SIZE_MB;
+export const FILE_VALID_TYPES = ['.png', '.jpg', '.jpeg'];
+
+export const SPECIAL_CHARS = '!@#$%^&*';
+const NAME = `^[A-Z][a-z]{1,${(NAME_MAX_LEN - 1).toString()}}$`;
+
+console.log(RegExp(NAME));
 
 export const RegexPattern = {
-  Name: /^[A-Z][a-z]+/,
+  Name: RegExp(NAME),
   Email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   SpecialChar: RegExp(`[${SPECIAL_CHARS}]`),
   LcaseLatin: /[a-z]/,
@@ -17,14 +28,15 @@ export const RegexPattern = {
 } as const;
 
 export const ValidationMessage = {
-  Name: 'Must contain at least 2 latin letters, first capital',
-  Age: `Must be at least ${AGE_LIMIT.toString()} years old`,
-  Email: 'Invalid email',
+  Name: `Must contain only latin letters, length from ${NAME_MIN_LEN.toString()} to ${NAME_MAX_LEN.toString()}, first capital`,
+  Age: `Must be within: ${AGE_MIN.toString()} - ${AGE_MAX.toString()}`,
+  Email: 'Invalid email (e.g. login@domain.com)',
   Gender: 'Invalid gender',
   Country: 'Select a country from the list',
-  AvatarSize: `Maximum allowed size: ${MAX_FILE_SIZE_MB.toString()}MB`,
+  AvatarSize: `Maximum allowed size: ${FILE_MAX_SIZE_MB.toString()}MB`,
   AvatarRequired: 'Select an image file',
-  PasswordLen: `Must be at least ${MIN_PASSWORD_LEN.toString()} chars long`,
+  PasswordMin: `Must be at least ${PASSWORD_MIN_LEN.toString()} chars long`,
+  PasswordMax: `Must be no longer than ${PASSWORD_MAX_LEN.toString()}`,
   PasswordHint: `Too weak (allowed: ${SPECIAL_CHARS},  latin letters, numbers)`,
   PasswordNotMatch: 'Passwords do not match',
 } as const;

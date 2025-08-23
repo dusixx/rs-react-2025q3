@@ -2,7 +2,7 @@
 import type { getFormData } from '@/common/utils/index.ts';
 import type { User, UserWithConfirm } from '@/redux/user.ts';
 import { userSchema } from './user-schema.ts';
-import { GOOD_PASSWORD_LEN, RegexPattern } from './validation.constants.ts';
+import { PASSWORD_GOOD_LEN, RegexPattern } from './validation.constants.ts';
 
 export type UserFieldErrors = Partial<Record<keyof UserWithConfirm, string[]>>;
 
@@ -34,21 +34,13 @@ export const validateUserFormData = (
 export type PasswordStrength = 'weak' | 'medium' | 'strong';
 
 export const getPasswordStrength = (password: string): PasswordStrength => {
-  let result = 0;
-  if (password.length >= GOOD_PASSWORD_LEN) {
-    result += 1;
-  }
-  if (RegexPattern.UcaseLatin.test(password)) {
-    result += 1;
-  }
-  if (RegexPattern.LcaseLatin.test(password)) {
-    result += 1;
-  }
-  if (RegexPattern.Number.test(password)) {
-    result += 1;
-  }
-  if (RegexPattern.SpecialChar.test(password)) {
-    result += 1;
-  }
+  const result = [
+    password.length >= PASSWORD_GOOD_LEN,
+    RegexPattern.UcaseLatin.test(password),
+    RegexPattern.LcaseLatin.test(password),
+    RegexPattern.SpecialChar.test(password),
+    RegexPattern.Number.test(password),
+  ].reduce((res, value) => res + Number(value), 0);
+
   return result <= 2 ? 'weak' : result <= 4 ? 'medium' : 'strong';
 };

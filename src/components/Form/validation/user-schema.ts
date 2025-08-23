@@ -5,9 +5,11 @@ import { Gender } from '@/redux/user.ts';
 import type { ZodTypeAny } from 'zod';
 import z from 'zod';
 import {
-  AGE_LIMIT,
-  MAX_FILE_SIZE_BYTES,
-  MIN_PASSWORD_LEN,
+  AGE_MAX,
+  AGE_MIN,
+  FILE_MAX_SIZE_BYTES,
+  PASSWORD_MAX_LEN,
+  PASSWORD_MIN_LEN,
   RegexPattern,
   ValidationMessage,
 } from './validation.constants.ts';
@@ -20,9 +22,11 @@ export const userSchema = z
     name: z.string().regex(RegexPattern.Name, {
       message: ValidationMessage.Name,
     }),
-    age: z.string().refine(a => isNumericPositiveInteger(a) && Number(a) >= AGE_LIMIT, {
-      message: ValidationMessage.Age,
-    }),
+    age: z
+      .string()
+      .refine(a => isNumericPositiveInteger(a) && Number(a) >= AGE_MIN && Number(a) <= AGE_MAX, {
+        message: ValidationMessage.Age,
+      }),
     email: z.string().regex(RegexPattern.Email, {
       message: ValidationMessage.Email,
     }),
@@ -31,8 +35,11 @@ export const userSchema = z
     }),
     password: z
       .string()
-      .min(MIN_PASSWORD_LEN, {
-        message: ValidationMessage.PasswordLen,
+      .min(PASSWORD_MIN_LEN, {
+        message: ValidationMessage.PasswordMin,
+      })
+      .max(PASSWORD_MAX_LEN, {
+        message: ValidationMessage.PasswordMax,
       })
       .refine(p => getPasswordStrength(p) !== 'weak', {
         message: ValidationMessage.PasswordHint,
@@ -50,7 +57,7 @@ export const userSchema = z
       )
       .refine(
         file => {
-          return file.size <= MAX_FILE_SIZE_BYTES;
+          return file.size <= FILE_MAX_SIZE_BYTES;
         },
         { message: ValidationMessage.AvatarSize },
       ),
