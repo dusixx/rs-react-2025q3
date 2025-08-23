@@ -1,4 +1,6 @@
+import type { KeyboardEventKey } from '@common/constants.ts';
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
+import type { FormEvent } from 'react';
 import { isError, isInteger, isPositiveInteger, isString } from './type-guards.ts';
 
 export * from './type-guards.ts';
@@ -61,4 +63,46 @@ export const mapObjectValues = <T>(
 
 export const capitalize = (str: string, locale: string = navigator.language): string => {
   return str.replace(/^\p{CWU}/u, char => char.toLocaleUpperCase(locale));
+};
+
+export const isKeyPressed = (key: KeyboardEventKey, event: Event): boolean => {
+  if (!(event instanceof KeyboardEvent)) {
+    return false;
+  }
+  const { key: k, ctrlKey: ctrl, altKey: alt, shiftKey: shift } = event;
+  return k === key.toString() && !ctrl && !alt && !shift;
+};
+
+export const getFormData = (
+  obj: HTMLFormElement | FormEvent<HTMLFormElement>,
+): Record<string, FormDataEntryValue> => {
+  const form = obj instanceof HTMLFormElement ? obj : obj.currentTarget;
+  return Object.fromEntries(new FormData(form).entries());
+};
+
+export const fileToBase64 = async (file: File): Promise<string> => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+
+  return new Promise((resolve, reject) => {
+    reader.onload = (): void => {
+      resolve(isString(reader.result) ? reader.result : '');
+    };
+    reader.onerror = (error: unknown): void => {
+      reject(isError(error) ? error : Error(ERR_SOMETHING_WRONG));
+    };
+  });
+};
+
+export const getOrCreateElementById = (
+  id: string,
+  tag: keyof HTMLElementTagNameMap = 'div',
+): HTMLElement => {
+  let el = document.getElementById(id);
+  if (!el) {
+    el = document.createElement(tag);
+    el.id = id;
+    document.body.append(el);
+  }
+  return el;
 };
