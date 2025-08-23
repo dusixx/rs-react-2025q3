@@ -56,7 +56,6 @@ describe('Modal', () => {
 
   it('locks body scroll', async () => {
     render(<Modal open={true} scrollLock={true} />);
-
     await waitFor(() => {
       expect(screen.getByTestId(SCROLL_LOCK_TEST_ID)).toBeInTheDocument();
     });
@@ -64,7 +63,6 @@ describe('Modal', () => {
 
   it('does not lock body scroll', async () => {
     render(<Modal open={true} scrollLock={false} />);
-
     await waitFor(() => {
       expect(screen.queryByTestId(SCROLL_LOCK_TEST_ID)).toBeNull();
     });

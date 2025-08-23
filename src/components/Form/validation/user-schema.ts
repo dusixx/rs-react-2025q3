@@ -1,6 +1,6 @@
 import { isNumericPositiveInteger } from '@/common/utils/index.ts';
 import countryList from '@/data/country-list.ts';
-import type { UserWithAgreement } from '@/redux/user.ts';
+import type { UserWithConfirm } from '@/redux/user.ts';
 import { Gender } from '@/redux/user.ts';
 import type { ZodTypeAny } from 'zod';
 import z from 'zod';
@@ -13,7 +13,7 @@ import {
 } from './validation.constants.ts';
 import { getPasswordStrength } from './validation.utils.ts';
 
-type UserShape = Record<keyof UserWithAgreement, ZodTypeAny>;
+type UserShape = Record<keyof UserWithConfirm, ZodTypeAny>;
 
 export const userSchema = z
   .object<UserShape>({

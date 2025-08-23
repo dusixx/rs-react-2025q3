@@ -1,7 +1,6 @@
 import { TestId } from '@/test-utils/constants.ts';
-import { KeyboardEventKey } from '@common/constants.ts';
-import { getOrCreateElementById, isKeyPressed } from '@utils/index.ts';
-import type { PropsWithChildren, ReactNode, SyntheticEvent } from 'react';
+import { getOrCreateElementWithId, isKeyPressed } from '@utils/index.ts';
+import type { MouseEvent, PropsWithChildren, ReactNode } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './Modal.module.scss';
@@ -25,12 +24,12 @@ export const Modal = ({
   shouldCloseOnBackdropClick = true,
   scrollLock = true,
 }: ModalProps): ReactNode => {
-  const modalRootRef = useRef(getOrCreateElementById(MODAL_ROOT_ID));
+  const modalRootRef = useRef(getOrCreateElementWithId(MODAL_ROOT_ID));
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = useCallback(
     (event: Event): void => {
-      if (shouldCloseOnEsc && isKeyPressed(KeyboardEventKey.Escape, event)) {
+      if (shouldCloseOnEsc && isKeyPressed('Escape', event)) {
         onClose?.();
       }
     },
@@ -44,7 +43,7 @@ export const Modal = ({
     };
   }, [handleKeyDown]);
 
-  const handleBackdropClick = (e: SyntheticEvent): void => {
+  const handleBackdropMouseDown = (e: MouseEvent): void => {
     if (shouldCloseOnBackdropClick && e.target === e.currentTarget) {
       onClose?.();
     }
@@ -56,7 +55,7 @@ export const Modal = ({
     <div
       className={styles.backdrop}
       data-testid={TestId.ModalBackdrop}
-      onClick={handleBackdropClick}
+      onMouseDown={handleBackdropMouseDown}
     >
       {scrollLock && <BodyScrollLock />}
       <div className={styles.content} ref={contentRef}>

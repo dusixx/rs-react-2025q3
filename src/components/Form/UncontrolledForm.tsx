@@ -18,7 +18,7 @@ import {
 const ERR_EMAIL_ALREADY_EXISTS = 'User with this email already exists';
 const AGREEMENT = 'Accept the terms of the agreement ';
 const SHOW_PASSWORD = 'Show password';
-const SUBMIT_BTN_TEXT = 'Add';
+const SUBMIT_BTN_TEXT = 'Append';
 
 export const UncontrolledForm = (): ReactNode => {
   const [errors, setErrors] = useState<UserFieldErrors>({});
@@ -82,7 +82,7 @@ export const UncontrolledForm = (): ReactNode => {
         {errors.email && <p className={styles.error}>{errors.email}</p>}
         {exists && <p className={styles.error}>{ERR_EMAIL_ALREADY_EXISTS}</p>}
       </label>
-      <fieldset className={styles.group}>
+      <fieldset className={styles.fieldset}>
         <label>
           <span>{LabelName.Password}</span>
           <input

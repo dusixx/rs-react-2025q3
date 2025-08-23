@@ -22,7 +22,7 @@ export const ValidationMessage = {
   Email: 'Invalid email',
   Gender: 'Invalid gender',
   Country: 'Select a country from the list',
-  AvatarSize: `The file size must not exceed ${MAX_FILE_SIZE_MB.toString()}MB`,
+  AvatarSize: `Maximum allowed size: ${MAX_FILE_SIZE_MB.toString()}MB`,
   AvatarRequired: 'Select an image file',
   PasswordLen: `Must be at least ${MIN_PASSWORD_LEN.toString()} chars long`,
   PasswordHint: `Too weak (allowed: ${SPECIAL_CHARS},  latin letters, numbers)`,

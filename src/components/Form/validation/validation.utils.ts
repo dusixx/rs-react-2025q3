@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { getFormData } from '@/common/utils/index.ts';
-import type { User, UserWithAgreement } from '@/redux/user.ts';
+import type { User, UserWithConfirm } from '@/redux/user.ts';
 import { userSchema } from './user-schema.ts';
 import { GOOD_PASSWORD_LEN, RegexPattern } from './validation.constants.ts';
 
-export type UserFieldErrors = Partial<Record<keyof UserWithAgreement, string[]>>;
+export type UserFieldErrors = Partial<Record<keyof UserWithConfirm, string[]>>;
 
 type UserFormData = Omit<User, 'avatar'> & {
   avatar: File;
