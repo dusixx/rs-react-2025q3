@@ -1,5 +1,6 @@
 import { TestId } from '@/test-utils/constants.ts';
 import { getOrCreateElementWithId, isKeyPressed } from '@utils/index.ts';
+import clsx from 'clsx';
 import type { MouseEvent, PropsWithChildren, ReactNode } from 'react';
 import { useCallback, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
@@ -14,6 +15,7 @@ type ModalProps = PropsWithChildren & {
   shouldCloseOnEsc?: boolean;
   shouldCloseOnBackdropClick?: boolean;
   scrollLock?: boolean;
+  className?: string;
 };
 
 export const Modal = ({
@@ -23,6 +25,7 @@ export const Modal = ({
   shouldCloseOnEsc = true,
   shouldCloseOnBackdropClick = true,
   scrollLock = true,
+  className,
 }: ModalProps): ReactNode => {
   const modalRootRef = useRef(getOrCreateElementWithId(MODAL_ROOT_ID));
   const contentRef = useRef<HTMLDivElement>(null);
@@ -58,7 +61,7 @@ export const Modal = ({
       onMouseDown={handleBackdropMouseDown}
     >
       {scrollLock && <BodyScrollLock />}
-      <div className={styles.content} ref={contentRef}>
+      <div className={clsx(styles.content, className)} ref={contentRef}>
         {children}
       </div>
     </div>,
