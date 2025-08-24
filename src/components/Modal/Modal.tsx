@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { TestId } from '@/test-utils/constants.ts';
 import { getOrCreateElementWithId, isKeyPressed } from '@utils/index.ts';
 import clsx from 'clsx';
@@ -8,6 +9,14 @@ import styles from './Modal.module.scss';
 import { BodyScrollLock } from './components/BodyScrollLock.tsx';
 
 const MODAL_ROOT_ID = 'modal-root';
+const FOCUSABLE_ELEMENTS_SELECTOR = [
+  'a[href]:not([disabled])',
+  'button:not([disabled])',
+  'textarea:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  '*[tabindex]:not([tabindex="-1"])',
+].join(',');
 
 type ModalProps = PropsWithChildren & {
   open: boolean;
@@ -29,18 +38,42 @@ export const Modal = ({
 }: ModalProps): ReactNode => {
   const modalRootRef = useRef(getOrCreateElementWithId(MODAL_ROOT_ID));
   const contentRef = useRef<HTMLDivElement>(null);
+  const focusableElementsRef = useRef<NodeListOf<Element>>(undefined);
 
+  const handleTabKeyDown = (e: KeyboardEvent): void => {
+    const { current: focusable } = focusableElementsRef;
+    if (!focusable) {
+      return;
+    }
+    const first = focusable[0] as HTMLElement;
+    const last = focusable[focusable.length - 1] as HTMLElement;
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        last.focus();
+        e.preventDefault();
+      }
+    } else if (document.activeElement === last) {
+      first.focus();
+      e.preventDefault();
+    }
+  };
   const handleKeyDown = useCallback(
-    (event: Event): void => {
-      if (shouldCloseOnEsc && isKeyPressed('Escape', event)) {
+    (e: KeyboardEvent): void => {
+      if (shouldCloseOnEsc && isKeyPressed('Escape', e)) {
         onClose?.();
+      }
+      if (e.key === 'Tab') {
+        handleTabKeyDown(e);
       }
     },
     [onClose, shouldCloseOnEsc],
   );
-  useEffect(() => {
-    addEventListener('keydown', handleKeyDown);
 
+  useEffect(() => {
+    focusableElementsRef.current = contentRef.current?.querySelectorAll(
+      FOCUSABLE_ELEMENTS_SELECTOR,
+    );
+    addEventListener('keydown', handleKeyDown);
     return (): void => {
       removeEventListener('keydown', handleKeyDown);
     };
@@ -51,6 +84,7 @@ export const Modal = ({
       onClose?.();
     }
   };
+
   if (!open) {
     return;
   }
