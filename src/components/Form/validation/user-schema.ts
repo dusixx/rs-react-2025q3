@@ -5,6 +5,7 @@ import type { UserWithConfirm } from '@/redux/user.ts';
 import { Gender, LabelName } from '@/redux/user.ts';
 import type { ZodTypeAny } from 'zod';
 import z from 'zod';
+import { getPasswordStrength } from '../utils.ts';
 import {
   AGE_MAX,
   AGE_MIN,
@@ -14,7 +15,6 @@ import {
   RegexPattern,
   ValidationMessage,
 } from './validation.constants.ts';
-import { getPasswordStrength } from './validation.utils.ts';
 
 type UserShape = Record<keyof UserWithConfirm, ZodTypeAny>;
 

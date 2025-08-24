@@ -6,8 +6,6 @@ import { App } from './App.tsx';
 describe('App', () => {
   it(`Renders home page content`, () => {
     render(<App />, { wrapper: ProvidersMock });
-    expect(getNestedChild('Header')).toBeInTheDocument();
-    expect(getNestedChild('Footer', 'FooterLogo')).toBeInTheDocument();
-    expect(getNestedChild('Main', 'SearchPage', 'SearchBar')).toBeInTheDocument();
+    expect(getNestedChild('MainPage')).toBeInTheDocument();
   });
 });

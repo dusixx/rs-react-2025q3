@@ -5,6 +5,7 @@ import { useAppDispatch, useCountryList } from '@/redux/hooks.ts';
 import type { UserWithConfirm } from '@/redux/user.ts';
 import { Gender, isUser, LabelName } from '@/redux/user.ts';
 import { addUser } from '@/redux/usersSlice.ts';
+import { TestId } from '@/test-utils/constants.ts';
 import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import { useState, type ReactNode } from 'react';
@@ -17,10 +18,10 @@ import {
   SUBMIT_BTN_TEXT,
 } from '../constants.ts';
 import styles from '../styles.module.scss';
-import { generateControlledFormDataRandomly } from '../utils.ts';
+import { getPasswordStrength } from '../utils.ts';
 import { userSchema } from '../validation/user-schema.ts';
 import { FILE_VALID_TYPES } from '../validation/validation.constants.ts';
-import { getPasswordStrength } from '../validation/validation.utils.ts';
+import { generateControlledFormData } from './ControlledForm.utils.ts';
 
 export type FormProps = {
   closeModal?: () => void;
@@ -47,7 +48,7 @@ export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
   const passwordStrength = getPasswordStrength(password ?? '');
 
   const handleGenerateClick = (): void => {
-    generateControlledFormDataRandomly(setValue);
+    generateControlledFormData(setValue);
   };
 
   const onSubmit = handleSubmit(async (data: ControlledFormInputs): Promise<void> => {
@@ -62,7 +63,7 @@ export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
   });
 
   return (
-    <div>
+    <div data-testid={TestId.FormControlled}>
       <button className={styles.generate} onClick={handleGenerateClick}>
         {GENERATE_BTN_TEXT}
       </button>

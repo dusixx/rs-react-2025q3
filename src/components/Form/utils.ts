@@ -1,18 +1,17 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
 /* eslint-disable @typescript-eslint/no-unnecessary-type-parameters */
 import { rndInt } from '@/common/utils/index.ts';
 import countries from '@/data/country-list.ts';
 import { Gender, type UserWithConfirm } from '@/redux/user.ts';
-import type { UseFormSetValue } from 'react-hook-form';
 import { capitalize as cap } from './../../common/utils/index';
-import type { ControlledFormInputs } from './ControlledForm/ControlledForm.tsx';
 import {
   AGE_MAX,
   AGE_MIN,
   NAME_MAX_LEN,
   NAME_MIN_LEN,
+  PASSWORD_GOOD_LEN,
   PASSWORD_MAX_LEN,
   PASSWORD_MIN_LEN,
+  RegexPattern,
   SPECIAL_CHARS,
 } from './validation/validation.constants.ts';
 
@@ -73,9 +72,7 @@ export const setInputValueByName = <T extends object>(
   }
 };
 
-type GetRandomFormDataResult = Partial<Record<keyof UserWithConfirm, InputValue>>;
-
-const genRandomFormData = (): GetRandomFormDataResult => {
+export const getRandomFormData = (): Partial<Record<keyof UserWithConfirm, InputValue>> => {
   const password = getRandomPassword(PASSWORD_MIN_LEN, PASSWORD_MAX_LEN);
   return {
     age: rndInt(AGE_MIN, AGE_MAX),
@@ -89,18 +86,16 @@ const genRandomFormData = (): GetRandomFormDataResult => {
   };
 };
 
-export const generateUncontrolledFormDataRandomly = (form: HTMLFormElement | null): void => {
-  if (form) {
-    Object.entries(genRandomFormData()).forEach(([key, value]) => {
-      setInputValueByName(form, key, value);
-    });
-  }
-};
+export type PasswordStrength = 'weak' | 'medium' | 'strong';
 
-export const generateControlledFormDataRandomly = (
-  setValue: UseFormSetValue<ControlledFormInputs>,
-): void => {
-  Object.entries(genRandomFormData()).forEach(([key, value]) => {
-    setValue(key as keyof UserWithConfirm, value, { shouldValidate: true });
-  });
+export const getPasswordStrength = (password: string): PasswordStrength => {
+  const result = [
+    password.length >= PASSWORD_GOOD_LEN,
+    RegexPattern.UcaseLatin.test(password),
+    RegexPattern.LcaseLatin.test(password),
+    RegexPattern.SpecialChar.test(password),
+    RegexPattern.Number.test(password),
+  ].reduce((res, value) => res + Number(value), 0);
+
+  return result <= 2 ? 'weak' : result <= 4 ? 'medium' : 'strong';
 };

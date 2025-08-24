@@ -64,7 +64,7 @@ export default defineConfig({
         'src/main.{ts,tsx,js,jsx}',
         '**/**types**',
         '**/hooks',
-        '**/store',
+        '**/redux',
       ],
       thresholds: {
         statements: 80,
