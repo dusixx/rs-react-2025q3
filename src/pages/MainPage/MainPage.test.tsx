@@ -1,4 +1,4 @@
-import { useUserList } from '@/redux/hooks.ts';
+import { mockUseUserList } from '@/test-utils/mocks/redux-hook-mock.ts';
 import { USERS_COUNT, usersMock } from '@/test-utils/mocks/user-mock.ts';
 import { render, screen } from '@testing-library/react';
 import { clickElement, getNestedChild, queryNestedChild } from 'src/test-utils/index.ts';
@@ -6,14 +6,7 @@ import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { vi } from 'vitest';
 import MainPage, { CONTROLLED_TEXT, UNCONTROLLED_TEXT } from './MainPage.tsx';
 
-vi.mock('@/redux/hooks.ts', async () => {
-  const actual = await vi.importActual('@/redux/hooks.ts');
-  return {
-    ...actual,
-    useUserList: vi.fn(),
-  };
-});
-vi.mocked(useUserList).mockReturnValue(usersMock);
+vi.mocked(mockUseUserList).mockReturnValue(usersMock);
 window.scrollTo = vi.fn();
 
 describe('MainPage', () => {

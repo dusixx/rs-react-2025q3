@@ -3,6 +3,7 @@ import { rndInt } from '@/common/utils/index.ts';
 import countries from '@/data/country-list.ts';
 import { Gender, type UserWithConfirm } from '@/redux/user.ts';
 import { FAKE_VALUE } from '@/test-utils/constants.ts';
+import type { CSSProperties } from 'react';
 import { capitalize as cap } from './../../common/utils/index';
 import {
   AGE_MAX,
@@ -107,4 +108,10 @@ export const getPasswordStrength = (password: string): PasswordStrength => {
   ].reduce((res, value) => res + Number(value), 0);
 
   return result <= 2 ? 'weak' : result <= 4 ? 'medium' : 'strong';
+};
+
+export const getPasswordStrengthStyle = (strength: PasswordStrength): CSSProperties => {
+  return {
+    backgroundColor: strength === 'medium' ? 'var(--color-orange)' : '',
+  };
 };

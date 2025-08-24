@@ -2,7 +2,7 @@
 export const AGE_MIN = 18;
 export const AGE_MAX = 80;
 
-export const PASSWORD_MIN_LEN = 3;
+export const PASSWORD_MIN_LEN = 4;
 export const PASSWORD_GOOD_LEN = 6;
 export const PASSWORD_MAX_LEN = 12;
 

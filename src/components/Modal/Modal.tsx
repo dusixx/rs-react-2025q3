@@ -40,7 +40,7 @@ export const Modal = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const focusableElementsRef = useRef<NodeListOf<Element>>(undefined);
 
-  const handleTabKeyDown = (e: KeyboardEvent): void => {
+  const handleTabDown = useCallback((e: KeyboardEvent): void => {
     const { current: focusable } = focusableElementsRef;
     if (!focusable) {
       return;
@@ -57,17 +57,18 @@ export const Modal = ({
       first.focus();
       e.preventDefault();
     }
-  };
+  }, []);
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent): void => {
       if (shouldCloseOnEsc && isKeyPressed('Escape', e)) {
         onClose?.();
       }
       if (e.key === 'Tab') {
-        handleTabKeyDown(e);
+        handleTabDown(e);
       }
     },
-    [onClose, shouldCloseOnEsc],
+    [onClose, shouldCloseOnEsc, handleTabDown],
   );
 
   useEffect(() => {

@@ -8,11 +8,11 @@ import {
   userFormDataMock,
 } from '@/test-utils/mocks/user-mock.ts';
 import { act, render, screen, waitFor } from '@testing-library/react';
-import { changeInput, clickElement, FAKE_VALUE, getNestedChild } from 'src/test-utils/index.ts';
+import { clickElement, FAKE_VALUE, getNestedChild } from 'src/test-utils/index.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { expect, vi } from 'vitest';
 import { GENERATE_BTN_TEXT, SHOW_PASSWORD_TEXT, SUBMIT_BTN_TEXT } from '../constants.ts';
-import { testLabelsRendered } from '../test-utils.ts';
+import { REGEX_STRONG_PASSWORD_LABEL, testLabelsRendered } from '../test-utils.ts';
 import { getPasswordStrength } from '../utils.ts';
 import { UncontrolledForm } from './UncontrolledForm.tsx';
 import { generateUncontrolledFormData, validateUserFormData } from './UncontrolledForm.utils.ts';
@@ -114,12 +114,18 @@ describe('UncontrolledForm', () => {
   });
 
   it('Displays password strength', () => {
+    vi.mocked(validateUserFormData).mockReturnValue({
+      success: false,
+      fieldErrors: {},
+    });
     vi.mocked(getPasswordStrength).mockReturnValue('strong');
     render(<UncontrolledForm />, {
       wrapper: ProvidersMock,
     });
-    const passwordInput = screen.getByLabelText(LabelName.Password);
-    changeInput(passwordInput, FAKE_VALUE);
-    expect(screen.getByText(/password:\s+strong/i)).toBeInTheDocument();
+    const submitBtn = screen.getByText(SUBMIT_BTN_TEXT);
+    act(() => {
+      clickElement(submitBtn);
+    });
+    expect(screen.getByText(REGEX_STRONG_PASSWORD_LABEL)).toBeInTheDocument();
   });
 });

@@ -26,7 +26,7 @@ export default function MainPage(): ReactNode {
   };
   return (
     <div data-testid={TestId.MainPage}>
-      <div className={styles.btns}>
+      <div className={styles.header}>
         <div className={styles.group}>
           <button
             className={styles.btn}

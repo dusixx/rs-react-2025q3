@@ -5,7 +5,7 @@ import { Gender, LabelName } from '@/redux/user.ts';
 import { addUser } from '@/redux/usersSlice.ts';
 import { TestId } from '@/test-utils/constants.ts';
 import clsx from 'clsx';
-import type { ChangeEvent, FormEvent } from 'react';
+import type { FormEvent } from 'react';
 import { useRef, useState, type ReactNode } from 'react';
 import {
   AGREEMENT_TEXT,
@@ -16,7 +16,7 @@ import {
 } from '../constants.ts';
 import styles from '../styles.module.scss';
 import type { PasswordStrength } from '../utils.ts';
-import { getPasswordStrength } from '../utils.ts';
+import { getPasswordStrength, getPasswordStrengthStyle } from '../utils.ts';
 import { FILE_VALID_TYPES } from '../validation/validation.constants.ts';
 import type { UserFieldErrors } from './UncontrolledForm.utils.ts';
 import { generateUncontrolledFormData, validateUserFormData } from './UncontrolledForm.utils.ts';
@@ -36,14 +36,6 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
   const formRef = useRef<HTMLFormElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
 
-  const handlePasswordChange = ({ target }: ChangeEvent<HTMLInputElement>): void => {
-    const strength = getPasswordStrength(target.value);
-    if (strength !== 'weak') {
-      setErrors(deleteProperties(errors, 'password'));
-    }
-    setPasswordStrength(strength);
-  };
-
   const handleGenerateClick = (): void => {
     if (formRef.current) {
       generateUncontrolledFormData(formRef.current);
@@ -58,6 +50,9 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const result = validateUserFormData(getFormData(e));
+
+    const strength = getPasswordStrength(passwordInputRef.current?.value ?? '');
+    setPasswordStrength(strength);
 
     if (result.success) {
       setErrors({});
@@ -100,11 +95,12 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
               type={showPassword ? 'text' : 'password'}
               name={LabelName.Password}
               ref={passwordInputRef}
-              onChange={handlePasswordChange}
             />
             {errors.password && <p className={styles.error}>{errors.password[0]}</p>}
-            {passwordStrength !== 'weak' && (
-              <p className={styles.strength}>{`Password: ${passwordStrength}`}</p>
+            {!errors.password && passwordStrength !== 'weak' && (
+              <p className={styles.strength} style={getPasswordStrengthStyle(passwordStrength)}>
+                password: {passwordStrength}
+              </p>
             )}
           </label>
           <label>

@@ -8,12 +8,15 @@ import { clickElement, FAKE_VALUE, getNestedChild } from 'src/test-utils/index.t
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { expect, vi } from 'vitest';
 import { GENERATE_BTN_TEXT, SHOW_PASSWORD_TEXT, SUBMIT_BTN_TEXT } from '../constants.ts';
-import { setAllFormTextInputsWithValue, testLabelsRendered } from '../test-utils.ts';
+import {
+  changeAllFormTextInputs,
+  DEFAULT_GENDER,
+  REGEX_STRONG_PASSWORD_LABEL,
+  testLabelsRendered,
+} from '../test-utils.ts';
 import { getPasswordStrength } from '../utils.ts';
 import { ControlledForm } from './ControlledForm.tsx';
 import { generateControlledFormData } from './ControlledForm.utils.ts';
-
-const DEFAULT_GENDER = 'male';
 
 vi.mock('./ControlledForm.utils.ts', async () => {
   const actual = await vi.importActual('./ControlledForm.utils.ts');
@@ -68,7 +71,7 @@ describe('ControlledForm', () => {
     render(<ControlledForm closeModal={closeModal} />, {
       wrapper: ProvidersMock,
     });
-    const user = setAllFormTextInputsWithValue(FAKE_VALUE);
+    const user = changeAllFormTextInputs(FAKE_VALUE);
 
     const submitBtn = screen.getByText(SUBMIT_BTN_TEXT);
     submitBtn.removeAttribute('disabled');
@@ -105,6 +108,6 @@ describe('ControlledForm', () => {
     render(<ControlledForm />, {
       wrapper: ProvidersMock,
     });
-    expect(screen.getByText(/password:\s+strong/i)).toBeInTheDocument();
+    expect(screen.getByText(REGEX_STRONG_PASSWORD_LABEL)).toBeInTheDocument();
   });
 });

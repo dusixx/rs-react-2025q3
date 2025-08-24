@@ -18,7 +18,7 @@ import {
   SUBMIT_BTN_TEXT,
 } from '../constants.ts';
 import styles from '../styles.module.scss';
-import { getPasswordStrength } from '../utils.ts';
+import { getPasswordStrength, getPasswordStrengthStyle } from '../utils.ts';
 import { userSchema } from '../validation/user-schema.ts';
 import { FILE_VALID_TYPES } from '../validation/validation.constants.ts';
 import { generateControlledFormData } from './ControlledForm.utils.ts';
@@ -89,7 +89,9 @@ export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
             <input type={showPassword ? 'text' : 'password'} {...register('password')} />
             {errors.password && <p className={styles.error}>{errors.password.message}</p>}
             {!errors.password && passwordStrength !== 'weak' && (
-              <p className={styles.strength}>{`Password: ${passwordStrength}`}</p>
+              <p className={styles.strength} style={getPasswordStrengthStyle(passwordStrength)}>
+                password: {passwordStrength}
+              </p>
             )}
           </label>
           <label>

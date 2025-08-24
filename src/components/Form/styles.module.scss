@@ -67,7 +67,14 @@ label.label {
 }
 
 .strength {
-  color: var(--color-green);
+  bottom: -16px;
+
+  padding: 0 4px;
+
+  color: white;
+
+  opacity: 0.7;
+  background-color: var(--color-green);
 }
 
 .fieldset {

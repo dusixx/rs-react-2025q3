@@ -3,6 +3,9 @@ import { LabelName } from '@/redux/user.ts';
 import { changeInput } from '@/test-utils/utils.ts';
 import { screen } from '@testing-library/react';
 
+export const DEFAULT_GENDER = 'male';
+export const REGEX_STRONG_PASSWORD_LABEL = /password:\s+strong/i;
+
 export const testLabelsRendered = (): void => {
   const labels = deleteProperties(LabelName, 'Gender', 'Agreement');
   Object.values(labels).forEach(name => {
@@ -10,7 +13,7 @@ export const testLabelsRendered = (): void => {
   });
 };
 
-export const setAllFormTextInputsWithValue = (value: string): Record<string, string> => {
+export const changeAllFormTextInputs = (value: string): Record<string, string> => {
   const result: Record<string, string> = {};
   const labels = deleteProperties(LabelName, 'Gender', 'Agreement', 'Avatar', 'Confirm');
 
