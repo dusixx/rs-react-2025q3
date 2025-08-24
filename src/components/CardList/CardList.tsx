@@ -1,4 +1,4 @@
-import { useUsers } from '@/redux/hooks.ts';
+import { useUserList } from '@/redux/hooks.ts';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
@@ -10,7 +10,7 @@ type CardListProps = {
 };
 
 export const CardList = ({ className }: CardListProps): ReactNode => {
-  const users = useUsers();
+  const users = useUserList();
   return (
     <ul data-testid={TestId.CardList} className={clsx(styles.list, className)}>
       {Object.values(users).map(info => (

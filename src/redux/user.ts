@@ -1,3 +1,5 @@
+import { hasOwnKeys } from '@/common/utils/type-guards.ts';
+
 export const Gender = {
   Male: 'male',
   Female: 'female',
@@ -29,3 +31,7 @@ export const LabelName: Record<Capitalize<keyof UserWithConfirm>, string> = {
   Agreement: 'agreement',
   Confirm: 'confirm',
 } as const;
+
+export const isUser = (obj: unknown): obj is User => {
+  return hasOwnKeys<User>(obj, 'name', 'age', 'avatar', 'country', 'email', 'gender', 'password');
+};
