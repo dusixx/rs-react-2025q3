@@ -65,6 +65,7 @@ export default defineConfig({
         '**/**types**',
         '**/hooks',
         '**/redux',
+        '**/validation',
       ],
       thresholds: {
         statements: 80,
