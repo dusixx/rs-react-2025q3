@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 /* eslint-disable @typescript-eslint/no-unnecessary-type-parameters */
 import { rndInt } from '@/common/utils/index.ts';
 import countries from '@/data/country-list.ts';
-import type { UserWithConfirm } from '@/redux/user.ts';
+import { Gender, type UserWithConfirm } from '@/redux/user.ts';
+import type { UseFormSetValue } from 'react-hook-form';
 import { capitalize as cap } from './../../common/utils/index';
+import type { ControlledFormInputs } from './ControlledForm.tsx';
 import {
   AGE_MAX,
   AGE_MIN,
@@ -24,13 +27,11 @@ export const getRandomName = (
   maxLen: number = minLen,
   capitalize: boolean = true,
 ): string => {
-  const result = [];
-  const len = rndInt(minLen, maxLen);
+  const result = Array.from({ length: rndInt(minLen, maxLen) })
+    .map(_ => alpha[rndInt(0, alpha.length - 1)])
+    .join('');
 
-  for (let i = 0; i < len; i += 1) {
-    result.push(alpha[rndInt(0, alpha.length - 1)]);
-  }
-  return capitalize ? cap(result.join('')) : result.join('');
+  return capitalize ? cap(result) : result;
 };
 
 export const getRandomEmail = (): string => {
@@ -39,40 +40,67 @@ export const getRandomEmail = (): string => {
 };
 
 export const getRandomPassword = (minLen: number, maxLen: number = minLen): string => {
-  const result = [];
   const groups = [alpha, alphaUpper, numbers, specials];
-  const len = rndInt(minLen, maxLen);
 
-  for (let i = 0; i < len; i += 1) {
-    const group = groups[i % groups.length];
-    result.push(group[rndInt(0, group.length - 1)]);
-  }
-  return result.join('');
+  return Array.from({ length: rndInt(minLen, maxLen) })
+    .map((_, idx) => {
+      const group = groups[idx % groups.length];
+      return group[rndInt(0, group.length - 1)];
+    })
+    .join('');
 };
 
 export const getRandomCountry = (): string => {
   return countries[rndInt(0, countries.length - 1)];
 };
 
+type InputValue = string | number | boolean;
+
 export const setInputValueByName = <T extends object>(
   form: HTMLFormElement,
   inputName: keyof T,
-  inputValue: string | number | boolean,
+  inputValue: InputValue,
 ): void => {
-  const input = form.elements.namedItem(String(inputName));
-  if (input instanceof HTMLInputElement) {
-    input.value = String(inputValue);
+  const el = form.elements.namedItem(String(inputName));
+  if (!el) {
+    return;
+  }
+  if ('checked' in el) {
+    el.checked = inputValue;
+  }
+  if ('value' in el) {
+    el.value = String(inputValue);
   }
 };
 
-export const generateFormDataRandomly = (form: HTMLFormElement | null): void => {
+type GetRandomFormDataResult = Partial<Record<keyof UserWithConfirm, InputValue>>;
+
+const genRandomFormData = (): GetRandomFormDataResult => {
+  const password = getRandomPassword(PASSWORD_MIN_LEN, PASSWORD_MAX_LEN);
+  return {
+    age: rndInt(AGE_MIN, AGE_MAX),
+    name: getRandomName(NAME_MIN_LEN, NAME_MAX_LEN),
+    email: getRandomEmail(),
+    password,
+    confirm: password,
+    country: getRandomCountry(),
+    gender: [Gender.Female, Gender.Male][rndInt(0, 1)],
+    agreement: true,
+  };
+};
+
+export const generateUncontrolledFormDataRandomly = (form: HTMLFormElement | null): void => {
   if (form) {
-    const password = getRandomPassword(PASSWORD_MIN_LEN, PASSWORD_MAX_LEN);
-    setInputValueByName<UserWithConfirm>(form, 'name', getRandomName(NAME_MIN_LEN, NAME_MAX_LEN));
-    setInputValueByName<UserWithConfirm>(form, 'age', rndInt(AGE_MIN, AGE_MAX));
-    setInputValueByName<UserWithConfirm>(form, 'email', getRandomEmail());
-    setInputValueByName<UserWithConfirm>(form, 'password', password);
-    setInputValueByName<UserWithConfirm>(form, 'confirm', password);
-    setInputValueByName<UserWithConfirm>(form, 'country', getRandomCountry());
+    Object.entries(genRandomFormData()).forEach(([key, value]) => {
+      setInputValueByName(form, key, value);
+    });
   }
+};
+
+export const generateControlledFormDataRandomly = (
+  setValue: UseFormSetValue<ControlledFormInputs>,
+): void => {
+  Object.entries(genRandomFormData()).forEach(([key, value]) => {
+    setValue(key as keyof UserWithConfirm, value, { shouldValidate: true });
+  });
 };

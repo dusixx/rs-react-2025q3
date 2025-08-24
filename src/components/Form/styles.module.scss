@@ -58,11 +58,16 @@ label.label {
   margin-top: 12px;
 }
 
-.error {
+.error,
+.strength {
   position: absolute;
   bottom: -16px;
   font-size: 10px;
   color: var(--color-accent);
+}
+
+.strength {
+  color: var(--color-green);
 }
 
 .fieldset {

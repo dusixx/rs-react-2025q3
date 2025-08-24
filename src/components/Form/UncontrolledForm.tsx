@@ -1,13 +1,20 @@
 /* eslint-disable max-lines-per-function */
-import { fileToBase64, getFormData, rndInt } from '@/common/utils/index.ts';
-import { useAppDispatch, useCountries, useUsers } from '@/redux/hooks.ts';
+import { deleteProperties, fileToBase64, getFormData } from '@/common/utils/index.ts';
+import { useAppDispatch, useCountryList } from '@/redux/hooks.ts';
 import { Gender, LabelName } from '@/redux/user.ts';
 import { addUser } from '@/redux/usersSlice.ts';
 import clsx from 'clsx';
-import type { FormEvent } from 'react';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
+import {
+  AGREEMENT_TEXT,
+  COUNTRY_LIST_PLACEHOLDER,
+  GENERATE_BTN_TEXT,
+  SHOW_PASSWORD_TEXT,
+  SUBMIT_BTN_TEXT,
+} from './constants.ts';
 import styles from './styles.module.scss';
-import { generateFormDataRandomly } from './utils.ts';
+import { generateUncontrolledFormDataRandomly } from './utils.ts';
 import { FILE_VALID_TYPES } from './validation/validation.constants.ts';
 import type { PasswordStrength } from './validation/validation.utils.ts';
 import {
@@ -16,76 +23,46 @@ import {
   type UserFieldErrors,
 } from './validation/validation.utils.ts';
 
-const ERR_EMAIL_ALREADY_EXISTS = 'User with this email already exists';
-const AGREEMENT_TEXT = 'Accept the terms of the agreement ';
-const SHOW_PASSWORD_TEXT = 'Show password';
-const SUBMIT_BTN_TEXT = 'Append';
-const GENERATE_BTN_TEXT = 'Generate randomly';
-const COUTRY_LIST_PLACEHOLDER = 'Select country...';
-
 export type FormProps = {
   closeModal?: () => void;
 };
 
 export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
+  const dispatch = useAppDispatch();
+  const countryList = useCountryList();
+
   const [errors, setErrors] = useState<UserFieldErrors>({});
-  const [exists, setExists] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState<PasswordStrength>('weak');
 
-  const nameInputRef = useRef<HTMLInputElement>(null);
-  const maleInputRef = useRef<HTMLInputElement>(null);
-  const femaleInputRef = useRef<HTMLInputElement>(null);
-  const termInputRef = useRef<HTMLInputElement>(null);
-  const passwordInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
 
-  const countryList = useCountries();
-  const dispatch = useAppDispatch();
-  const users = useUsers();
-
-  useEffect(() => {
-    if (nameInputRef.current) {
-      nameInputRef.current.focus();
-    }
-    if (maleInputRef.current) {
-      maleInputRef.current.checked = true;
-    }
-  }, []);
-
+  const handlePasswordChange = ({ target }: ChangeEvent<HTMLInputElement>): void => {
+    setPasswordStrength(getPasswordStrength(target.value));
+  };
   const handleGenerateClick = (): void => {
-    const { current: form } = formRef;
-    const genderInputRef = rndInt(0, 1) ? maleInputRef : femaleInputRef;
-    if (form) {
-      if (termInputRef.current) {
-        termInputRef.current.checked = true;
+    if (formRef.current) {
+      generateUncontrolledFormDataRandomly(formRef.current);
+      const strength = getPasswordStrength(passwordInputRef.current?.value ?? '');
+      if (strength !== 'weak') {
+        setErrors(deleteProperties(errors, 'password', 'confirm'));
       }
-      if (genderInputRef.current) {
-        genderInputRef.current.checked = true;
-      }
-      generateFormDataRandomly(form);
+      setPasswordStrength(strength);
     }
   };
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const result = validateUserFormData(getFormData(e));
 
-    const passStrength = getPasswordStrength(passwordInputRef.current?.value ?? '');
-    setPasswordStrength(passStrength);
-
     if (result.success) {
       setErrors({});
-
       const user = {
         ...result.data,
         avatar: await fileToBase64(result.data.avatar),
       };
-      const alreadyExists = Boolean(users[user.email]);
-      setExists(alreadyExists);
-      if (!alreadyExists) {
-        dispatch(addUser(user));
-        closeModal?.();
-      }
+      dispatch(addUser(user));
+      closeModal?.();
     } else {
       setErrors(result.fieldErrors);
     }
@@ -98,7 +75,7 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
       <form className={styles.form} onSubmit={e => void handleSubmit(e)} ref={formRef}>
         <label>
           <span>{LabelName.Name}</span>
-          <input type='text' ref={nameInputRef} name={LabelName.Name} autoComplete='off' />
+          <input type='text' name={LabelName.Name} autoComplete='off' autoFocus />
           {errors.name && <p className={styles.error}>{errors.name}</p>}
         </label>
         <label>
@@ -109,8 +86,7 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
         <label>
           <span>{LabelName.Email}</span>
           <input type='text' name={LabelName.Email} autoComplete='off' />
-          {errors.email && <p className={styles.error}>{errors.email}</p>}
-          {exists && <p className={styles.error}>{ERR_EMAIL_ALREADY_EXISTS}</p>}
+          {errors.email && <p className={styles.error}>{errors.email[0]}</p>}
         </label>
         <fieldset className={styles.fieldset}>
           <label>
@@ -119,13 +95,11 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
               type={showPassword ? 'text' : 'password'}
               name={LabelName.Password}
               ref={passwordInputRef}
+              onChange={handlePasswordChange}
             />
             {errors.password && <p className={styles.error}>{errors.password[0]}</p>}
-            {passwordStrength !== 'weak' && (
-              <p
-                className={styles.error}
-                style={{ color: 'var(--color-green)' }}
-              >{`Password: ${passwordStrength}`}</p>
+            {!errors.password && passwordStrength !== 'weak' && (
+              <p className={styles.strength}>{`Password: ${passwordStrength}`}</p>
             )}
           </label>
           <label>
@@ -146,10 +120,10 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
         <label>
           <span>{LabelName.Country}</span>
           <input
-            name='country'
+            name={LabelName.Country}
             list='countries'
             autoComplete='off'
-            placeholder={COUTRY_LIST_PLACEHOLDER}
+            placeholder={COUNTRY_LIST_PLACEHOLDER}
           />
           <datalist id='countries'>
             {countryList.map(item => {
@@ -160,16 +134,11 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
         </label>
         <div className={styles.gender}>
           <label className={styles.label}>
-            <input type='radio' name={LabelName.Gender} value={Gender.Male} ref={maleInputRef} />
+            <input type='radio' name={LabelName.Gender} value={Gender.Male} defaultChecked />
             <span>{Gender.Male}</span>
           </label>
           <label className={styles.label}>
-            <input
-              type='radio'
-              name={LabelName.Gender}
-              value={Gender.Female}
-              ref={femaleInputRef}
-            />
+            <input type='radio' name={LabelName.Gender} value={Gender.Female} />
             <span>{Gender.Female}</span>
           </label>
         </div>
@@ -179,7 +148,7 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
           {errors.avatar && <p className={styles.error}>{errors.avatar}</p>}
         </label>
         <label className={clsx(styles.label, styles.terms)}>
-          <input type='checkbox' name={LabelName.Agreement} ref={termInputRef} />
+          <input type='checkbox' name={LabelName.Agreement} />
           <span>{AGREEMENT_TEXT}</span>
           {errors.agreement && <p className={styles.error}>{errors.agreement}</p>}
         </label>
