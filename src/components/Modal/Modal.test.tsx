@@ -12,7 +12,6 @@ const SCROLL_LOCK_TEST_ID = 'scroll-lock-mock';
 const ContentMock = (): JSX.Element => {
   return <div data-testid={CONTENT_TEST_ID}></div>;
 };
-
 vi.mock('./components/BodyScrollLock.tsx', () => ({
   BodyScrollLock: (): JSX.Element => {
     return <div data-testid={SCROLL_LOCK_TEST_ID}></div>;

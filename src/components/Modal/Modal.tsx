@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
+import { KeyboardEventKey } from '@/common/constants.ts';
 import { TestId } from '@/test-utils/constants.ts';
 import { getOrCreateElementWithId, isKeyPressed } from '@utils/index.ts';
 import clsx from 'clsx';
@@ -64,7 +65,7 @@ export const Modal = ({
       if (shouldCloseOnEsc && isKeyPressed('Escape', e)) {
         onClose?.();
       }
-      if (e.key === 'Tab') {
+      if (e.key === KeyboardEventKey.Tab) {
         handleTabDown(e);
       }
     },

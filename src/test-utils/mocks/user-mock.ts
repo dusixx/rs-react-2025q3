@@ -5,7 +5,10 @@ import { FAKE_VALUE } from '../constants.ts';
 
 export const FAKE_FIELD_ERROR = `field-error-${FAKE_VALUE}`;
 export const USERS_COUNT = 5;
-const usersArray = Array.from<User>({ length: USERS_COUNT }).map(_ => getRandomFormData() as User);
+
+export const usersArray = Array.from<User>({ length: USERS_COUNT }).map(
+  _ => getRandomFormData() as User,
+);
 
 export const usersMock = usersArray.reduce<Record<string, User>>((res, user) => {
   res[user.email] = user;

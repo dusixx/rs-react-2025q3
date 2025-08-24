@@ -8,7 +8,6 @@ type CardProps = {
   userInfo: User;
   className?: string;
 };
-
 const AVATAR_ALT = 'user avatar';
 const ICON_PROPS = {
   size: 16,

@@ -21,7 +21,6 @@ type UserShape = Record<keyof UserWithConfirm, ZodTypeAny>;
 const transformAvatar = (v: unknown): File | null => {
   return v instanceof FileList ? v.item(0) : v instanceof File ? v : null;
 };
-
 const refineAge = (v: unknown): boolean => {
   return isNumericPositiveInteger(v) && Number(v) >= AGE_MIN && Number(v) <= AGE_MAX;
 };

@@ -41,7 +41,7 @@ vi.mock('../utils.ts', async () => {
 });
 
 describe('UncontrolledForm', () => {
-  it(`Renders correctly`, async () => {
+  it(`Renders correctly`, () => {
     render(<UncontrolledForm />, {
       wrapper: ProvidersMock,
     });
