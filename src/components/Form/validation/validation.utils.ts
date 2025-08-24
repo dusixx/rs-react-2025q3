@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import type { getFormData } from '@/common/utils/index.ts';
+import { deleteProperties, type getFormData } from '@/common/utils/index.ts';
 import type { User, UserWithConfirm } from '@/redux/user.ts';
 import { userSchema } from './user-schema.ts';
 import { PASSWORD_GOOD_LEN, RegexPattern } from './validation.constants.ts';
@@ -18,11 +18,9 @@ export const validateUserFormData = (
 ): ValidateUserFormDataResult => {
   const { data, error, success } = userSchema.safeParse(formData);
   if (success) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { agreement: _a, confirm: _b, ...rest } = data;
     return {
       success,
-      data: rest as UserFormData,
+      data: deleteProperties(data, 'agreement', 'confirm') as UserFormData,
     };
   }
   return {

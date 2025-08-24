@@ -1,6 +1,6 @@
 import { CardList } from '@/components/CardList/CardList.tsx';
-import { ControlledForm } from '@/components/Form/ControlledForm.tsx';
-import { UncontrolledForm } from '@/components/Form/UncontrolledForm';
+import { ControlledForm } from '@/components/Form/ControlledForm/ControlledForm';
+import { UncontrolledForm } from '@/components/Form/UncontrolledForm/UncontrolledForm';
 import { Modal } from '@/components/Modal/Modal.tsx';
 import { useState, type ReactNode } from 'react';
 import styles from './MainPage.module.scss';

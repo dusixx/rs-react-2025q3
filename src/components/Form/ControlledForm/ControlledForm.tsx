@@ -15,12 +15,12 @@ import {
   GENERATE_BTN_TEXT,
   SHOW_PASSWORD_TEXT,
   SUBMIT_BTN_TEXT,
-} from './constants.ts';
-import styles from './styles.module.scss';
-import { generateControlledFormDataRandomly } from './utils.ts';
-import { userSchema } from './validation/user-schema.ts';
-import { FILE_VALID_TYPES } from './validation/validation.constants.ts';
-import { getPasswordStrength } from './validation/validation.utils.ts';
+} from '../constants.ts';
+import styles from '../styles.module.scss';
+import { generateControlledFormDataRandomly } from '../utils.ts';
+import { userSchema } from '../validation/user-schema.ts';
+import { FILE_VALID_TYPES } from '../validation/validation.constants.ts';
+import { getPasswordStrength } from '../validation/validation.utils.ts';
 
 export type FormProps = {
   closeModal?: () => void;
@@ -49,6 +49,7 @@ export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
   const handleGenerateClick = (): void => {
     generateControlledFormDataRandomly(setValue);
   };
+
   const onSubmit = handleSubmit(async (data: ControlledFormInputs): Promise<void> => {
     const user = {
       ...deleteProperties(data, 'agreement', 'confirm'),
@@ -59,6 +60,7 @@ export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
       closeModal?.();
     }
   });
+
   return (
     <div>
       <button className={styles.generate} onClick={handleGenerateClick}>

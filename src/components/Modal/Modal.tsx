@@ -47,6 +47,7 @@ export const Modal = ({
     }
     const first = focusable[0] as HTMLElement;
     const last = focusable[focusable.length - 1] as HTMLElement;
+
     if (e.shiftKey) {
       if (document.activeElement === first) {
         last.focus();

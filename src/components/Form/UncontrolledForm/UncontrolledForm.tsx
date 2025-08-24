@@ -4,7 +4,7 @@ import { useAppDispatch, useCountryList } from '@/redux/hooks.ts';
 import { Gender, LabelName } from '@/redux/user.ts';
 import { addUser } from '@/redux/usersSlice.ts';
 import clsx from 'clsx';
-import type { ChangeEvent, FormEvent } from 'react';
+import type { FormEvent } from 'react';
 import { useRef, useState, type ReactNode } from 'react';
 import {
   AGREEMENT_TEXT,
@@ -12,16 +12,16 @@ import {
   GENERATE_BTN_TEXT,
   SHOW_PASSWORD_TEXT,
   SUBMIT_BTN_TEXT,
-} from './constants.ts';
-import styles from './styles.module.scss';
-import { generateUncontrolledFormDataRandomly } from './utils.ts';
-import { FILE_VALID_TYPES } from './validation/validation.constants.ts';
-import type { PasswordStrength } from './validation/validation.utils.ts';
+} from '../constants.ts';
+import styles from '../styles.module.scss';
+import { generateUncontrolledFormDataRandomly } from '../utils.ts';
+import { FILE_VALID_TYPES } from '../validation/validation.constants.ts';
+import type { PasswordStrength } from '../validation/validation.utils.ts';
 import {
   getPasswordStrength,
   validateUserFormData,
   type UserFieldErrors,
-} from './validation/validation.utils.ts';
+} from '../validation/validation.utils.ts';
 
 export type FormProps = {
   closeModal?: () => void;
@@ -38,9 +38,6 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
   const formRef = useRef<HTMLFormElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
 
-  const handlePasswordChange = ({ target }: ChangeEvent<HTMLInputElement>): void => {
-    setPasswordStrength(getPasswordStrength(target.value));
-  };
   const handleGenerateClick = (): void => {
     if (formRef.current) {
       generateUncontrolledFormDataRandomly(formRef.current);
@@ -54,6 +51,9 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const result = validateUserFormData(getFormData(e));
+
+    const passStrength = getPasswordStrength(passwordInputRef.current?.value ?? '');
+    setPasswordStrength(passStrength);
 
     if (result.success) {
       setErrors({});
@@ -95,7 +95,6 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
               type={showPassword ? 'text' : 'password'}
               name={LabelName.Password}
               ref={passwordInputRef}
-              onChange={handlePasswordChange}
             />
             {errors.password && <p className={styles.error}>{errors.password[0]}</p>}
             {!errors.password && passwordStrength !== 'weak' && (

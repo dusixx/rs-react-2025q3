@@ -5,7 +5,7 @@ import countries from '@/data/country-list.ts';
 import { Gender, type UserWithConfirm } from '@/redux/user.ts';
 import type { UseFormSetValue } from 'react-hook-form';
 import { capitalize as cap } from './../../common/utils/index';
-import type { ControlledFormInputs } from './ControlledForm.tsx';
+import type { ControlledFormInputs } from './ControlledForm/ControlledForm.tsx';
 import {
   AGE_MAX,
   AGE_MIN,
