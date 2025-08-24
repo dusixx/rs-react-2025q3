@@ -2,6 +2,7 @@
 import { rndInt } from '@/common/utils/index.ts';
 import countries from '@/data/country-list.ts';
 import { Gender, type UserWithConfirm } from '@/redux/user.ts';
+import { FAKE_VALUE } from '@/test-utils/constants.ts';
 import { capitalize as cap } from './../../common/utils/index';
 import {
   AGE_MAX,
@@ -51,6 +52,14 @@ export const getRandomPassword = (minLen: number, maxLen: number = minLen): stri
 
 export const getRandomCountry = (): string => {
   return countries[rndInt(0, countries.length - 1)];
+};
+
+export const getFakeFileList = (): FileList => {
+  const file = new File([FAKE_VALUE], `${FAKE_VALUE}.png`, { type: 'image/png' });
+  const dataTransfer = new DataTransfer();
+  dataTransfer.items.add(file);
+
+  return dataTransfer.files;
 };
 
 type InputValue = string | number | boolean;

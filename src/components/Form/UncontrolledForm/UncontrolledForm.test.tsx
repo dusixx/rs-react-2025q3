@@ -1,4 +1,4 @@
-import { deleteProperties, fileToBase64 } from '@/common/utils/index.ts';
+import { fileToBase64 } from '@/common/utils/index.ts';
 import { LabelName } from '@/redux/user.ts';
 import { addUser } from '@/redux/usersSlice.ts';
 import { appDispatchMock } from '@/test-utils/mocks/redux-hook-mock.ts';
@@ -12,6 +12,7 @@ import { changeInput, clickElement, FAKE_VALUE, getNestedChild } from 'src/test-
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { expect, vi } from 'vitest';
 import { GENERATE_BTN_TEXT, SHOW_PASSWORD_TEXT, SUBMIT_BTN_TEXT } from '../constants.ts';
+import { testLabelsRendered } from '../test-utils.ts';
 import { getPasswordStrength } from '../utils.ts';
 import { UncontrolledForm } from './UncontrolledForm.tsx';
 import { generateUncontrolledFormData, validateUserFormData } from './UncontrolledForm.utils.ts';
@@ -38,12 +39,6 @@ vi.mock('../utils.ts', async () => {
     getPasswordStrength: vi.fn(),
   };
 });
-const testLabelsRendered = (): void => {
-  const labels = deleteProperties(LabelName, 'Gender', 'Agreement');
-  Object.values(labels).forEach(name => {
-    expect(screen.getByLabelText(String(name))).toBeInTheDocument();
-  });
-};
 
 describe('UncontrolledForm', () => {
   it(`Renders correctly`, async () => {

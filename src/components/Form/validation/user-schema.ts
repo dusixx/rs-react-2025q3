@@ -59,6 +59,7 @@ export const userSchema = z
     }),
     avatar: z
       .unknown()
+      .optional()
       .transform(transformAvatar)
       .refine(v => v && v.name.length !== 0, {
         message: ValidationMessage.AvatarRequired,
