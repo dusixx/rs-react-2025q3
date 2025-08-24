@@ -38,16 +38,16 @@ export const getErrorMessage = (error: unknown, defaultMessage: string = ''): st
   return isString(error) ? error : isError(error) ? error.message : defaultMessage;
 };
 
-export const isNumeric = (v: string | number): boolean => {
-  const num = parseFloat(v.toString());
+export const isNumeric = (v: unknown): boolean => {
+  const num = parseFloat(String(v));
   return !isNaN(num) && isFinite(num);
 };
 
-export const isNumericInteger = (v: string): boolean => {
+export const isNumericInteger = (v: unknown): boolean => {
   return isNumeric(v) && isInteger(Number(v));
 };
 
-export const isNumericPositiveInteger = (v: number | string): boolean => {
+export const isNumericPositiveInteger = (v: unknown): boolean => {
   return isNumeric(v) && isPositiveInteger(Number(v));
 };
 
@@ -105,4 +105,17 @@ export const getOrCreateElementWithId = (
     document.body.append(el);
   }
   return el;
+};
+
+type Omitted<T extends object> = Omit<T, keyof T>;
+
+export const deleteProperty = <T extends object>(obj: Omitted<T>, key: keyof T): Omitted<T> => {
+  const { [key]: _, ...rest } = obj;
+  return rest;
+};
+
+export const deleteProperties = <T extends object>(obj: T, ...keys: (keyof T)[]): Omitted<T> => {
+  return keys.reduce<Omitted<T>>((res, key) => {
+    return deleteProperty(res, key);
+  }, obj);
 };
