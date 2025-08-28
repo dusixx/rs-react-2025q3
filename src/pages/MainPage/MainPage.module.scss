@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  max-width: max-content;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: var(--border-radius);
+
+  background-color: var(--color-bg);
+}
+
+.btn {
+  @extend %btn-primary;
+
+  width: 160px;
+}
+
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  width: 360px;
+  padding: 20px 20px 30px;
+  border-radius: var(--border-radius);
+  background-color: white;
+}
+
+.heading {
+  margin-bottom: 20px;
+  font-size: 16px;
+  text-align: center;
+}
