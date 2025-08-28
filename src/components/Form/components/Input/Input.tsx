@@ -1,7 +1,7 @@
 import type { InputHTMLAttributes, ReactNode, Ref } from 'react';
 import styles from './Input.module.scss';
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   ref?: Ref<HTMLInputElement>;
   label?: string;
   error?: string | string[];

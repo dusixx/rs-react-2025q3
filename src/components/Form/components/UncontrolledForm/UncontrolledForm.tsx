@@ -22,6 +22,7 @@ import {
   NAME_MAX_LEN,
   PASSWORD_MAX_LEN,
 } from '../../validation/validation.constants.ts';
+import { Checkbox } from '../Input/Checkbox.tsx';
 import { Datalist } from '../Input/Datalist.tsx';
 import { Input } from '../Input/Input.tsx';
 import type { UserFieldErrors } from './UncontrolledForm.utils.ts';
@@ -95,15 +96,13 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
             )}
           </Input>
           <Input securely={!showPassword} nameLabel={InputLabel.Confirm} error={errors.confirm} />
-          <label className={styles.label}>
-            <input
-              type='checkbox'
-              onChange={() => {
-                setShowPassword(p => !p);
-              }}
-            />
-            <span>{SHOW_PASSWORD_TEXT}</span>
-          </label>
+          <Checkbox
+            label={SHOW_PASSWORD_TEXT}
+            className={styles.label}
+            onChange={() => {
+              setShowPassword(p => !p);
+            }}
+          />
         </fieldset>
         <Datalist
           options={countryList}
@@ -128,11 +127,11 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
           accept={FILE_VALID_TYPES.join()}
           error={errors.avatar}
         />
-        <label className={clsx(styles.label, styles.terms)}>
-          <input type='checkbox' name={InputLabel.Agreement} />
-          <span>{AGREEMENT_TEXT}</span>
-          {errors.agreement && <p className={styles.error}>{errors.agreement}</p>}
-        </label>
+        <Checkbox
+          className={clsx(styles.label, styles.terms)}
+          error={errors.agreement}
+          label={AGREEMENT_TEXT}
+        />
         <button className={styles.btn} type='submit'>
           {SUBMIT_BTN_TEXT}
         </button>

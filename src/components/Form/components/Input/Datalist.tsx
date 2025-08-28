@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
+import type { InputProps } from './Input.tsx';
 import { Input } from './Input.tsx';
 
-type DatalistProps = Parameters<typeof Input>[0] & {
+type DatalistProps = InputProps & {
   options: readonly string[] | string[];
 };
 
