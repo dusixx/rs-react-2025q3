@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { User } from './user.ts';
+import type { User } from '../common/types/user.ts';
 
 type UsersState = {
   items: Record<string, User>;
