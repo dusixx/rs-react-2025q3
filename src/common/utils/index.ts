@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { KeyboardEventKey } from '@common/constants.ts';
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
 import type { FormEvent } from 'react';
@@ -5,26 +6,8 @@ import { isError, isInteger, isPositiveInteger, isString } from './type-guards.t
 
 export * from './type-guards.ts';
 
-export const areStringsEqual = (
-  str1: string,
-  str2: string,
-  { ignoreCase = true, locales }: { ignoreCase: boolean; locales: string },
-): boolean => {
-  return str1.localeCompare(str2, locales, ignoreCase ? { sensitivity: 'base' } : undefined) === 0;
-};
-
-export const serializeStyle = (style: object): string => {
-  return JSON.stringify(style)
-    .replace(/[^\w:,.]/gi, '')
-    .replace(/,/g, ';');
-};
-
 export const rndInt = (min: number, max: number): number => {
   return Math.round(min + Math.random() * (max - min));
-};
-
-export const chooseOneRandomly = <T>(...values: T[]): T => {
-  return values[rndInt(0, values.length - 1)];
 };
 
 export const getErrorInstance = (
@@ -49,16 +32,6 @@ export const isNumericInteger = (v: unknown): boolean => {
 
 export const isNumericPositiveInteger = (v: unknown): boolean => {
   return isNumeric(v) && isPositiveInteger(Number(v));
-};
-
-export const mapObjectValues = <T>(
-  obj: Record<string, unknown>,
-  mapper: (v: unknown) => T,
-): Record<string, T> => {
-  return Object.keys(obj).reduce<Record<string, T>>((res, key) => {
-    res[key] = mapper(obj[key]);
-    return res;
-  }, {});
 };
 
 export const capitalize = (str: string, locale: string = navigator.language): string => {
@@ -107,15 +80,36 @@ export const getOrCreateElementWithId = (
   return el;
 };
 
-type Omitted<T extends object> = Omit<T, keyof T>;
-
-export const deleteProperty = <T extends object>(obj: Omitted<T>, key: keyof T): Omitted<T> => {
-  const { [key]: _, ...rest } = obj;
-  return rest;
+export const omit = <T extends object, K extends keyof T>(obj: T, ...keys: K[]): Omit<T, K> => {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([key]) => !keys.includes(key as K)),
+  ) as Omit<T, K>;
 };
 
-export const deleteProperties = <T extends object>(obj: T, ...keys: (keyof T)[]): Omitted<T> => {
-  return keys.reduce<Omitted<T>>((res, key) => {
-    return deleteProperty(res, key);
-  }, obj);
+export const FOCUSABLE_SELECTOR = [
+  'a[href]',
+  'area[href]',
+  'details',
+  'iframe',
+  ':is(button, input:not([type="hidden"])',
+  'select',
+  'textarea',
+].join(',');
+
+export const isFocusable = (obj: unknown): obj is HTMLElement => {
+  if (!(obj instanceof HTMLElement)) {
+    return false;
+  }
+  const computedStyle = getComputedStyle(obj);
+  if (
+    computedStyle.getPropertyValue('visibility') === 'hidden' ||
+    computedStyle.getPropertyValue('display') === 'none'
+  ) {
+    return false;
+  }
+  return (
+    obj.matches(FOCUSABLE_SELECTOR) ||
+    parseInt(obj.getAttribute('tabindex') ?? '') >= 0 ||
+    obj.isContentEditable
+  );
 };
