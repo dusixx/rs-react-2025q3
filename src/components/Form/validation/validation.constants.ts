@@ -19,6 +19,7 @@ const NAME = `^[A-Z][a-z]{1,${(NAME_MAX_LEN - 1).toString()}}$`;
 export const RegexPattern = {
   Name: RegExp(NAME),
   Email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+  PasswordAllowed: RegExp(`[${SPECIAL_CHARS}a-z0-9]`, 'ig'),
   SpecialChar: RegExp(`[${SPECIAL_CHARS}]`),
   LcaseLatin: /[a-z]/,
   UcaseLatin: /[A-Z]/,
@@ -26,16 +27,16 @@ export const RegexPattern = {
 } as const;
 
 export const ValidationMessage = {
-  Name: `Must contain only latin letters, length from ${NAME_MIN_LEN.toString()} to ${NAME_MAX_LEN.toString()}, first capital`,
-  Age: `must be a number between ${AGE_MIN.toString()} and ${AGE_MAX.toString()}`,
+  Name: `Must contain only latin letters, at least ${NAME_MIN_LEN.toString()} chars long, first capital`,
+  Age: `Must be a number between ${AGE_MIN.toString()} and ${AGE_MAX.toString()}`,
   Email: 'Invalid email (e.g. login@domain.com)',
   Gender: 'Invalid gender',
   Country: 'Select a country from the list',
   AvatarSize: `Maximum allowed size: ${FILE_MAX_SIZE_MB.toString()}MB`,
   AvatarRequired: 'Select an image file',
-  PasswordMin: `Must be at least ${PASSWORD_MIN_LEN.toString()} chars long`,
-  PasswordMax: `Must be no longer than ${PASSWORD_MAX_LEN.toString()}`,
-  PasswordWeak: `Too weak (allowed: ${SPECIAL_CHARS},  latin letters, numbers)`,
+  PasswordLength: `Musty be at least ${PASSWORD_MIN_LEN.toString()} chars long`,
+  PasswordWeak: `Password too weak`,
+  PasswordInvalid: `Allowed: ${SPECIAL_CHARS},  latin letters, numbers`,
   PasswordNotMatch: 'Passwords do not match',
   Agreement: 'Must be accepted',
   EmailExists: 'User with this email already exists',
