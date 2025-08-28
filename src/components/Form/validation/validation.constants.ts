@@ -34,7 +34,7 @@ export const ValidationMessage = {
   Country: 'Select a country from the list',
   AvatarSize: `Maximum allowed size: ${FILE_MAX_SIZE_MB.toString()}MB`,
   AvatarRequired: 'Select an image file',
-  PasswordLength: `Musty be at least ${PASSWORD_MIN_LEN.toString()} chars long`,
+  PasswordLength: `Must be at least ${PASSWORD_MIN_LEN.toString()} chars long`,
   PasswordWeak: `Password too weak`,
   PasswordInvalid: `Allowed: ${SPECIAL_CHARS},  latin letters, numbers`,
   PasswordNotMatch: 'Passwords do not match',
