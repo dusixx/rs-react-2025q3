@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
+import type { UserWithConfirm } from '@/common/types/user.ts';
+import { InputLabel, type User } from '@/common/types/user.ts';
 import { getRandomFormData } from '@/components/Form/utils.ts';
-import { LabelName, type User } from '@/redux/user.ts';
 import { FAKE_VALUE } from '../constants.ts';
 
 export const FAKE_FIELD_ERROR = `field-error-${FAKE_VALUE}`;
@@ -22,10 +23,9 @@ export const userFormDataMock = {
   }),
 };
 
-export const fieldErrorsMock = Object.values(LabelName).reduce<Record<string, string[]>>(
-  (res, key) => {
-    res[key] = [`${key}: ${FAKE_FIELD_ERROR}`];
-    return res;
-  },
-  {},
-);
+type R = Expand<Record<keyof UserWithConfirm, string[]>>;
+
+export const fieldErrorsMock = Object.values(InputLabel).reduce<R>((res, key) => {
+  res[key as keyof UserWithConfirm] = [`${key}: ${FAKE_FIELD_ERROR}`];
+  return res;
+}, {} as R);

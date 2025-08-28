@@ -1,4 +1,4 @@
-import type { UserWithConfirm } from '@/redux/user.ts';
+import type { UserWithConfirm } from '@/common/types/user';
 import type { ZodTypeAny } from 'zod';
 import z from 'zod';
 
