@@ -25,8 +25,9 @@ import {
   NAME_MAX_LEN,
   PASSWORD_MAX_LEN,
 } from '../../validation/validation.constants.ts';
-import { Checkbox } from '../Input/Checkbox.tsx';
-import { Datalist } from '../Input/Datalist.tsx';
+import { Checkbox } from '../Input/components/Checkbox.tsx';
+import { Datalist } from '../Input/components/Datalist.tsx';
+import { Radio } from '../Input/components/Radio.tsx';
 import { Input } from '../Input/Input.tsx';
 import { generateControlledFormData } from './ControlledForm.utils.ts';
 
@@ -102,7 +103,7 @@ export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
           <Input
             {...register('confirm')}
             securely={!showPassword}
-            nameLabel={InputLabel.Confirm}
+            label={InputLabel.Confirm}
             error={errors.confirm?.message}
           />
           <Checkbox
@@ -121,14 +122,19 @@ export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
           error={errors.country?.message}
         />
         <div className={styles.gender}>
-          <label className={styles.label}>
-            <input type='radio' {...register('gender')} value={Gender.Male} defaultChecked />
-            <span>{Gender.Male}</span>
-          </label>
-          <label className={styles.label}>
-            <input type='radio' {...register('gender')} value={Gender.Female} />
-            <span>{Gender.Female}</span>
-          </label>
+          <Radio
+            {...register('gender')}
+            className={styles.label}
+            value={Gender.Male}
+            label={Gender.Male}
+            defaultChecked
+          />
+          <Radio
+            {...register('gender')}
+            className={styles.label}
+            value={Gender.Female}
+            label={Gender.Female}
+          />
         </div>
         <Input
           {...register('avatar')}

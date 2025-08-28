@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import styles from './Input.module.scss';
-import type { InputProps } from './Input.tsx';
+import styles from '../Input.module.scss';
+import type { InputProps } from '../Input.tsx';
 
 type CheckboxProps = InputProps & {
   label?: string;

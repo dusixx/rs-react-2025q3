@@ -22,8 +22,9 @@ import {
   NAME_MAX_LEN,
   PASSWORD_MAX_LEN,
 } from '../../validation/validation.constants.ts';
-import { Checkbox } from '../Input/Checkbox.tsx';
-import { Datalist } from '../Input/Datalist.tsx';
+import { Checkbox } from '../Input/components/Checkbox.tsx';
+import { Datalist } from '../Input/components/Datalist.tsx';
+import { Radio } from '../Input/components/Radio.tsx';
 import { Input } from '../Input/Input.tsx';
 import type { UserFieldErrors } from './UncontrolledForm.utils.ts';
 import { generateUncontrolledFormData, validateUserFormData } from './UncontrolledForm.utils.ts';
@@ -78,13 +79,20 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
         {GENERATE_BTN_TEXT}
       </button>
       <form className={styles.form} onSubmit={e => void handleSubmit(e)} ref={formRef}>
-        <Input nameLabel={InputLabel.Name} error={errors.name} maxLength={NAME_MAX_LEN} autoFocus />
-        <Input nameLabel={InputLabel.Age} error={errors.age} />
-        <Input nameLabel={InputLabel.Email} error={errors.email} />
+        <Input
+          name={InputLabel.Name}
+          label={InputLabel.Name}
+          error={errors.name}
+          maxLength={NAME_MAX_LEN}
+          autoFocus
+        />
+        <Input name={InputLabel.Age} label={InputLabel.Age} error={errors.age} />
+        <Input name={InputLabel.Email} label={InputLabel.Email} error={errors.email} />
         <fieldset className={styles.fieldset}>
           <Input
             securely={!showPassword}
-            nameLabel={InputLabel.Password}
+            name={InputLabel.Password}
+            label={InputLabel.Password}
             ref={passwordInputRef}
             maxLength={PASSWORD_MAX_LEN}
             error={errors.password}
@@ -95,7 +103,12 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
               </p>
             )}
           </Input>
-          <Input securely={!showPassword} nameLabel={InputLabel.Confirm} error={errors.confirm} />
+          <Input
+            securely={!showPassword}
+            name={InputLabel.Confirm}
+            label={InputLabel.Confirm}
+            error={errors.confirm}
+          />
           <Checkbox
             label={SHOW_PASSWORD_TEXT}
             className={styles.label}
@@ -106,24 +119,30 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
         </fieldset>
         <Datalist
           options={countryList}
-          nameLabel={InputLabel.Country}
-          list='countries'
+          name={InputLabel.Country}
+          label={InputLabel.Country}
           placeholder={COUNTRY_LIST_PLACEHOLDER}
           error={errors.country}
         />
         <div className={styles.gender}>
-          <label className={styles.label}>
-            <input type='radio' name={InputLabel.Gender} value={Gender.Male} defaultChecked />
-            <span>{Gender.Male}</span>
-          </label>
-          <label className={styles.label}>
-            <input type='radio' name={InputLabel.Gender} value={Gender.Female} />
-            <span>{Gender.Female}</span>
-          </label>
+          <Radio
+            className={styles.label}
+            name={InputLabel.Gender}
+            value={Gender.Male}
+            label={Gender.Male}
+            defaultChecked
+          />
+          <Radio
+            className={styles.label}
+            name={InputLabel.Gender}
+            value={Gender.Female}
+            label={Gender.Female}
+          />
         </div>
         <Input
           type='file'
-          nameLabel={InputLabel.Avatar}
+          name={InputLabel.Avatar}
+          label={InputLabel.Avatar}
           accept={FILE_VALID_TYPES.join()}
           error={errors.avatar}
         />
@@ -131,6 +150,7 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
           className={clsx(styles.label, styles.terms)}
           error={errors.agreement}
           label={AGREEMENT_TEXT}
+          name={InputLabel.Agreement}
         />
         <button className={styles.btn} type='submit'>
           {SUBMIT_BTN_TEXT}

@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react';
-import type { InputProps } from './Input.tsx';
-import { Input } from './Input.tsx';
+import type { InputProps } from '../Input.tsx';
+import { Input } from '../Input.tsx';
 
 type DatalistProps = InputProps & {
   options: readonly string[] | string[];
 };
 
 export const Datalist = ({
-  list = crypto.randomUUID().replace('-', ''),
+  list = `list_${crypto.randomUUID().replace(/-/g, '').slice(-8)}`,
   options,
   ...rest
 }: DatalistProps): ReactNode => {

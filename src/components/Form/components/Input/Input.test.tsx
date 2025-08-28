@@ -8,13 +8,7 @@ describe('Input', () => {
     const errMsg = fieldErrorsMock.name[0];
     const childrenTestId = `children-${FAKE_VALUE}`;
     render(
-      <Input
-        nameLabel={FAKE_VALUE}
-        error={errMsg}
-        data-testid={FAKE_VALUE}
-        id={FAKE_VALUE}
-        securely
-      >
+      <Input name={FAKE_VALUE} error={errMsg} data-testid={FAKE_VALUE} id={FAKE_VALUE} securely>
         <p data-testid={childrenTestId}>{FAKE_VALUE}</p>
       </Input>,
     );

@@ -74,6 +74,7 @@ export const setInputValueByName = <T extends object>(
   if (!el) {
     return;
   }
+  console.log(el);
   if ('checked' in el) {
     el.checked = inputValue;
   }
