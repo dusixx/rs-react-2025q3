@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-parameters */
+import { Gender, type UserWithConfirm } from '@/common/types/user.ts';
 import { rndInt } from '@/common/utils/index.ts';
 import countries from '@/data/country-list.ts';
-import { Gender, type UserWithConfirm } from '@/redux/user.ts';
 import { FAKE_VALUE } from '@/test-utils/constants.ts';
 import type { CSSProperties } from 'react';
 import { capitalize as cap } from './../../common/utils/index';

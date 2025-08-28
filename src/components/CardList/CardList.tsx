@@ -1,4 +1,4 @@
-import type { User } from '@/redux/user.ts';
+import type { User } from '@/common/types/user.ts';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';

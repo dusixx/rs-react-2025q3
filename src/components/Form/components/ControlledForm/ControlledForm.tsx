@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable max-lines-per-function */
-import { deleteProperties, fileToBase64 } from '@/common/utils/index.ts';
+import type { UserWithConfirm } from '@/common/types/user.ts';
+import { Gender, InputLabel, isUser } from '@/common/types/user.ts';
+import { fileToBase64, omit } from '@/common/utils/index.ts';
 import { useAppDispatch, useCountryList } from '@/redux/hooks.ts';
-import type { UserWithConfirm } from '@/redux/user.ts';
-import { Gender, isUser, LabelName } from '@/redux/user.ts';
 import { addUser } from '@/redux/usersSlice.ts';
 import { TestId } from '@/test-utils/constants.ts';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,20 +16,26 @@ import {
   GENERATE_BTN_TEXT,
   SHOW_PASSWORD_TEXT,
   SUBMIT_BTN_TEXT,
-} from '../constants.ts';
-import styles from '../styles.module.scss';
-import { getPasswordStrength, getPasswordStrengthStyle } from '../utils.ts';
-import { userSchema } from '../validation/user-schema.ts';
-import { FILE_VALID_TYPES } from '../validation/validation.constants.ts';
+} from '../../constants.ts';
+import styles from '../../styles.module.scss';
+import { getPasswordStrength, getPasswordStrengthStyle } from '../../utils.ts';
+import { userSchema } from '../../validation/user-schema.ts';
+import {
+  FILE_VALID_TYPES,
+  NAME_MAX_LEN,
+  PASSWORD_MAX_LEN,
+} from '../../validation/validation.constants.ts';
+import { Input } from '../Input/Input.tsx';
 import { generateControlledFormData } from './ControlledForm.utils.ts';
 
 export type FormProps = {
   closeModal?: () => void;
 };
-export type ControlledFormInputs = Partial<UserWithConfirm> & {
-  avatar?: File;
-};
-
+export type ControlledFormInputs = Partial<
+  Omit<UserWithConfirm, 'avatar'> & {
+    avatar: File;
+  }
+>;
 export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
   const countryList = useCountryList();
   const dispatch = useAppDispatch();
@@ -53,7 +59,7 @@ export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
 
   const onSubmit = handleSubmit(async (data: ControlledFormInputs): Promise<void> => {
     const user = {
-      ...deleteProperties(data, 'agreement', 'confirm'),
+      ...omit(data, 'agreement', 'confirm'),
       avatar: data.avatar ? await fileToBase64(data.avatar) : '',
     };
     if (isUser(user)) {
@@ -68,37 +74,35 @@ export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
         {GENERATE_BTN_TEXT}
       </button>
       <form className={styles.form} onSubmit={onSubmit}>
-        <label>
-          <span>{LabelName.Name}</span>
-          <input type='text' {...register('name')} autoComplete='off' autoFocus />
-          {errors.name && <p className={styles.error}>{errors.name.message}</p>}
-        </label>
-        <label>
-          <span>{LabelName.Age}</span>
-          <input type='text' {...register('age')} autoComplete='off' />
-          {errors.age && <p className={styles.error}>{errors.age.message}</p>}
-        </label>
-        <label>
-          <span>{LabelName.Email}</span>
-          <input type='text' {...register('email')} autoComplete='off' />
-          {errors.email && <p className={styles.error}>{errors.email.message}</p>}
-        </label>
+        <Input
+          {...register('name')}
+          label={InputLabel.Name}
+          autoFocus
+          maxLength={NAME_MAX_LEN}
+          error={errors.name?.message}
+        />
+        <Input {...register('age')} label={InputLabel.Age} error={errors.age?.message} />
+        <Input {...register('email')} label={InputLabel.Email} error={errors.email?.message} />
         <fieldset className={styles.fieldset}>
-          <label>
-            <span>{LabelName.Password}</span>
-            <input type={showPassword ? 'text' : 'password'} {...register('password')} />
-            {errors.password && <p className={styles.error}>{errors.password.message}</p>}
+          <Input
+            {...register('password')}
+            securely={!showPassword}
+            label={InputLabel.Password}
+            maxLength={PASSWORD_MAX_LEN}
+            error={errors.password?.message}
+          >
             {!errors.password && passwordStrength !== 'weak' && (
               <p className={styles.strength} style={getPasswordStrengthStyle(passwordStrength)}>
                 password: {passwordStrength}
               </p>
             )}
-          </label>
-          <label>
-            <span>{LabelName.Confirm}</span>
-            <input type={showPassword ? 'text' : 'password'} {...register('confirm')} />
-            {errors.confirm && <p className={styles.error}>{errors.confirm.message}</p>}
-          </label>
+          </Input>
+          <Input
+            {...register('confirm')}
+            securely={!showPassword}
+            nameLabel={InputLabel.Confirm}
+            error={errors.confirm?.message}
+          />
           <label className={styles.label}>
             <input
               type='checkbox'
@@ -109,21 +113,19 @@ export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
             <span>{SHOW_PASSWORD_TEXT}</span>
           </label>
         </fieldset>
-        <label>
-          <span>{LabelName.Country}</span>
-          <input
-            list='countries'
-            autoComplete='off'
-            placeholder={COUNTRY_LIST_PLACEHOLDER}
-            {...register('country')}
-          />
+        <Input
+          {...register('country')}
+          label={InputLabel.Country}
+          list='countries'
+          placeholder={COUNTRY_LIST_PLACEHOLDER}
+          error={errors.country?.message}
+        >
           <datalist id='countries'>
             {countryList.map(item => {
               return <option key={item} value={item} />;
             })}
           </datalist>
-          {errors.country && <p className={styles.error}>{errors.country.message}</p>}
-        </label>
+        </Input>
         <div className={styles.gender}>
           <label className={styles.label}>
             <input type='radio' {...register('gender')} value={Gender.Male} defaultChecked />
@@ -134,11 +136,13 @@ export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
             <span>{Gender.Female}</span>
           </label>
         </div>
-        <label>
-          <span>{LabelName.Avatar}</span>
-          <input {...register('avatar')} type='file' accept={FILE_VALID_TYPES.join()} />
-          {errors.avatar && <p className={styles.error}>{errors.avatar.message}</p>}
-        </label>
+        <Input
+          {...register('avatar')}
+          type='file'
+          label={InputLabel.Avatar}
+          accept={FILE_VALID_TYPES.join()}
+          error={errors.avatar?.message}
+        />
         <label className={clsx(styles.label, styles.terms)}>
           <input type='checkbox' {...register('agreement')} />
           <span>{AGREEMENT_TEXT}</span>

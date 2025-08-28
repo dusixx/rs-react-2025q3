@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import type { UserWithConfirm } from '@/redux/user.ts';
+import type { UserWithConfirm } from '@/common/types/user.ts';
 import type { UseFormSetValue } from 'react-hook-form';
-import { getRandomFormData } from '../utils.ts';
+import { getRandomFormData } from '../../utils.ts';
 import type { ControlledFormInputs } from './ControlledForm.tsx';
 
 export const generateControlledFormData = (

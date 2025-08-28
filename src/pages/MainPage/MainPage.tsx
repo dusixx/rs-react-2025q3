@@ -1,14 +1,14 @@
 import { CardList } from '@/components/CardList/CardList.tsx';
-import { ControlledForm } from '@/components/Form/ControlledForm/ControlledForm';
-import { UncontrolledForm } from '@/components/Form/UncontrolledForm/UncontrolledForm';
+import { ControlledForm } from '@/components/Form/components/ControlledForm/ControlledForm';
+import { UncontrolledForm } from '@/components/Form/components/UncontrolledForm/UncontrolledForm';
 import { Modal } from '@/components/Modal/Modal.tsx';
 import { useUserList } from '@/redux/hooks.ts';
 import { TestId } from '@/test-utils/constants.ts';
 import { useState, type ReactNode } from 'react';
 import styles from './MainPage.module.scss';
 
-export const CONTROLLED_TEXT = 'Controlled';
-export const UNCONTROLLED_TEXT = 'Uncontrolled';
+export const CONTROLLED_TEXT = 'Controlled form';
+export const UNCONTROLLED_TEXT = 'Uncontrolled form';
 
 export default function MainPage(): ReactNode {
   const [open, setOpen] = useState(false);

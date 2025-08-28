@@ -1,5 +1,5 @@
 import { IconFemale, IconMale } from '@/common/constants.ts';
-import type { User } from '@/redux/user.ts';
+import type { User } from '@/common/types/user';
 import clsx from 'clsx';
 import type { ReactNode } from 'react';
 import styles from './Card.module.scss';

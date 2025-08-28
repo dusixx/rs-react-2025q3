@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
-import { deleteProperties, fileToBase64, getFormData } from '@/common/utils/index.ts';
+import { Gender, InputLabel } from '@/common/types/user.ts';
+import { fileToBase64, getFormData, omit } from '@/common/utils/index.ts';
 import { useAppDispatch, useCountryList } from '@/redux/hooks.ts';
-import { Gender, LabelName } from '@/redux/user.ts';
 import { addUser } from '@/redux/usersSlice.ts';
 import { TestId } from '@/test-utils/constants.ts';
 import clsx from 'clsx';
@@ -13,11 +13,16 @@ import {
   GENERATE_BTN_TEXT,
   SHOW_PASSWORD_TEXT,
   SUBMIT_BTN_TEXT,
-} from '../constants.ts';
-import styles from '../styles.module.scss';
-import type { PasswordStrength } from '../utils.ts';
-import { getPasswordStrength, getPasswordStrengthStyle } from '../utils.ts';
-import { FILE_VALID_TYPES } from '../validation/validation.constants.ts';
+} from '../../constants.ts';
+import styles from '../../styles.module.scss';
+import type { PasswordStrength } from '../../utils.ts';
+import { getPasswordStrength, getPasswordStrengthStyle } from '../../utils.ts';
+import {
+  FILE_VALID_TYPES,
+  NAME_MAX_LEN,
+  PASSWORD_MAX_LEN,
+} from '../../validation/validation.constants.ts';
+import { Input } from '../Input/Input.tsx';
 import type { UserFieldErrors } from './UncontrolledForm.utils.ts';
 import { generateUncontrolledFormData, validateUserFormData } from './UncontrolledForm.utils.ts';
 
@@ -41,12 +46,11 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
       generateUncontrolledFormData(formRef.current);
       const strength = getPasswordStrength(passwordInputRef.current?.value ?? '');
       if (strength !== 'weak') {
-        setErrors(deleteProperties(errors, 'password', 'confirm'));
+        setErrors(omit(errors, 'password', 'confirm'));
       }
       setPasswordStrength(strength);
     }
   };
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const result = validateUserFormData(getFormData(e));
@@ -66,48 +70,30 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
       setErrors(result.fieldErrors);
     }
   };
-
   return (
     <div data-testid={TestId.FormUncontrolled}>
       <button className={styles.generate} onClick={handleGenerateClick}>
         {GENERATE_BTN_TEXT}
       </button>
       <form className={styles.form} onSubmit={e => void handleSubmit(e)} ref={formRef}>
-        <label>
-          <span>{LabelName.Name}</span>
-          <input type='text' name={LabelName.Name} autoComplete='off' autoFocus />
-          {errors.name && <p className={styles.error}>{errors.name}</p>}
-        </label>
-        <label>
-          <span>{LabelName.Age}</span>
-          <input type='text' name={LabelName.Age} autoComplete='off' />
-          {errors.age && <p className={styles.error}>{errors.age}</p>}
-        </label>
-        <label>
-          <span>{LabelName.Email}</span>
-          <input type='text' name={LabelName.Email} autoComplete='off' />
-          {errors.email && <p className={styles.error}>{errors.email[0]}</p>}
-        </label>
+        <Input nameLabel={InputLabel.Name} error={errors.name} maxLength={NAME_MAX_LEN} autoFocus />
+        <Input nameLabel={InputLabel.Age} error={errors.age} />
+        <Input nameLabel={InputLabel.Email} error={errors.email} />
         <fieldset className={styles.fieldset}>
-          <label>
-            <span>{LabelName.Password}</span>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              name={LabelName.Password}
-              ref={passwordInputRef}
-            />
-            {errors.password && <p className={styles.error}>{errors.password[0]}</p>}
+          <Input
+            securely={!showPassword}
+            nameLabel={InputLabel.Password}
+            ref={passwordInputRef}
+            maxLength={PASSWORD_MAX_LEN}
+            error={errors.password}
+          >
             {!errors.password && passwordStrength !== 'weak' && (
               <p className={styles.strength} style={getPasswordStrengthStyle(passwordStrength)}>
                 password: {passwordStrength}
               </p>
             )}
-          </label>
-          <label>
-            <span>{LabelName.Confirm}</span>
-            <input type={showPassword ? 'text' : 'password'} name={LabelName.Confirm} />
-            {errors.confirm && <p className={styles.error}>{errors.confirm}</p>}
-          </label>
+          </Input>
+          <Input securely={!showPassword} nameLabel={InputLabel.Confirm} error={errors.confirm} />
           <label className={styles.label}>
             <input
               type='checkbox'
@@ -118,38 +104,36 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
             <span>{SHOW_PASSWORD_TEXT}</span>
           </label>
         </fieldset>
-        <label>
-          <span>{LabelName.Country}</span>
-          <input
-            name={LabelName.Country}
-            list='countries'
-            autoComplete='off'
-            placeholder={COUNTRY_LIST_PLACEHOLDER}
-          />
+        <Input
+          nameLabel={InputLabel.Country}
+          list='countries'
+          placeholder={COUNTRY_LIST_PLACEHOLDER}
+          error={errors.country}
+        >
           <datalist id='countries'>
             {countryList.map(item => {
               return <option key={item} value={item} />;
             })}
           </datalist>
-          {errors.country && <p className={styles.error}>{errors.country}</p>}
-        </label>
+        </Input>
         <div className={styles.gender}>
           <label className={styles.label}>
-            <input type='radio' name={LabelName.Gender} value={Gender.Male} defaultChecked />
+            <input type='radio' name={InputLabel.Gender} value={Gender.Male} defaultChecked />
             <span>{Gender.Male}</span>
           </label>
           <label className={styles.label}>
-            <input type='radio' name={LabelName.Gender} value={Gender.Female} />
+            <input type='radio' name={InputLabel.Gender} value={Gender.Female} />
             <span>{Gender.Female}</span>
           </label>
         </div>
-        <label>
-          <span>{LabelName.Avatar}</span>
-          <input name={LabelName.Avatar} type='file' accept={FILE_VALID_TYPES.join()} />
-          {errors.avatar && <p className={styles.error}>{errors.avatar}</p>}
-        </label>
+        <Input
+          type='file'
+          nameLabel={InputLabel.Avatar}
+          accept={FILE_VALID_TYPES.join()}
+          error={errors.avatar}
+        />
         <label className={clsx(styles.label, styles.terms)}>
-          <input type='checkbox' name={LabelName.Agreement} />
+          <input type='checkbox' name={InputLabel.Agreement} />
           <span>{AGREEMENT_TEXT}</span>
           {errors.agreement && <p className={styles.error}>{errors.agreement}</p>}
         </label>

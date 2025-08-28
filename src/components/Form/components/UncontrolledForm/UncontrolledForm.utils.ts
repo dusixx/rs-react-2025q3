@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
+import type { User, UserWithConfirm } from '@/common/types/user.ts';
 import type { getFormData } from '@/common/utils/index.ts';
-import { deleteProperties } from '@/common/utils/index.ts';
-import type { User, UserWithConfirm } from '@/redux/user.ts';
-import { getRandomFormData, setInputValueByName } from '../utils.ts';
-import { userSchema } from '../validation/user-schema.ts';
+import { omit } from '@/common/utils/index.ts';
+import { getRandomFormData, setInputValueByName } from '../../utils.ts';
+import { userSchema } from '../../validation/user-schema.ts';
 
 export type UserFieldErrors = Partial<Record<keyof UserWithConfirm, string[]>>;
 
@@ -19,7 +19,7 @@ export const validateUserFormData = (formData: ReturnType<typeof getFormData>): 
   if (success) {
     return {
       success,
-      data: deleteProperties(data, 'agreement', 'confirm') as UserFormData,
+      data: omit(data, 'agreement', 'confirm') as UserFormData,
     };
   }
   return {
