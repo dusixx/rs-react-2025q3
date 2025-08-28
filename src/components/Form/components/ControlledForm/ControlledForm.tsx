@@ -25,6 +25,7 @@ import {
   NAME_MAX_LEN,
   PASSWORD_MAX_LEN,
 } from '../../validation/validation.constants.ts';
+import { Datalist } from '../Input/Datalist.tsx';
 import { Input } from '../Input/Input.tsx';
 import { generateControlledFormData } from './ControlledForm.utils.ts';
 
@@ -113,19 +114,13 @@ export const ControlledForm = ({ closeModal }: FormProps): ReactNode => {
             <span>{SHOW_PASSWORD_TEXT}</span>
           </label>
         </fieldset>
-        <Input
+        <Datalist
           {...register('country')}
+          options={countryList}
           label={InputLabel.Country}
-          list='countries'
           placeholder={COUNTRY_LIST_PLACEHOLDER}
           error={errors.country?.message}
-        >
-          <datalist id='countries'>
-            {countryList.map(item => {
-              return <option key={item} value={item} />;
-            })}
-          </datalist>
-        </Input>
+        />
         <div className={styles.gender}>
           <label className={styles.label}>
             <input type='radio' {...register('gender')} value={Gender.Male} defaultChecked />

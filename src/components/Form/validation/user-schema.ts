@@ -53,8 +53,8 @@ export const userSchema = z
       .unknown()
       .optional()
       .transform(transformAvatar)
-      .refine(v => v && v.name.length !== 0, ValidationMessage.AvatarRequired)
-      .refine(f => f && f.size <= FILE_MAX_SIZE_BYTES, ValidationMessage.AvatarSize),
+      .refine(file => file && file.name.length !== 0, ValidationMessage.AvatarRequired)
+      .refine(file => file && file.size <= FILE_MAX_SIZE_BYTES, ValidationMessage.AvatarSize),
     agreement: z.unknown().refine(v => v, ValidationMessage.Agreement),
     confirm: z.string(),
   })

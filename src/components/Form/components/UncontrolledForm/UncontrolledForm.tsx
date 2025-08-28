@@ -22,6 +22,7 @@ import {
   NAME_MAX_LEN,
   PASSWORD_MAX_LEN,
 } from '../../validation/validation.constants.ts';
+import { Datalist } from '../Input/Datalist.tsx';
 import { Input } from '../Input/Input.tsx';
 import type { UserFieldErrors } from './UncontrolledForm.utils.ts';
 import { generateUncontrolledFormData, validateUserFormData } from './UncontrolledForm.utils.ts';
@@ -104,18 +105,13 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
             <span>{SHOW_PASSWORD_TEXT}</span>
           </label>
         </fieldset>
-        <Input
+        <Datalist
+          options={countryList}
           nameLabel={InputLabel.Country}
           list='countries'
           placeholder={COUNTRY_LIST_PLACEHOLDER}
           error={errors.country}
-        >
-          <datalist id='countries'>
-            {countryList.map(item => {
-              return <option key={item} value={item} />;
-            })}
-          </datalist>
-        </Input>
+        />
         <div className={styles.gender}>
           <label className={styles.label}>
             <input type='radio' name={InputLabel.Gender} value={Gender.Male} defaultChecked />
