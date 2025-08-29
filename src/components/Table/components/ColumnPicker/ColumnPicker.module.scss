@@ -1,0 +1,30 @@
+.modal {
+  display: flex;
+
+  padding: 24px 20px;
+  border-radius: var(--border-radius);
+
+  font-size: 13px;
+
+  background-color: var(--color-bg);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn {
+  @extend %btn-primary;
+
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.checkbox {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  line-height: 1;
+}
