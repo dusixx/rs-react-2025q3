@@ -46,27 +46,6 @@ export const isKeyPressed = (key: keyof typeof KeyboardEventKey, event: Event): 
   return k === key.toString() && !ctrl && !alt && !shift;
 };
 
-export const getFormData = (
-  obj: HTMLFormElement | FormEvent<HTMLFormElement>,
-): Record<string, FormDataEntryValue> => {
-  const form = obj instanceof HTMLFormElement ? obj : obj.currentTarget;
-  return Object.fromEntries(new FormData(form).entries());
-};
-
-export const fileToBase64 = async (file: File): Promise<string> => {
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-
-  return new Promise((resolve, reject) => {
-    reader.onload = (): void => {
-      resolve(isString(reader.result) ? reader.result : '');
-    };
-    reader.onerror = (error: unknown): void => {
-      reject(isError(error) ? error : Error(ERR_SOMETHING_WRONG));
-    };
-  });
-};
-
 export const getOrCreateElementWithId = (
   id: string,
   tag: keyof HTMLElementTagNameMap = 'div',
@@ -80,36 +59,23 @@ export const getOrCreateElementWithId = (
   return el;
 };
 
+export const getFormData = (
+  obj: HTMLFormElement | FormEvent<HTMLFormElement>,
+): Record<string, FormDataEntryValue> => {
+  const form = obj instanceof HTMLFormElement ? obj : obj.currentTarget;
+  return Object.fromEntries(new FormData(form).entries());
+};
+
 export const omit = <T extends object, K extends keyof T>(obj: T, ...keys: K[]): Omit<T, K> => {
   return Object.fromEntries(
     Object.entries(obj).filter(([key]) => !keys.includes(key as K)),
   ) as Omit<T, K>;
 };
 
-export const FOCUSABLE_SELECTOR = [
-  'a[href]',
-  'area[href]',
-  'details',
-  'iframe',
-  ':is(button, input:not([type="hidden"])',
-  'select',
-  'textarea',
-].join(',');
+export const getId = (): string => {
+  return crypto.randomUUID().replace(/-/g, '');
+};
 
-export const isFocusable = (obj: unknown): obj is HTMLElement => {
-  if (!(obj instanceof HTMLElement)) {
-    return false;
-  }
-  const computedStyle = getComputedStyle(obj);
-  if (
-    computedStyle.getPropertyValue('visibility') === 'hidden' ||
-    computedStyle.getPropertyValue('display') === 'none'
-  ) {
-    return false;
-  }
-  return (
-    obj.matches(FOCUSABLE_SELECTOR) ||
-    parseInt(obj.getAttribute('tabindex') ?? '') >= 0 ||
-    obj.isContentEditable
-  );
+export const removeDups = <T = unknown[]>(arr: T[]): T[] => {
+  return [...new Set(arr)];
 };
