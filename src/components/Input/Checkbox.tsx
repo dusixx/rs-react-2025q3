@@ -10,7 +10,7 @@ export const Checkbox = ({ label, className, error, ...rest }: CheckboxProps): R
   const errorMsg = Array.isArray(error) ? error[0] : error;
   return (
     <label className={className}>
-      <input type='checkbox' {...rest} />
+      <input className={styles.checkbox} type='checkbox' {...rest} />
       <span>{label}</span>
       {errorMsg && <p className={styles.error}>{errorMsg}</p>}
     </label>

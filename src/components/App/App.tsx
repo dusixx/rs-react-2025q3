@@ -5,7 +5,7 @@ const MainPage = lazy(() => import('@pages/MainPage/MainPage.tsx'));
 
 export const App = (): ReactNode => {
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader size={28}>Loading data, please wait...</Loader>}>
       <MainPage />
     </Suspense>
   );

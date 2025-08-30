@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode, Ref } from 'react';
+import { memo, type InputHTMLAttributes, type ReactNode, type Ref } from 'react';
 import styles from './Input.module.scss';
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -18,3 +18,5 @@ export const Input = ({ label, children, error, securely, ...rest }: InputProps)
     </label>
   );
 };
+
+export const MemoizedInput = memo(Input);
