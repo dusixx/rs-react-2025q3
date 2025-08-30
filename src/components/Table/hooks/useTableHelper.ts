@@ -1,51 +1,45 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import { removeDups } from '@/common/utils/index.ts';
+import { createRecord, removeDups } from '@/common/utils/index.ts';
 import type { AnnualData } from '@/services/types.ts';
 import { BasicColumnNames, BasicDataColumnNames } from '@/services/types.ts';
 import { useCallback, useMemo } from 'react';
 import type { TableProps } from '../Table.tsx';
-
-const NA = 'N/A';
+import { NA } from '../Table.utils.ts';
 
 type UseTableHelperResult = {
-  allColumns: string[];
-  getRowData: (countryName: string) => readonly string[] | undefined;
-};
-
-const getAnnualData = (countryDataForAllYears: AnnualData[], targetYear?: number): AnnualData => {
-  const existingAnnualData = targetYear
-    ? countryDataForAllYears.find(({ year }) => year === targetYear)
-    : countryDataForAllYears[countryDataForAllYears.length - 1];
-
-  return existingAnnualData ?? ({ year: targetYear ?? NA } as AnnualData);
+  headerRowData: Record<string, string>;
+  getRowDataByCountry: (countryName: string) => Record<string, string> | undefined;
 };
 
 export const useTableHelper = ({
-  data,
-  targetYear,
-  additionalColumns = [],
+  summaryData,
+  additionalDataColumns = [],
 }: TableProps): UseTableHelperResult => {
-  const allColumns = useMemo(
-    () => removeDups([...BasicColumnNames, ...BasicDataColumnNames, ...additionalColumns]),
-    [additionalColumns],
+  const columnKeys = useMemo(
+    () => removeDups([...BasicColumnNames, ...BasicDataColumnNames, ...additionalDataColumns]),
+    [additionalDataColumns],
   );
-  const getRowData = useCallback(
-    (countryName: string): readonly string[] | undefined => {
-      if (!countryName || !data[countryName]) {
+
+  const getRowDataByCountry = useCallback(
+    (countryName: string): Record<string, string> | undefined => {
+      if (!countryName || !summaryData[countryName]) {
         return;
       }
-      const { iso_code, data: countryDataForAllYears } = data[countryName];
-      const annualData = getAnnualData(countryDataForAllYears, targetYear);
-      const annualDataColumns = allColumns
+      const { iso_code, data } = summaryData[countryName];
+      const annualData = data[0];
+      const annualDataValues = columnKeys
         .slice(2)
         .map(colName => annualData[colName as keyof AnnualData]?.toString() || NA);
 
-      return [countryName, iso_code || NA, ...annualDataColumns];
+      const columnValues = [countryName, iso_code || NA, ...annualDataValues];
+
+      return createRecord({ keys: columnKeys, values: columnValues, placeholder: NA });
     },
-    [allColumns, data, targetYear],
+    [columnKeys, summaryData],
   );
+
   return {
-    allColumns,
-    getRowData,
+    headerRowData: createRecord({ keys: columnKeys }),
+    getRowDataByCountry,
   };
 };

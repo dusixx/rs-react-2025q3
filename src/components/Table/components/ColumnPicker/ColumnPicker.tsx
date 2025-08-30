@@ -2,49 +2,39 @@ import { getFormData } from '@/common/utils/index.ts';
 import { Checkbox } from '@/components/Input/Checkbox.tsx';
 import { Modal } from '@/components/Modal/Modal.tsx';
 import { AdditionalDataColumnNames } from '@/services/types.ts';
-import type { ChangeEvent } from 'react';
-import { useCallback, useState, type FormEvent, type ReactNode } from 'react';
+import { memo, useCallback, type FormEvent, type ReactNode } from 'react';
 import styles from './ColumnPicker.module.scss';
 
 const APPLY_BTN_TEXT = 'Apply';
 
 type ColumnPickerProps = {
-  columns?: string[] | readonly string[];
-  onApply?: (columns: string[]) => void;
+  open: boolean;
+  onClose: (columns?: string[]) => void;
+  columns?: string[];
+  selectedColumns?: string[];
 };
 
 export const ColumnPicker = ({
-  columns = AdditionalDataColumnNames,
-  onApply,
+  columns = [...AdditionalDataColumnNames],
+  selectedColumns = [],
+  open,
+  onClose,
 }: ColumnPickerProps): ReactNode => {
-  const [open, setOpen] = useState(true);
-  const [selectedCount, setSelectedCount] = useState(0);
-
-  const handleCheckboxChange = useCallback(({ target }: ChangeEvent<HTMLInputElement>): void => {
-    setSelectedCount(c => (target.checked ? c + 1 : c - 1));
-  }, []);
-
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>): void => {
-      const selectedColumns = Object.keys(getFormData(e));
-      if (selectedColumns.length !== 0) {
-        console.log(selectedColumns);
-        onApply?.(selectedColumns);
-      }
       e.preventDefault();
-      setOpen(false);
+      const selected = Object.keys(getFormData(e));
+      onClose(selected);
     },
-    [onApply],
+    [onClose],
   );
 
+  const handleModalClose = useCallback((): void => {
+    onClose(selectedColumns);
+  }, [onClose, selectedColumns]);
+
   return (
-    <Modal
-      className={styles.modal}
-      open={open}
-      onClose={() => {
-        setOpen(false);
-      }}
-    >
+    <Modal className={styles.modal} open={open} onClose={handleModalClose}>
       <form className={styles.form} onSubmit={handleSubmit}>
         {columns.map(colName => {
           return (
@@ -54,14 +44,16 @@ export const ColumnPicker = ({
               label={colName}
               value={colName}
               key={colName}
-              onChange={handleCheckboxChange}
+              defaultChecked={selectedColumns.includes(colName)}
             />
           );
         })}
-        <button className={styles.btn} type='submit' disabled={!selectedCount}>
+        <button className={styles.btn} type='submit'>
           {APPLY_BTN_TEXT}
         </button>
       </form>
     </Modal>
   );
 };
+
+export const MemoizedColumnPicker = memo(ColumnPicker);
