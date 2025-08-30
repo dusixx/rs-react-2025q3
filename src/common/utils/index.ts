@@ -79,3 +79,16 @@ export const getId = (): string => {
 export const removeDups = <T = unknown[]>(arr: T[]): T[] => {
   return [...new Set(arr)];
 };
+
+export const createRecord = <T = unknown>({
+  keys,
+  values = keys,
+  placeholder,
+}: {
+  keys: PropertyKey[];
+  values?: unknown[];
+  placeholder?: unknown;
+}): Record<string, T> => {
+  const entries = keys.map((key, idx) => [key, values[idx] ?? placeholder]);
+  return Object.fromEntries(entries) as Record<string, T>;
+};
