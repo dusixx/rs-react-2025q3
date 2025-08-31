@@ -10,7 +10,7 @@
 ##### 1. Add columns `(6x)`
 
 ```
-Commited: 1.2s
+Committed at: 1.2s
 Render duration: 310.4ms
 Passive effects: 36.2ms
 Interactions: MainPage
@@ -22,7 +22,7 @@ Interactions: MainPage
 ##### 2. Remove columns `(6x)`
 
 ```
-Commited: 1.4s
+Committed at: 1.4s
 Render duration: 478.2ms
 Passive effects: 73.3ms
 Interactions: MainPage
@@ -34,7 +34,7 @@ Interactions: MainPage
 ##### 3. Search by name `(query="un")`
 
 ```
-Commited: 2s
+Committed at: 2s
 Render duration: 151.1ms
 Passive effects: 7.1ms
 Interactions: MainPage
@@ -46,7 +46,7 @@ Interactions: MainPage
 ##### 4. Sort `(by country name DESC)`
 
 ```
-Commited: 1.8s
+Committed at: 1.8s
 Render duration: 366.8ms
 Passive effects: 19.1ms
 Interactions: MainPage
@@ -58,7 +58,7 @@ Interactions: MainPage
 ##### 5. Sort `(by population ASC)`
 
 ```
-Commited: 2s
+Committed at: 2s
 Render duration: 351.8ms
 Passive effects: 17.9ms
 Interactions: MainPage
@@ -70,7 +70,7 @@ Interactions: MainPage
 ##### 6. Select another year
 
 ```
-Commited: 2.8s
+Committed at: 2.8s
 Render duration: 363.9ms
 Passive effects: 16.9ms (without highlighting cells)
 Interactions: MainPage
@@ -98,7 +98,7 @@ By using:
 ##### 1. Add columns `(6x)`
 
 ```
-Commited: 1.1s
+Committed at: 1.1s
 Render duration: 6.7ms (was 310.4ms)
 Passive effects: 3ms (was 36.2ms)
 Interactions: MainPage
@@ -110,7 +110,7 @@ Interactions: MainPage
 ##### 2. Remove columns `(6x)`
 
 ```
-Commited: 1.4s
+Committed at: 1.4s
 Render duration: 5.3ms (was 478.2ms)
 Passive effects: 0.8ms (was 73.3ms)
 Interactions: MainPage
@@ -122,9 +122,9 @@ Interactions: MainPage
 ##### 3. Search by name `(query="un")`
 
 ```
-Commited: 1.8s
-Render duration: 75.5ms (151.1ms)
-Passive effects: 0.1ms (7.1ms)
+Committed at: 1.8s
+Render duration: 75.5ms (was 151.1ms)
+Passive effects: 0.1ms (was 7.1ms)
 Interactions: MainPage
 ```
 
@@ -134,7 +134,7 @@ Interactions: MainPage
 ##### 4. Sort `(by country name DESC)`
 
 ```
-Commited: 3.5s
+Committed at: 3.5s
 Render duration: 349.6ms (was 366.8ms)
 Passive effects: 0 (was 19.1ms)
 Interactions: MainPage
@@ -147,7 +147,7 @@ Interactions: MainPage
 ##### 5. Sort `(by population ASC)`
 
 ```
-Commited: 2.8s
+Committed at: 2.8s
 Render duration: 229.5ms (was 351.8ms)
 Passive effects: 0 (was 17.9ms)
 Interactions: MainPage
@@ -159,7 +159,7 @@ Interactions: MainPage
 ##### 6. Select another year
 
 ```
-Commited: 2.9s
+Committed at: 2.9s
 Render duration: 298.5ms (was 363.9ms)
 Passive effects: 57.7ms
 Interactions: MainPage
