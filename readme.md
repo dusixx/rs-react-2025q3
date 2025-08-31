@@ -1,36 +1,79 @@
-### Performance Profiling
+## Performance Profiling
 
-#### After optimization
+<details open>
+<summary><b>After optimization</b></summary>
 
-##### 1. Add columns `6`
+---
 
-![add columns fm](/profiling/opt/add-cols-fg.jpg)
-![add columns rn](/profiling/opt/add-cols-rn.jpg)
+```
+by using React.memo, useMemo, useCallback, proper `key` props
+```
 
-##### 2. Remove columns `6`
+##### 1. Add columns `(6)`
 
-![remove columns fm](/profiling/opt/rem-cols-fg.jpg)
-![remove columns rn](/profiling/opt/rem-cols-rn.jpg)
+```
+Commited: 1.1s
+Render duration: 6.7ms
+Interactions: MainPage
+```
 
-##### 3. Search by name `query='un'`
+![add columns fm](/profiling-report/opt/add-cols-fg.jpg)
+![add columns rn](/profiling-report/opt/add-cols-rn.jpg)
 
-![search fm](/profiling/opt/search-un-fg.jpg)
-![search rn](/profiling/opt/search-un-rn.jpg)
+##### 2. Remove columns `(6)`
 
-##### 4. Sort by `country name DESC`
+```
+Commited: 1.4s
+Render duration: 5.3ms
+Interactions: MainPage
+```
 
-![sort by name fm](/profiling/opt/sort-cza-fg.jpg)
-![sort by name rn](/profiling/opt/sort-cza-rn.jpg)
-![sort by name rn2](/profiling/opt/sort-cza-rn2.jpg)
+![remove columns fm](/profiling-report/opt/rem-cols-fg.jpg)
+![remove columns rn](/profiling-report/opt/rem-cols-rn.jpg)
 
-##### 5. Sort by `population ASC`
+##### 3. Search by name `(query="un")`
 
-![sort by population fm](/profiling/opt/sort-pop09-fg.jpg)
-![sort by population rn](/profiling/opt/sort-pop09-rn.jpg)
+```
+Commited: 1.8s
+Render duration: 75.5ms
+Interactions: MainPage
+```
+
+![search fm](/profiling-report/opt/search-un-fg.jpg)
+![search rn](/profiling-report/opt/search-un-rn.jpg)
+
+##### 4. Sort `(by country name DESC)`
+
+```
+Commited: 3.5s
+Render duration: 349.6ms
+Interactions: MainPage
+```
+
+![sort by name fm](/profiling-report/opt/sort-cza-fg.jpg)
+![sort by name rn](/profiling-report/opt/sort-cza-rn.jpg)
+![sort by name rn2](/profiling-report/opt/sort-cza-rn2.jpg)
+
+##### 5. Sort `(by population ASC)`
+
+```
+Commited: 2.8s
+Render duration: 229.5ms
+Interactions: MainPage
+```
+
+![sort by population fm](/profiling-report/opt/sort-pop09-fg.jpg)
+![sort by population rn](/profiling-report/opt/sort-pop09-rn.jpg)
 
 ##### 6. Select another year
 
-![change year fm](/profiling/opt/select-year-fg.jpg)
-![change year rn](/profiling/opt/select-year-rn.jpg)
+```
+Commited: 2.9s
+Render duration: 298.5ms
+Interactions: MainPage
+```
 
----
+![change year fm](/profiling-report/opt/select-year-fg.jpg)
+![change year rn](/profiling-report/opt/select-year-rn.jpg)
+
+</details>
