@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { memo, type ReactNode, type SelectHTMLAttributes } from 'react';
 import styles from './Select.module.scss';
 
@@ -6,11 +7,11 @@ type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
   label?: string;
 };
 
-export const Select = ({ labelValuePairs, label, ...rest }: SelectProps): ReactNode => {
+export const Select = ({ labelValuePairs, label, className, ...rest }: SelectProps): ReactNode => {
   return (
     <label className={styles.label}>
       {label}
-      <select {...rest}>
+      <select className={clsx(styles.clickable, className)} {...rest}>
         {Object.entries(labelValuePairs).map(([label, value]) => {
           const valueStr = String(value);
           return <option value={valueStr} label={label} key={valueStr} />;
