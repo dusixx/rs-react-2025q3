@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 import styles from './Input.module.scss';
 import type { InputProps } from './Input.tsx';
 
@@ -6,7 +6,7 @@ type CheckboxProps = InputProps & {
   label?: string;
 };
 
-export const Checkbox = ({ label, className, error, ...rest }: CheckboxProps): ReactNode => {
+const Checkbox = ({ label, className, error, ...rest }: CheckboxProps): ReactNode => {
   const errorMsg = Array.isArray(error) ? error[0] : error;
   return (
     <label className={className}>
@@ -16,3 +16,5 @@ export const Checkbox = ({ label, className, error, ...rest }: CheckboxProps): R
     </label>
   );
 };
+
+export const MemoizedCheckbox = memo(Checkbox);

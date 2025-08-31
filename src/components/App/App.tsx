@@ -1,12 +1,12 @@
 import { lazy, Suspense, type ReactNode } from 'react';
-import { Loader } from '../Loader/Loader.tsx';
+import { MemoizedLoader } from '../Loader/Loader.tsx';
 
-const MainPage = lazy(() => import('@pages/MainPage/MainPage.tsx'));
+const MemoizedMainPage = lazy(() => import('@pages/MainPage/MainPage.tsx'));
 
 export const App = (): ReactNode => {
   return (
-    <Suspense fallback={<Loader size={28}>Loading data, please wait...</Loader>}>
-      <MainPage />
+    <Suspense fallback={<MemoizedLoader size={28}>Loading data, please wait...</MemoizedLoader>}>
+      <MemoizedMainPage />
     </Suspense>
   );
 };

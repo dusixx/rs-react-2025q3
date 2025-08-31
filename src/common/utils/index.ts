@@ -2,7 +2,7 @@
 import type { KeyboardEventKey } from '@common/constants.ts';
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
 import type { FormEvent } from 'react';
-import { isError, isInteger, isPositiveInteger, isString } from './type-guards.ts';
+import { isError, isString } from './type-guards.ts';
 
 export * from './type-guards.ts';
 
@@ -19,19 +19,6 @@ export const getErrorInstance = (
 
 export const getErrorMessage = (error: unknown, defaultMessage: string = ''): string => {
   return isString(error) ? error : isError(error) ? error.message : defaultMessage;
-};
-
-export const isNumeric = (v: unknown): boolean => {
-  const num = parseFloat(String(v));
-  return !isNaN(num) && isFinite(num);
-};
-
-export const isNumericInteger = (v: unknown): boolean => {
-  return isNumeric(v) && isInteger(Number(v));
-};
-
-export const isNumericPositiveInteger = (v: unknown): boolean => {
-  return isNumeric(v) && isPositiveInteger(Number(v));
 };
 
 export const capitalize = (str: string, locale: string = navigator.language): string => {

@@ -1,8 +1,9 @@
 import { getFormData } from '@/common/utils/index.ts';
-import { Checkbox } from '@/components/Input/Checkbox.tsx';
-import { Modal } from '@/components/Modal/Modal.tsx';
+import { MemoizedCheckbox } from '@/components/Input/Checkbox.tsx';
+import { MemoizedModal } from '@/components/Modal/Modal.tsx';
 import { AdditionalDataColumnNames } from '@/services/types.ts';
 import { memo, useCallback, type FormEvent, type ReactNode } from 'react';
+import { formatColumnName } from '../../Table.utils.ts';
 import styles from './ColumnPicker.module.scss';
 
 const APPLY_BTN_TEXT = 'Apply';
@@ -34,14 +35,14 @@ export const ColumnPicker = ({
   }, [onClose, selectedColumns]);
 
   return (
-    <Modal className={styles.modal} open={open} onClose={handleModalClose}>
+    <MemoizedModal className={styles.modal} open={open} onClose={handleModalClose}>
       <form className={styles.form} onSubmit={handleSubmit}>
         {columns.map(colName => {
           return (
-            <Checkbox
+            <MemoizedCheckbox
+              label={formatColumnName(colName)}
               className={styles.checkbox}
               name={colName}
-              label={colName}
               value={colName}
               key={colName}
               defaultChecked={selectedColumns.includes(colName)}
@@ -52,7 +53,7 @@ export const ColumnPicker = ({
           {APPLY_BTN_TEXT}
         </button>
       </form>
-    </Modal>
+    </MemoizedModal>
   );
 };
 

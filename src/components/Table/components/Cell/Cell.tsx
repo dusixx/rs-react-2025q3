@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type { CSSProperties } from 'react';
 import { memo, useEffect, useRef, useState, type ReactNode } from 'react';
 import styles from './Cell.module.scss';
@@ -32,7 +33,7 @@ const Cell = ({ value = '', cellKey, header }: CellProps): ReactNode => {
       {value}
     </th>
   ) : (
-    <td className={styles.cell} style={cellStyle} title={value}>
+    <td className={clsx(styles.cell, styles.td)} style={cellStyle} title={value}>
       {value}
     </td>
   );

@@ -4,7 +4,7 @@ import type { AnnualData } from '@/services/types.ts';
 import { BasicColumnNames, BasicDataColumnNames } from '@/services/types.ts';
 import { useCallback, useMemo } from 'react';
 import type { TableProps } from '../Table.tsx';
-import { NA } from '../Table.utils.ts';
+import { formatColumnName, NA } from '../Table.utils.ts';
 
 type UseTableHelperResult = {
   headerRowData: Record<string, string>;
@@ -39,7 +39,10 @@ export const useTableHelper = ({
   );
 
   return {
-    headerRowData: createRecord({ keys: columnKeys }),
+    headerRowData: createRecord({
+      values: columnKeys.map(v => formatColumnName(v)),
+      keys: columnKeys,
+    }),
     getRowDataByCountry,
   };
 };

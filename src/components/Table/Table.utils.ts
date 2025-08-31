@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
+import { capitalize } from '@/common/utils/index.ts';
 import type { AnnualData, SummaryData } from '@/services/types.ts';
 
 type SortByCountryName = 'byCountryNameAsc' | 'byCountryNameDesc';
@@ -104,4 +105,12 @@ export const filterSummaryData = ({
     }
     return obj;
   }, {});
+};
+
+export const formatColumnName = (colname: string): string => {
+  const words = colname.split(/[_-\s]+/).map(word => {
+    const result = capitalize(word);
+    return /iso|co2/i.test(result) ? result.toUpperCase() : result;
+  });
+  return words.join(' ');
 };

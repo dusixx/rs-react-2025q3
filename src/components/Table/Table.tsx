@@ -9,7 +9,6 @@ const HEADER_ROW_KEY = 'header';
 export type TableProps = {
   summaryData: SummaryData;
   additionalDataColumns?: readonly string[];
-  targetYear?: number;
 };
 
 const Table = (props: TableProps): ReactNode => {

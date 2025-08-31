@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import { IconSettings } from '@/common/constants.ts';
-import { createRecord } from '@/common/utils/index.ts';
+import { IconOptions } from '@/common/constants.ts';
 import { MemoizedInput } from '@/components/Input/Input.tsx';
-import { MemoizedSelect } from '@/components/Select/Select';
+import { MemoizedSelect } from '@/components/Input/Select/Select.tsx';
 import { MemoizedColumnPicker } from '@/components/Table/components/ColumnPicker/ColumnPicker.tsx';
 import { MemoizedTable } from '@/components/Table/Table.tsx';
 import {
@@ -14,20 +13,18 @@ import {
 import { summaryDataPromise } from '@/services/index.ts';
 import clsx from 'clsx';
 import type { ChangeEvent } from 'react';
-import { use, useCallback, useDeferredValue, useMemo, useState, type ReactNode } from 'react';
+import { memo, use, useCallback, useDeferredValue, useMemo, useState, type ReactNode } from 'react';
+import {
+  ICON_PROPS,
+  LABEL_SORT_BY,
+  LABEL_YEAR,
+  LAST_YEAR,
+  SEARCH_PLACEHOLDER,
+  YEARS_RECORD,
+} from './MainPage.constants.ts';
 import styles from './MainPage.module.scss';
 
-const SEARCH_PLACEHOLDER = 'Country name...';
-const SETTINGS_BTN_TEXT = 'columns';
-const ICON_PROPS = { size: 20 };
-const FIRST_YEAR = 1750;
-const LAST_YEAR = 2023;
-const YEAR_VALUES = Array.from({ length: LAST_YEAR - FIRST_YEAR + 1 }).map(
-  (_, idx) => FIRST_YEAR + idx,
-);
-const YEARS_RECORD = createRecord<number>({ keys: YEAR_VALUES });
-
-export default function MainPage(): ReactNode {
+const MainPage = (): ReactNode => {
   const summaryData = use(summaryDataPromise);
   const [columnsShown, setColumnsShown] = useState<string[]>();
   const [showColumnPicker, setShowColumnPicker] = useState(false);
@@ -72,19 +69,18 @@ export default function MainPage(): ReactNode {
     <div className={styles.wrapper}>
       <div className={styles.toolbar}>
         <button className={styles.btn} onClick={handleSettingsClick}>
-          <IconSettings {...ICON_PROPS} />
-          {SETTINGS_BTN_TEXT}
+          <IconOptions {...ICON_PROPS} />
         </button>
         <div className={styles.group}>
           <MemoizedSelect
-            label='Year:'
+            label={LABEL_YEAR}
             className={styles.input}
             labelValuePairs={YEARS_RECORD}
             defaultValue={LAST_YEAR}
             onChange={handleYearChange}
           />
           <MemoizedSelect
-            label='Sort by:'
+            label={LABEL_SORT_BY}
             className={styles.input}
             labelValuePairs={SortSelectLabelValuePairs}
             onChange={handleSortByChange}
@@ -103,11 +99,10 @@ export default function MainPage(): ReactNode {
         onClose={handleClosePicker}
         selectedColumns={columnsShown}
       />
-      <MemoizedTable
-        summaryData={filteredData}
-        additionalDataColumns={columnsShown}
-        targetYear={targetYear}
-      />
+      <MemoizedTable summaryData={filteredData} additionalDataColumns={columnsShown} />
     </div>
   );
-}
+};
+
+const MemoizedMainPage = memo(MainPage);
+export default MemoizedMainPage;

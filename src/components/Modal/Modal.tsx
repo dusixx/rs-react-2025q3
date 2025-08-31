@@ -2,7 +2,7 @@ import { useSimpleModalFocusTrap } from '@/hooks/useSimpleModalFocusTrap.ts';
 import { getOrCreateElementWithId, isKeyPressed } from '@utils/index.ts';
 import clsx from 'clsx';
 import type { MouseEvent, PropsWithChildren, ReactNode } from 'react';
-import { useCallback, useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { BodyScrollLock } from './components/BodyScrollLock.tsx';
 import styles from './Modal.module.scss';
@@ -18,7 +18,7 @@ type ModalProps = PropsWithChildren & {
   className?: string;
 };
 
-export const Modal = ({
+const Modal = ({
   children,
   open,
   onClose,
@@ -48,11 +48,15 @@ export const Modal = ({
     };
   }, [handleKeyDown]);
 
-  const handleBackdropMouseDown = (e: MouseEvent): void => {
-    if (shouldCloseOnBackdropClick && e.target === e.currentTarget) {
-      onClose?.();
-    }
-  };
+  const handleBackdropMouseDown = useCallback(
+    (e: MouseEvent): void => {
+      if (shouldCloseOnBackdropClick && e.target === e.currentTarget) {
+        onClose?.();
+      }
+    },
+    [onClose, shouldCloseOnBackdropClick],
+  );
+
   if (!open) {
     return;
   }
@@ -66,3 +70,5 @@ export const Modal = ({
     modalRootRef.current,
   );
 };
+
+export const MemoizedModal = memo(Modal);

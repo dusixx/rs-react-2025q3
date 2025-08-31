@@ -21,3 +21,16 @@ export const isPositiveInteger = (obj: unknown): obj is number => {
 export const hasOwnKeys = <T extends object>(obj: unknown, ...keys: (keyof T)[]): obj is T => {
   return isObject(obj) && keys.every(key => Object.prototype.hasOwnProperty.call(obj, key));
 };
+
+export const isNumeric = (v: unknown): v is string | number => {
+  const num = parseFloat(String(v));
+  return !isNaN(num) && isFinite(num);
+};
+
+export const isNumericInteger = (v: unknown): v is string | number => {
+  return isNumeric(v) && isInteger(Number(v));
+};
+
+export const isNumericPositiveInteger = (v: unknown): v is string | number => {
+  return isNumeric(v) && isPositiveInteger(Number(v));
+};
