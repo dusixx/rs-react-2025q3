@@ -15,7 +15,7 @@ export const useTableHelper = ({
   summaryData,
   additionalDataColumns = [],
 }: TableProps): UseTableHelperResult => {
-  const columnKeys = useMemo(
+  const selectedColumnKeys = useMemo(
     () => removeDups([...BasicColumnNames, ...BasicDataColumnNames, ...additionalDataColumns]),
     [additionalDataColumns],
   );
@@ -27,21 +27,21 @@ export const useTableHelper = ({
       }
       const { iso_code, data } = summaryData[countryName];
       const annualData = data[0];
-      const annualDataValues = columnKeys
+      const annualDataValues = selectedColumnKeys
         .slice(2)
         .map(colName => annualData[colName as keyof AnnualData]?.toString() || NA);
 
       const columnValues = [countryName, iso_code || NA, ...annualDataValues];
 
-      return createRecord({ keys: columnKeys, values: columnValues, placeholder: NA });
+      return createRecord({ keys: selectedColumnKeys, values: columnValues, placeholder: NA });
     },
-    [columnKeys, summaryData],
+    [selectedColumnKeys, summaryData],
   );
 
   return {
     headerRowData: createRecord({
-      values: columnKeys.map(v => formatColumnName(v)),
-      keys: columnKeys,
+      values: selectedColumnKeys.map(v => formatColumnName(v)),
+      keys: selectedColumnKeys,
     }),
     getRowDataByCountry,
   };
