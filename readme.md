@@ -90,10 +90,10 @@ Interactions: MainPage
 
 By using:
 
-- `useMemo` [source](https://github.com/dusixx/rs-react-2025q3/blob/82bedddddab998f9403445924db6e90314afd4da/src/pages/MainPage/MainPage.tsx#L60)
-- `React.memo` [source](https://github.com/dusixx/rs-react-2025q3/blob/82bedddddab998f9403445924db6e90314afd4da/src/components/Table/components/Row/Row.tsx#L22)
-- `useCallback` [source](https://github.com/dusixx/rs-react-2025q3/blob/82bedddddab998f9403445924db6e90314afd4da/src/pages/MainPage/MainPage.tsx#L40)
-- Proper `key` props [source](https://github.com/dusixx/rs-react-2025q3/blob/82bedddddab998f9403445924db6e90314afd4da/src/components/Table/components/Row/Row.tsx#L15)
+- `useMemo` [code](https://github.com/dusixx/rs-react-2025q3/blob/82bedddddab998f9403445924db6e90314afd4da/src/pages/MainPage/MainPage.tsx#L60)
+- `React.memo` [code](https://github.com/dusixx/rs-react-2025q3/blob/82bedddddab998f9403445924db6e90314afd4da/src/components/Table/components/Row/Row.tsx#L22)
+- `useCallback` [code](https://github.com/dusixx/rs-react-2025q3/blob/82bedddddab998f9403445924db6e90314afd4da/src/pages/MainPage/MainPage.tsx#L40)
+- Proper `key` props [code](https://github.com/dusixx/rs-react-2025q3/blob/82bedddddab998f9403445924db6e90314afd4da/src/components/Table/components/Row/Row.tsx#L15)
 
 ##### 1. Add columns `(6x)`
 
