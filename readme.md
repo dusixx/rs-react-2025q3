@@ -3,11 +3,11 @@
 <details open>
 <summary><b>Without optimizations</b></summary>
 
+[Unoptimized Source (15.4Mb)](https://github.com/dusixx/data/raw/refs/heads/main/unopt-src.zip)
+
 ---
 
 ##### 1. Add columns `(6x)`
-
-[Unoptimized Source (15.4Mb)](https://github.com/dusixx/data/raw/refs/heads/main/unopt-src.zip)
 
 ```
 Commited: 1.2s
