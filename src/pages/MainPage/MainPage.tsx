@@ -1,5 +1,5 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import { IconOptions } from '@/common/constants.ts';
 import { MemoizedInput } from '@/components/Input/Input.tsx';
 import { MemoizedSelect } from '@/components/Input/Select/Select.tsx';
 import { MemoizedColumnPicker } from '@/components/Table/components/ColumnPicker/ColumnPicker.tsx';
@@ -15,11 +15,12 @@ import clsx from 'clsx';
 import type { ChangeEvent } from 'react';
 import { memo, use, useCallback, useDeferredValue, useMemo, useState, type ReactNode } from 'react';
 import {
-  ICON_PROPS,
+  FooterLinks,
   LABEL_SORT_BY,
   LABEL_YEAR,
   LAST_YEAR,
   SEARCH_PLACEHOLDER,
+  SETTINGS_BTN_TEXT,
   YEARS_RECORD,
 } from './MainPage.constants.ts';
 import styles from './MainPage.module.scss';
@@ -69,7 +70,7 @@ const MainPage = (): ReactNode => {
     <div className={styles.wrapper}>
       <div className={styles.toolbar}>
         <button className={styles.btn} onClick={handleSettingsClick}>
-          <IconOptions {...ICON_PROPS} />
+          {SETTINGS_BTN_TEXT}
         </button>
         <div className={styles.group}>
           <MemoizedSelect
@@ -100,6 +101,17 @@ const MainPage = (): ReactNode => {
         selectedColumns={columnsShown}
       />
       <MemoizedTable summaryData={filteredData} additionalDataColumns={columnsShown} />
+      <div className={styles.footer}>
+        <div className={styles.links}>
+          {Object.entries(FooterLinks).map(([text, props]) => {
+            return (
+              <a className={styles.link} {...props} key={text}>
+                {text}
+              </a>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };

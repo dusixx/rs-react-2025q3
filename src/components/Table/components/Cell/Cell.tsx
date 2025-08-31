@@ -18,6 +18,7 @@ const Cell = ({ value = '', cellKey, header }: CellProps): ReactNode => {
   useEffect(() => {
     if (oldValue.current !== value) {
       oldValue.current = value;
+
       setHighlighted(true);
       setTimeout(() => {
         setHighlighted(false);
@@ -29,7 +30,7 @@ const Cell = ({ value = '', cellKey, header }: CellProps): ReactNode => {
     backgroundColor: highlighted ? 'var(--color-violet-10)' : 'transparent',
   };
   return header ? (
-    <th className={styles.cell} style={cellStyle} title={value}>
+    <th className={clsx(styles.cell, styles.th)} style={cellStyle} title={value}>
       {value}
     </th>
   ) : (

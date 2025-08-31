@@ -91,7 +91,7 @@
   @include mix.main-transition('border-color');
 
   &:focus {
-    border-color: var(--color-green-gray);
+    border-color: var(--color-text-30);
   }
 }
 
