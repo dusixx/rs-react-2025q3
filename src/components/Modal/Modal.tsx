@@ -1,10 +1,10 @@
-import { useSimpleModalFocusTrap } from '@/hooks/useSimpleModalFocusTrap.ts';
 import { getOrCreateElementWithId, isKeyPressed } from '@utils/index.ts';
 import clsx from 'clsx';
 import type { MouseEvent, PropsWithChildren, ReactNode } from 'react';
 import { memo, useCallback, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { BodyScrollLock } from './components/BodyScrollLock.tsx';
+import { useSimpleModalFocusTrap } from './hooks/useSimpleModalFocusTrap.ts';
 import styles from './Modal.module.scss';
 
 const MODAL_ROOT_ID = 'modal-root';
