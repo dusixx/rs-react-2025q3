@@ -1,0 +1,21 @@
+import clsx from 'clsx';
+import { memo, type ReactNode } from 'react';
+import styles from './Input.module.scss';
+import type { InputProps } from './Input.tsx';
+
+type CheckboxProps = InputProps & {
+  label?: string;
+};
+
+const Checkbox = ({ label, className, error, ...rest }: CheckboxProps): ReactNode => {
+  const errorMsg = Array.isArray(error) ? error[0] : error;
+  return (
+    <label className={clsx(styles.clickable, className)}>
+      <input className={styles.checkbox} type='checkbox' {...rest} />
+      <span>{label}</span>
+      {errorMsg && <p className={styles.error}>{errorMsg}</p>}
+    </label>
+  );
+};
+
+export const MemoizedCheckbox = memo(Checkbox);

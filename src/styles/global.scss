@@ -1,0 +1,19 @@
+@use './utils/reset';
+
+body {
+  font-family: 'Open sans', Arial, sans-serif;
+  font-size: 14px;
+  color: var(--color-text);
+  background-color: var(--color-body-bg);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 12px;
+}

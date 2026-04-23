@@ -1,0 +1,33 @@
+.wrapper {
+  position: relative;
+
+  overflow: auto;
+
+  width: 100%;
+  max-height: 80vh;
+  padding-right: 4px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 12px;
+}
+
+.head {
+  position: sticky;
+  top: 0;
+
+  display: flex;
+
+  width: 100%;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--color-text);
+
+  background-color: var(--color-bg);
+}
+
+tr:nth-child(even) {
+  background-color: var(--color-bg);
+}

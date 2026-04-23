@@ -1,0 +1,19 @@
+.error {
+  position: absolute;
+  bottom: -16px;
+  font-size: 10px;
+  color: var(--color-accent);
+}
+
+.checkbox {
+  aspect-ratio: 1;
+  width: 16px;
+}
+
+.clickable {
+  cursor: pointer;
+
+  input {
+    cursor: pointer;
+  }
+}

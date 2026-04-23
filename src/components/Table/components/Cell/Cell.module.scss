@@ -1,0 +1,27 @@
+@use '../../../../styles//utils/mixins' as mix;
+
+.cell {
+  width: 100%;
+  padding: 12px 8px;
+
+  line-height: 1.5;
+  text-align: center;
+
+  background-color: transparent;
+
+  @include mix.main-transition('background-color, color');
+}
+
+.td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.th {
+  @media (width <= 800px) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
