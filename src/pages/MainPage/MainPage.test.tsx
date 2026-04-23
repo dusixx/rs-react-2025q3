@@ -9,7 +9,7 @@ import {
   ITEMS_PER_PAGE,
   VALID_QUERY,
 } from 'src/test-utils/mocks/api-mock.ts';
-import { localStorageMock } from 'src/test-utils/mocks/index.ts';
+import { localStorageMock } from 'src/test-utils/vitest.setup.ts';
 import { vi } from 'vitest';
 import { LS_KEY_LAST_QUERY } from './MainPage.constants.ts';
 import MainPage from './MainPage.tsx';
