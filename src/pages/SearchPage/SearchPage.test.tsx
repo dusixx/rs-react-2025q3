@@ -8,11 +8,11 @@ import {
   INVALID_QUERY,
 } from 'src/test-utils/mocks/api-mock.ts';
 import { ITEMS_PER_PAGE } from 'src/test-utils/mocks/character-mock.ts';
-import { localStorageMock } from 'src/test-utils/mocks/local-storage-mock.ts';
 import { mockUseAppCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { changeInput, clickElement, getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
+import { localStorageMock } from 'vitest.setup.ts';
 import SearchPage from './SearchPage.tsx';
 
 const renderPage = async (): Promise<void> => {

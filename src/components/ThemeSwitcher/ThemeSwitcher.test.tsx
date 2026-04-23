@@ -1,8 +1,8 @@
 import { LocalStorageKey } from '@common/constants.ts';
 import { render, screen } from '@testing-library/react';
-import { localStorageMock } from 'src/test-utils/mocks/local-storage-mock.ts';
 import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { clickElement } from 'src/test-utils/utils.ts';
+import { localStorageMock } from 'vitest.setup.ts';
 import { ICON_DARK_SIZE, ICON_LIGHT_SIZE, ThemeSwitcher } from './ThemeSwitcher.tsx';
 
 describe('ThemeSwitcher', () => {
