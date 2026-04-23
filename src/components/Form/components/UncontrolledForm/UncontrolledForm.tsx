@@ -5,7 +5,7 @@ import { useAppDispatch, useCountryList } from '@/redux/hooks.ts';
 import { addUser } from '@/redux/usersSlice.ts';
 import { TestId } from '@/test-utils/constants.ts';
 import clsx from 'clsx';
-import type { FormEvent } from 'react';
+import type { ChangeEvent } from 'react';
 import { useRef, useState, type ReactNode } from 'react';
 import {
   AGREEMENT_TEXT,
@@ -54,7 +54,7 @@ export const UncontrolledForm = ({ closeModal }: FormProps): ReactNode => {
       setPasswordStrength(strength);
     }
   };
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const result = validateUserFormData(getFormData(e));
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import type { KeyboardEventKey } from '@common/constants.ts';
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
-import type { FormEvent } from 'react';
+import type { ChangeEvent } from 'react';
 import { isError, isInteger, isPositiveInteger, isString } from './type-guards.ts';
 
 export * from './type-guards.ts';
@@ -43,11 +43,11 @@ export const isKeyPressed = (key: keyof typeof KeyboardEventKey, event: Event): 
     return false;
   }
   const { key: k, ctrlKey: ctrl, altKey: alt, shiftKey: shift } = event;
-  return k === key.toString() && !ctrl && !alt && !shift;
+  return k === key && !ctrl && !alt && !shift;
 };
 
 export const getFormData = (
-  obj: HTMLFormElement | FormEvent<HTMLFormElement>,
+  obj: HTMLFormElement | ChangeEvent<HTMLFormElement>,
 ): Record<string, FormDataEntryValue> => {
   const form = obj instanceof HTMLFormElement ? obj : obj.currentTarget;
   return Object.fromEntries(new FormData(form).entries());
