@@ -56,7 +56,7 @@ describe('ErrorBoundary', () => {
   });
 
   it(`Invokes componentDidCatch and logs error to console`, () => {
-    const consoleLogMock = vi.spyOn(console, 'log').mockImplementationOnce(() => {});
+    const consoleErrorMock = vi.spyOn(console, 'error').mockImplementationOnce(() => {});
     renderErrorBoundary(true);
 
     const args = componentDidCatchMock.mock.calls[0];
@@ -65,7 +65,7 @@ describe('ErrorBoundary', () => {
       errorInfo: args[1],
     });
     expect(getErrorInstance).toHaveBeenCalled();
-    expect(consoleLogMock).toHaveBeenCalledWith(Error(ERR_SOMETHING_WRONG), args[1]);
+    expect(consoleErrorMock).toHaveBeenCalledWith(Error(ERR_SOMETHING_WRONG), args[1]);
   });
 
   it(`Resets error on button click`, () => {

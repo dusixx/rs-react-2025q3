@@ -5,33 +5,37 @@
 
   margin-bottom: 32px;
   padding: 20px 0;
-  border-bottom: 1px solid rgb(226 226 226);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .logo {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  display: inline-flex;
 
-  font-size: 12px;
-  line-height: 1;
-  text-transform: uppercase;
-}
+  aspect-ratio: 3.4;
+  width: min-content;
+  height: 48px;
 
-[data-logo-text] {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  color: var(--color-green);
+
+  svg {
+    fill: currentcolor;
+  }
 }
 
 .btn {
   @extend %btn-primary;
 
   width: 100px;
-  border: 1px solid var(--color-violet-light);
+  border: 1px solid var(--color-sec-btn-bg);
 
-  color: var(--color-violet-light);
+  color: var(--color-sec-btn-bg);
   text-transform: capitalize;
 
   background-color: transparent;
+}
+
+.group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }

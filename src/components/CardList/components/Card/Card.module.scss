@@ -1,5 +1,8 @@
+@use '../../../../styles/utils/mixins' as mix;
+
 .card {
   cursor: pointer;
+  user-select: none;
 
   overflow: hidden;
   display: flex;
@@ -14,7 +17,7 @@
   text-align: center;
   text-transform: capitalize;
 
-  background-color: white;
+  background-color: var(--color-bg);
 
   @media (width<=500px) {
     width: 80%;
@@ -80,5 +83,28 @@
     aspect-ratio: 1;
     height: 8px;
     border-radius: 50%;
+  }
+}
+
+.checkbox {
+  cursor: pointer;
+  aspect-ratio: 1;
+  width: 20px;
+  accent-color: var(--color-violet-light);
+}
+
+.label {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  padding: 4px;
+  border-radius: var(--border-radius);
+
+  @include mix.focused {
+    background-color: var(--color-violet-light-10);
   }
 }

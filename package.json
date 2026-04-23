@@ -17,7 +17,8 @@
     "lint:fix-all": "(npm run stylelint:fix) || true && npm run lint:fix",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "fix:deps": "rm -rf node_modules package-lock.json && npm cache clean --force && npm i"
   },
   "husky": {
     "hooks": {
@@ -25,14 +26,14 @@
     }
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
+    "@reduxjs/toolkit": "^2.8.2",
     "@testing-library/user-event": "^14.6.1",
     "clsx": "^2.1.1",
     "modern-normalize": "^3.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.3"
   },
   "devDependencies": {
@@ -42,6 +43,7 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
+    "@types/file-saver": "^2.0.7",
     "@types/fslightbox-react": "^1.8.0",
     "@types/isomorphic-fetch": "^0.0.39",
     "@types/jest": "^29.5.14",
@@ -76,7 +78,7 @@
     "stylelint-config-standard": "^38.0.0",
     "stylelint-config-standard-scss": "^14.0.0",
     "stylelint-prettier": "^5.0.3",
-    "typescript": "~5.7.2",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.31.1",
     "vite": "^6.3.1",
     "vite-plugin-svgr": "^4.3.0",

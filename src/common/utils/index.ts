@@ -6,7 +6,10 @@ export * from './type-guards.ts';
 export const areStringsEqual = (
   str1: string,
   str2: string,
-  { ignoreCase = true, locales }: { ignoreCase: boolean; locales: string },
+  { ignoreCase, locales }: { ignoreCase: boolean; locales: string } = {
+    ignoreCase: true,
+    locales: '',
+  },
 ): boolean => {
   return str1.localeCompare(str2, locales, ignoreCase ? { sensitivity: 'base' } : undefined) === 0;
 };
@@ -47,4 +50,18 @@ export const isNumericInteger = (v: string): boolean => {
 
 export const isNumericPositiveInteger = (v: number | string): boolean => {
   return isNumeric(v) && isPositiveInteger(Number(v));
+};
+
+export const mapObjectValues = <T>(
+  obj: Record<string, unknown>,
+  mapper: (v: unknown) => T,
+): Record<string, T> => {
+  return Object.keys(obj).reduce<Record<string, T>>((res, key) => {
+    res[key] = mapper(obj[key]);
+    return res;
+  }, {});
+};
+
+export const capitalize = (str: string, locale: string = navigator.language): string => {
+  return str.replace(/^\p{CWU}/u, char => char.toLocaleUpperCase(locale));
 };

@@ -14,12 +14,16 @@ describe('Description', () => {
     const episodes = getEpisodes(episode).join(', ');
 
     expect(getNestedChild('DetailedCardDesc')).toBeInTheDocument();
+
     expect(screen.getByText(id)).toBeInTheDocument();
     expect(screen.getByText('id:')).toBeInTheDocument();
+
     expect(screen.getByText(name)).toBeInTheDocument();
     expect(screen.getByText('name:')).toBeInTheDocument();
+
     expect(screen.getByText(status)).toBeInTheDocument();
     expect(screen.getByText('status:')).toBeInTheDocument();
+
     expect(screen.getByText(species)).toBeInTheDocument();
     expect(screen.getByText('species:')).toBeInTheDocument();
 
@@ -28,15 +32,16 @@ describe('Description', () => {
 
     expect(screen.getByText(getLocationName(origin))).toBeInTheDocument();
     expect(screen.getByText('origin:')).toBeInTheDocument();
+
     expect(screen.getByText(getLocationName(location))).toBeInTheDocument();
     expect(screen.getByText('location:')).toBeInTheDocument();
+
+    expect(screen.getByText(episodes)).toBeInTheDocument();
+    expect(screen.getByText('episode:')).toBeInTheDocument();
 
     expect(screen.queryByText(created)).toBeNull();
     expect(screen.queryByText(image)).toBeNull();
     expect(screen.queryByText(url)).toBeNull();
-
-    expect(screen.getByText(episodes)).toBeInTheDocument();
-    expect(screen.getByText('episode:')).toBeInTheDocument();
 
     expect(getNestedChild('DetailedCardDesc', 'DetailedCardEpisode')).toHaveAttribute(
       EPISODES_DATA_ATTR,

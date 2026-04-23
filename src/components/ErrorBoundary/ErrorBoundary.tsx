@@ -21,7 +21,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps> {
       error: getErrorInstance(error),
       errorInfo,
     });
-    console.log(error, errorInfo);
+    console.error(error, errorInfo);
   }
 
   protected resetError(): void {

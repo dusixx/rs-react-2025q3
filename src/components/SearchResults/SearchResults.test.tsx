@@ -1,9 +1,9 @@
 import { act, render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { TestId } from 'src/test-utils/constants.ts';
 import { ERR_NOT_FOUND, getCharactersByNameMock } from 'src/test-utils/mocks/api-mock.ts';
 import { ITEMS_PER_PAGE, PAGES_COUNT } from 'src/test-utils/mocks/character-mock.ts';
-import { mockUseCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
+import { mockUseAppCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
+import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { outletElementMock } from 'src/test-utils/mocks/router-dom-mock.tsx';
 import { clickElement, getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
@@ -16,28 +16,26 @@ vi.mock('./SearchResults.module.scss', () => ({
   },
 }));
 const renderResults = async (props: SearchResultsProps = { query: '' }): Promise<void> => {
-  await act(() =>
-    render(
-      <MemoryRouter>
-        <SearchResults {...props} />
-      </MemoryRouter>,
-    ),
-  );
+  await act(() => {
+    render(<SearchResults {...props} />, { wrapper: ProvidersMock });
+    return Promise.resolve();
+  });
 };
 
 describe('SearchResults', () => {
-  const { getParams, createParams } = mockUseCustomSearchResult;
+  const { getParams, createParams, setParams } = mockUseAppCustomSearchResult;
   const [name, page] = ['rick', 3];
-
-  beforeEach(() => {
-    vi.mocked(getParams)?.mockReturnValue([]);
-  });
 
   it(`Displays results if valid params specified`, async () => {
     await renderResults({ query: name, page });
     expect(getCharactersByNameMock).toHaveBeenCalledWith(name, page);
     await act(() => vi.runAllTimers());
     expect(getNestedChild('CardList')).toHaveProperty('children.length', ITEMS_PER_PAGE);
+
+    const cards = screen.getAllByRole('article');
+    expect(cards).toHaveLength(ITEMS_PER_PAGE);
+    clickElement(cards[0]);
+    expect(setParams).toHaveBeenCalledWith({ details: 1 });
   });
 
   it(`Displays error if invalid params specified`, async () => {
@@ -70,12 +68,12 @@ describe('SearchResults', () => {
     await act(() => vi.runAllTimers());
 
     clickElement(getNestedChild('PaginatorNextBtn'));
-    expect(createParams).toHaveBeenCalledWith({ page: (page + 1).toString(), q: name });
+    expect(createParams).toHaveBeenCalledWith({ page: page + 1, q: name });
     clickElement(getNestedChild('PaginatorPrevBtn'));
-    expect(createParams).toHaveBeenCalledWith({ page: page.toString(), q: name });
+    expect(createParams).toHaveBeenCalledWith({ page: page, q: name });
     clickElement(getNestedChild('PaginatorFirstBtn'));
-    expect(createParams).toHaveBeenCalledWith({ page: '1', q: name });
+    expect(createParams).toHaveBeenCalledWith({ page: 1, q: name });
     clickElement(getNestedChild('PaginatorLastBtn'));
-    expect(createParams).toHaveBeenCalledWith({ page: PAGES_COUNT.toString(), q: name });
+    expect(createParams).toHaveBeenCalledWith({ page: PAGES_COUNT, q: name });
   });
 });

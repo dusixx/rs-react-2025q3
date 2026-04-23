@@ -13,7 +13,8 @@
   @extend %btn-primary;
 
   padding: 4px;
-  color: var(--color-accent);
+  border-color: transparent;
+  color: var(--color-green);
   background-color: transparent;
 }
 

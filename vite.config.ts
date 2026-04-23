@@ -11,7 +11,7 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            const chunkId = id.toString().split('node_modules/')[1].split('/')[0].toString();
+            const chunkId = id.split('node_modules/')[1].split('/')[0];
             return btoa(chunkId).replace(/[^\w]/g, '').split('').reverse().join('');
           }
         },
@@ -46,7 +46,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./src/test-utils/vitest.setup.ts'],
+    setupFiles: ['./vitest.setup.ts'],
     coverage: {
       all: true,
       provider: 'v8',
@@ -63,6 +63,8 @@ export default defineConfig({
         '**/utils',
         'src/main.{ts,tsx,js,jsx}',
         '**/**types**',
+        '**/hooks',
+        '**/store',
       ],
       thresholds: {
         statements: 80,

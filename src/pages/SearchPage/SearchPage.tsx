@@ -1,9 +1,10 @@
-import { INITIAL_PAGE, INITIAL_QUERY } from '@common/constants.ts';
+import { INITIAL_PAGE } from '@common/constants.ts';
+import { FlyoutPanel } from '@components/FlyoutPanel/FlyoutPanel.tsx';
 import { SearchBar } from '@components/SearchBar/SearchBar.tsx';
 import { SearchResults } from '@components/SearchResults/SearchResults.tsx';
-import { useCustomSearchParams } from '@hooks/useCustomSearchParams.ts';
+import { useAppCustomSearchParams } from '@hooks/useAppCustomSearchParams.ts';
 import { usePersistedSearchQuery } from '@hooks/usePersistedSearchQuery';
-import { useEffect, useState, type JSX } from 'react';
+import { useCallback, useEffect, useState, type JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchPage.module.scss';
 
@@ -14,23 +15,28 @@ export default function SearchPage(): JSX.Element {
   const [page, setPage] = useState(INITIAL_PAGE);
   const [value, setValue] = useState(query);
   const [version, setVersion] = useState(crypto.randomUUID());
-  const { getParams, createParams, deleteParams, hasParams } = useCustomSearchParams();
+  const { getParams, createParams, deleteParams, hasParams } = useAppCustomSearchParams();
 
-  useEffect(() => {
+  const initSearchParams = useCallback((): void => {
     if (!hasParams('page')) {
       createParams({
-        q: INITIAL_QUERY,
-        page: INITIAL_PAGE.toString(),
+        q: query,
+        page: INITIAL_PAGE,
       });
     }
-    const [q = INITIAL_QUERY, p = INITIAL_PAGE] = getParams('q', 'page');
+  }, [hasParams, createParams, query]);
+
+  useEffect(() => {
+    initSearchParams();
+
+    const [q = query, p = INITIAL_PAGE] = getParams('q', 'page');
     setQuery(q);
     setValue(q);
     setPage(Number(p));
-  }, [getParams, setQuery, setValue, deleteParams, hasParams, createParams]);
+  }, [getParams, setQuery, setValue, deleteParams, query, initSearchParams]);
 
   const handleSubmit = (value: string): void => {
-    createParams({ q: value, page: INITIAL_PAGE.toString() });
+    createParams({ q: value, page: INITIAL_PAGE });
     if (page === INITIAL_PAGE && value === query) {
       setVersion(crypto.randomUUID());
     }
@@ -52,6 +58,7 @@ export default function SearchPage(): JSX.Element {
           value={value}
         />
         <SearchResults query={query} page={page} version={version} />
+        <FlyoutPanel />
       </div>
     </div>
   );

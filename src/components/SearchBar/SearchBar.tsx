@@ -1,5 +1,5 @@
 import { IconClose, IconSearch } from '@common/constants.ts';
-import type { ChangeEvent, JSX } from 'react';
+import type { ChangeEvent, ComponentPropsWithRef, JSX } from 'react';
 import { type SyntheticEvent } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchBar.module.scss';
@@ -7,12 +7,14 @@ import styles from './SearchBar.module.scss';
 const ICON_SIZE = 20;
 const INITIAL_VALUE = '';
 
-type SearchBarProps = {
-  value: string;
-  className?: string;
-  placeholder?: string;
+type SearchBarProps = Omit<ComponentPropsWithRef<'input'>, 'onSubmit' | 'onChange' | 'value'> & {
+  value?: string;
   onChange?: (value: string) => void;
   onSubmit?: (value: string) => void;
+};
+
+const trimValue = (value: string = ''): string => {
+  return value.trim();
 };
 
 export const SearchBar = ({
@@ -21,16 +23,15 @@ export const SearchBar = ({
   value,
   onChange,
   onSubmit,
+  ...restProps
 }: SearchBarProps): JSX.Element => {
   const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>): void => {
     onChange?.(value);
   };
-
   const handleSubmit = (event: SyntheticEvent): void => {
-    onSubmit?.(value.trim());
+    onSubmit?.(trimValue(value));
     event.preventDefault();
   };
-
   const handleClearClick = (): void => {
     onChange?.(INITIAL_VALUE);
   };
@@ -44,6 +45,7 @@ export const SearchBar = ({
           value={value}
           placeholder={placeholder}
           onChange={handleChange}
+          {...restProps}
         />
         {value && (
           <button

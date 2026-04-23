@@ -50,4 +50,6 @@ export const TestId = {
   DetailedCard: 'detailed-card',
   DetailedCardEpisode: 'detailed-card-episode',
   SearchResultsOutlet: 'search-results-outlet',
+  FlyoutPanel: 'flyout-panel',
+  ThemeSwitcher: 'theme-switcher',
 } as const;

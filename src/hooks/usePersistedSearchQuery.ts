@@ -1,4 +1,4 @@
-import { INITIAL_QUERY, LS_KEY_LAST_QUERY } from '@common/constants.ts';
+import { INITIAL_QUERY, LocalStorageKey } from '@common/constants.ts';
 import { useCallback, useState } from 'react';
 
 type UseSearchQueryResult = {
@@ -7,7 +7,7 @@ type UseSearchQueryResult = {
 };
 
 const getPersistedQuery = (): string => {
-  return localStorage.getItem(LS_KEY_LAST_QUERY) ?? INITIAL_QUERY;
+  return localStorage.getItem(LocalStorageKey.LastQuery) ?? INITIAL_QUERY;
 };
 
 export const usePersistedSearchQuery = (): UseSearchQueryResult => {
@@ -15,11 +15,8 @@ export const usePersistedSearchQuery = (): UseSearchQueryResult => {
 
   const setQuery = useCallback((value: string): void => {
     setSearchQuery(value);
-    localStorage.setItem(LS_KEY_LAST_QUERY, value);
+    localStorage.setItem(LocalStorageKey.LastQuery, value);
   }, []);
 
-  return {
-    setQuery,
-    query,
-  };
+  return { setQuery, query };
 };

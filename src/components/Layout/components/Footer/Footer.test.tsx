@@ -1,7 +1,7 @@
+import { LinkProps } from '@common/constants.ts';
 import { render, screen } from '@testing-library/react';
 import { getNestedChild } from 'src/test-utils/index.ts';
-import { COPYRIGHT, IMAGE_PROPS, LINK_PROPS } from './Footer.constants.ts';
-import { Footer } from './Footer.tsx';
+import { COPYRIGHT, Footer, RSS_LOGO_SRC, RSS_URL } from './Footer.tsx';
 
 describe('Footer', () => {
   it(`Renders footer`, () => {
@@ -12,9 +12,9 @@ describe('Footer', () => {
 
     expect(link).toBeInTheDocument();
     expect(logo).toBeInTheDocument();
-    expect(link).toHaveAttribute('href', LINK_PROPS.href);
-    expect(link).toHaveAttribute('rel', LINK_PROPS.rel);
-    expect(logo).toHaveAttribute('src', IMAGE_PROPS.src);
+    expect(link).toHaveAttribute('href', RSS_URL);
+    expect(link).toHaveAttribute('rel', LinkProps.rel);
+    expect(logo).toHaveAttribute('src', RSS_LOGO_SRC);
     expect(screen.getByText(COPYRIGHT)).toBeInTheDocument();
   });
 });

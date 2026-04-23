@@ -5,13 +5,17 @@ import { TestId } from './constants.ts';
 
 export type TestIdKey = keyof typeof TestId;
 export type TestIdValue = (typeof TestId)[TestIdKey];
+type ClickElementOptions = {
+  times?: number;
+};
 
 export const changeInput = (input: HTMLElement, value: string): boolean => {
   return fireEvent.change(input, { target: { value } });
 };
 
-export const clickElement = (el: Element): boolean => {
-  return fireEvent.click(el);
+export const clickElement = (el: Element, options: ClickElementOptions = {}): boolean => {
+  const { times } = options;
+  return Array.from({ length: times ?? 1 }).every(_ => fireEvent.click(el));
 };
 
 export const getNestedChild = <T extends HTMLElement = HTMLElement>(

@@ -9,7 +9,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', './vitest.setup.ts'] },
   {
     extends: [
       js.configs.recommended,
@@ -25,7 +25,6 @@ export default tseslint.config(
         ecmaFeatures: { jsx: true },
         ecmaVersion: 2022,
         sourceType: 'module',
-        project: './tsconfig.json',
         globals: globals.browser,
         tsconfigRootDir: import.meta.dirname,
       },

@@ -1,5 +1,5 @@
 import { IconFemale, IconMale, IconMaleFemale } from '@common/constants.ts';
-import type { CharacterLocation } from '@services/api.types';
+import type { CharacterLocation } from '@services/api/api.types';
 import type { IconType } from 'react-icons';
 
 const GENDER_ICONS: Record<string, IconType> = {
@@ -10,7 +10,7 @@ const GENDER_ICONS: Record<string, IconType> = {
 
 const STATUS_INDICATOR_COLOR: Record<string, string> = {
   alive: 'var(--color-green)',
-  dead: 'var(--color-green-gray)',
+  dead: 'var(--color-accent)',
   unknown: 'var(--color-violet-light)',
 } as const;
 

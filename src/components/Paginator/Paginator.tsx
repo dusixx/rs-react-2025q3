@@ -8,7 +8,6 @@ import {
 import clsx from 'clsx';
 import { useEffect, useState, type JSX } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
-import { ButtonTitle, PRIM_BTN_ICON_PROPS, SEC_BTN_ICON_PROPS } from './Paginator.constants.ts';
 import styles from './Paginator.module.scss';
 
 type PaginatorProps = {
@@ -17,6 +16,15 @@ type PaginatorProps = {
   className?: string;
   onClick?: (page: number) => void;
 };
+
+const PRIM_BTN_ICON_SIZE = 32;
+const SEC_BTN_ICON_SIZE = 24;
+export const ButtonTitle = {
+  Next: 'next',
+  Prev: 'prev',
+  Last: 'last',
+  First: 'first',
+} as const;
 
 export const Paginator = ({
   onClick,
@@ -57,7 +65,7 @@ export const Paginator = ({
           onClick={handleFirstClick}
           title={ButtonTitle.First}
         >
-          <IconArrowLeftDouble {...SEC_BTN_ICON_PROPS} />
+          <IconArrowLeftDouble size={SEC_BTN_ICON_SIZE} />
         </button>
         <button
           data-testid={TestId.PaginatorPrevBtn}
@@ -66,7 +74,7 @@ export const Paginator = ({
           onClick={handlePrevClick}
           title={ButtonTitle.Prev}
         >
-          <IconArrowLeft {...PRIM_BTN_ICON_PROPS} />
+          <IconArrowLeft size={PRIM_BTN_ICON_SIZE} />
         </button>
       </div>
       <div data-testid={TestId.PaginatorCounter} className={styles.counter}>
@@ -86,7 +94,7 @@ export const Paginator = ({
           onClick={handleNextClick}
           title={ButtonTitle.Next}
         >
-          <IconArrowRight {...PRIM_BTN_ICON_PROPS} />
+          <IconArrowRight size={PRIM_BTN_ICON_SIZE} />
         </button>
         <button
           data-testid={TestId.PaginatorLastBtn}
@@ -95,7 +103,7 @@ export const Paginator = ({
           onClick={handleLastClick}
           title={ButtonTitle.Last}
         >
-          <IconArrowRightDouble {...SEC_BTN_ICON_PROPS} />
+          <IconArrowRightDouble size={SEC_BTN_ICON_SIZE} />
         </button>
       </div>
     </div>

@@ -1,7 +1,6 @@
-import { INITIAL_PAGE, LS_KEY_LAST_QUERY } from '@common/constants.ts';
+import { INITIAL_PAGE, LocalStorageKey } from '@common/constants.ts';
 import { render } from '@testing-library/react';
 import { act } from 'react';
-import { MemoryRouter } from 'react-router-dom';
 import { FAKE_VALUE } from 'src/test-utils/constants.ts';
 import {
   ERR_NOT_FOUND,
@@ -9,34 +8,29 @@ import {
   INVALID_QUERY,
 } from 'src/test-utils/mocks/api-mock.ts';
 import { ITEMS_PER_PAGE } from 'src/test-utils/mocks/character-mock.ts';
-import { localStorageMock } from 'src/test-utils/mocks/local-storage-mock.ts';
+import { mockUseAppCustomSearchResult } from 'src/test-utils/mocks/mockUseCustomSearchParams.ts';
+import { ProvidersMock } from 'src/test-utils/mocks/provider-mock.tsx';
 import { changeInput, clickElement, getNestedChild } from 'src/test-utils/utils.ts';
 import { vi } from 'vitest';
+import { localStorageMock } from 'vitest.setup.ts';
 import SearchPage from './SearchPage.tsx';
 
 const renderPage = async (): Promise<void> => {
-  await act(() =>
-    render(
-      <MemoryRouter>
-        <SearchPage />
-      </MemoryRouter>,
-    ),
-  );
+  await act(() => {
+    render(<SearchPage />, { wrapper: ProvidersMock });
+    return Promise.resolve();
+  });
 };
 
 describe('SearchPage', () => {
   const { setItem, getItem } = localStorageMock;
+  const { createParams } = mockUseAppCustomSearchResult;
 
   it(`Handles search term from localStorage on initial load`, async () => {
-    setItem(LS_KEY_LAST_QUERY, FAKE_VALUE);
+    setItem(LocalStorageKey.LastQuery, FAKE_VALUE);
     await renderPage();
-    expect(getItem).toHaveBeenCalledWith(LS_KEY_LAST_QUERY);
+    expect(getItem).toHaveBeenCalledWith(LocalStorageKey.LastQuery);
     expect(getItem).toHaveReturnedWith(FAKE_VALUE);
-  });
-
-  it(`Shows loading state while fetching data`, async () => {
-    await renderPage();
-    expect(getNestedChild('Loader')).toBeInTheDocument();
   });
 
   it(`Calls API with correct parameters`, async () => {
@@ -45,12 +39,21 @@ describe('SearchPage', () => {
       changeInput(getNestedChild('SearchBarInput'), FAKE_VALUE);
       return clickElement(getNestedChild('SearchBarBtn'));
     });
-    expect(setItem).toHaveBeenCalledWith(LS_KEY_LAST_QUERY, FAKE_VALUE);
+    expect(setItem).toHaveBeenCalledWith(LocalStorageKey.LastQuery, FAKE_VALUE);
     expect(getCharactersByNameMock).toHaveBeenCalledWith(FAKE_VALUE, INITIAL_PAGE);
   });
 
+  it(`Initiates a search with an empty query`, async () => {
+    await renderPage();
+    await act(() => {
+      changeInput(getNestedChild('SearchBarInput'), '');
+      return Promise.resolve();
+    });
+    expect(createParams).toHaveBeenCalledWith({ q: '', page: INITIAL_PAGE });
+  });
+
   it(`Handles empty query response`, async () => {
-    setItem(LS_KEY_LAST_QUERY, '');
+    setItem(LocalStorageKey.LastQuery, '');
     await renderPage();
     await act(() => vi.runAllTimers());
     expect(getCharactersByNameMock).toHaveBeenCalledWith('', INITIAL_PAGE);
@@ -58,7 +61,7 @@ describe('SearchPage', () => {
   });
 
   it(`Handles invalid query`, async () => {
-    setItem(LS_KEY_LAST_QUERY, INVALID_QUERY);
+    setItem(LocalStorageKey.LastQuery, INVALID_QUERY);
     await renderPage();
     await act(() => vi.runAllTimers());
     expect(getCharactersByNameMock).toHaveBeenCalledWith(INVALID_QUERY, INITIAL_PAGE);

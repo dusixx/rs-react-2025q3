@@ -1,9 +1,9 @@
 import { ERR_SOMETHING_WRONG, LOADER_VISIBILITY_DURATION } from '@common/constants.ts';
 import { ErrorInfo } from '@components/ErrorInfo/ErrorInfo.tsx';
 import { Loader } from '@components/Loader/Loader.tsx';
-import { useCustomSearchParams } from '@hooks/useCustomSearchParams.ts';
-import { getCharacterById } from '@services/api.ts';
-import type { CharacterInfo } from '@services/api.types.ts';
+import { useAppCustomSearchParams } from '@hooks/useAppCustomSearchParams.ts';
+import { getCharacterById } from '@services/api/api.ts';
+import type { CharacterInfo } from '@services/api/api.types.ts';
 import { getErrorInstance, getErrorMessage, isNumericInteger } from '@utils/index.ts';
 import { useEffect, useState, type ReactNode } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
@@ -16,9 +16,9 @@ export const DetailedCard = (): ReactNode => {
   const [info, setInfo] = useState<CharacterInfo | null>(null);
   const [error, setError] = useState<Error>();
   const [loading, setLoading] = useState(false);
-  const { getParams, deleteParams } = useCustomSearchParams();
+  const { getParams, deleteParams } = useAppCustomSearchParams();
 
-  const [id] = getParams('details');
+  const [id = ''] = getParams('details');
 
   useEffect(() => {
     if (isNumericInteger(id)) {
