@@ -20,7 +20,10 @@ export const hasOwnKeys = <K extends string>(
 export const areStringsEqual = (
   str1: string,
   str2: string,
-  { ignoreCase = true, locales }: { ignoreCase: boolean; locales: string },
+  { ignoreCase, locales }: { ignoreCase: boolean; locales: string } = {
+    ignoreCase: true,
+    locales: '',
+  },
 ): boolean => {
   return str1.localeCompare(str2, locales, ignoreCase ? { sensitivity: 'base' } : undefined) === 0;
 };
