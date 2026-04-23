@@ -1,0 +1,16 @@
+.list {
+  overflow: hidden;
+  display: flex;
+  flex-shrink: 1;
+  flex-wrap: wrap;
+  gap: 32px;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  margin-top: 40px;
+}
+
+.card:last-child {
+  border: 1px dashed var(--color-violet-light);
+}

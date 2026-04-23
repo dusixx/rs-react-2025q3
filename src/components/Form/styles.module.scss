@@ -1,0 +1,103 @@
+$fields-gap: 28px;
+$font-size: 12px;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $fields-gap;
+  width: 100%;
+
+  ::placeholder {
+    font-size: $font-size;
+  }
+
+  label {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    span {
+      margin-bottom: 2px;
+      font-size: $font-size;
+      text-transform: capitalize;
+    }
+  }
+
+  input[type='text'],
+  input[type='number'],
+  input[type='password'],
+  input[list] {
+    @extend %text-input;
+
+    height: 32px;
+    font-size: $font-size;
+  }
+}
+
+.btn {
+  @extend %btn-primary;
+
+  margin-top: 4px;
+  background-color: var(--color-accent);
+}
+
+.gender {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+label.label {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+}
+
+.terms {
+  margin-top: 12px;
+}
+
+.error,
+.strength {
+  position: absolute;
+  bottom: -16px;
+  font-size: 10px;
+  color: var(--color-accent);
+}
+
+.strength {
+  bottom: -16px;
+
+  padding: 0 4px;
+
+  color: white;
+
+  opacity: 0.7;
+  background-color: var(--color-green);
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: $fields-gap;
+
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+
+  background-color: var(--color-body-bg);
+}
+
+.generate {
+  @extend %btn-primary;
+
+  margin-left: auto;
+  border: 1px solid var(--color-green);
+
+  font-size: 12px;
+  color: var(--color-green);
+  text-transform: capitalize;
+
+  background-color: transparent;
+}
