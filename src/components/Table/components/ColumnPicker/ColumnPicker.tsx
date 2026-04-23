@@ -2,7 +2,8 @@ import { getFormData } from '@/common/utils/index.ts';
 import { MemoizedCheckbox } from '@/components/Input/Checkbox.tsx';
 import { MemoizedModal } from '@/components/Modal/Modal.tsx';
 import { AdditionalDataColumnNames } from '@/services/types.ts';
-import { memo, useCallback, type FormEvent, type ReactNode } from 'react';
+import type { ChangeEvent } from 'react';
+import { memo, useCallback, type ReactNode } from 'react';
 import { formatColumnName } from '../../Table.utils.ts';
 import styles from './ColumnPicker.module.scss';
 
@@ -22,7 +23,7 @@ export const ColumnPicker = ({
   onClose,
 }: ColumnPickerProps): ReactNode => {
   const handleSubmit = useCallback(
-    (e: FormEvent<HTMLFormElement>): void => {
+    (e: ChangeEvent<HTMLFormElement>): void => {
       e.preventDefault();
       const selected = Object.keys(getFormData(e));
       onClose(selected);
