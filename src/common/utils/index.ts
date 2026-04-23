@@ -6,7 +6,10 @@ export * from './type-guards.ts';
 export const areStringsEqual = (
   str1: string,
   str2: string,
-  { ignoreCase = true, locales }: { ignoreCase: boolean; locales: string },
+  { ignoreCase, locales }: { ignoreCase: boolean; locales: string } = {
+    locales: '',
+    ignoreCase: true,
+  },
 ): boolean => {
   return str1.localeCompare(str2, locales, ignoreCase ? { sensitivity: 'base' } : undefined) === 0;
 };
