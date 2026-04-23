@@ -1,0 +1,31 @@
+.form {
+  position: relative;
+  display: flex;
+}
+
+.input {
+  @extend %text-input;
+
+  width: 100%;
+  border-right: unset;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.btn {
+  @extend %btn-primary;
+
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.clear-btn {
+  @extend %btn;
+
+  position: absolute;
+  top: 50%;
+  right: 64px;
+  transform: translateY(-50%);
+
+  opacity: 0.3;
+}

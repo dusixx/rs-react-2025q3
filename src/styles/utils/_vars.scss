@@ -1,0 +1,19 @@
+:root {
+  --color-text: rgb(38 38 38);
+  --color-bg: rgb(241 241 241);
+  --color-violet: #44318d;
+  --color-violet-dark: #2a1b3d;
+  --color-violet-light: rgb(130 95 175);
+  --color-green-gray: #a4b3b6;
+  --color-accent: #d83f87;
+  --color-accent-10: rgb(216 65 135 / 10%);
+  --color-btn-bg: var(--color-violet);
+  --color-error: var(--color-accent);
+  --color-border: rgb(216 216 216);
+  --color-green: rgb(12 173 0);
+  --color-border-input: rgb(128 128 128);
+  --box-shadow: 0 1px 1px 1px rgb(238 238 238);
+  --border-radius: 14px;
+  --min-width: 320px;
+  --max-width: 1280px;
+}
