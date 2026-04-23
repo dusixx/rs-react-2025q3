@@ -1,7 +1,8 @@
 import type { SummaryData } from './types.ts';
 import { InvalidDataError, isSummaryData } from './types.utils.ts';
 
-const DATA_URL = 'https://raw.githubusercontent.com/dusixx/data/refs/heads/main/owid-co2-data.json';
+const DATA_URL =
+  'https://raw.githubusercontent.com/dusixx/owid-co2-data/refs/heads/main/owid-co2-data.json';
 
 export const getSummaryData = async (): Promise<SummaryData> => {
   const response = await fetch(DATA_URL, {

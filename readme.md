@@ -3,7 +3,7 @@
 <details open>
 <summary><b>Without optimizations</b></summary>
 
-[Unoptimized Source (15.4Mb)](https://github.com/dusixx/data/raw/refs/heads/main/unopt-src.zip)
+[Unoptimized Source (15.4Mb)](https://github.com/dusixx/owid-co2-data/raw/refs/heads/main/unopt-src.zip)
 
 ---
 
