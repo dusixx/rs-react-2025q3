@@ -6,10 +6,13 @@ import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginReactCompiler from 'eslint-plugin-react-compiler';
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 import eslintPluginReactRefresh from 'eslint-plugin-react-refresh';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import nextPlugin from './next-plugin.config.js';
 
-export default tseslint.config(
+export default defineConfig([
+  ...nextPlugin,
   { ignores: ['dist', '**/*.test.ts', '**/*.test.js', '**/*.test.tsx'] },
   {
     extends: [
@@ -40,7 +43,6 @@ export default tseslint.config(
       'react-hooks': eslintPluginReactHooks,
       'react-refresh': eslintPluginReactRefresh,
       'react-compiler': eslintPluginReactCompiler,
-      '@next/next': eslintPluginNext,
     },
     rules: {
       ...eslintPluginReact.configs.recommended.rules,
@@ -73,8 +75,6 @@ export default tseslint.config(
         'error',
         { accessibility: 'explicit', overrides: { constructors: 'off' } },
       ],
-      ...eslintPluginNext.configs.recommended.rules,
-      ...eslintPluginNext.configs['core-web-vitals'].rules,
     },
     settings: {
       react: {
@@ -82,4 +82,4 @@ export default tseslint.config(
       },
     },
   },
-);
+]);
