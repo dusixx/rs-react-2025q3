@@ -17,7 +17,8 @@
     "lint:fix-all": "(npm run stylelint:fix) || true && npm run lint:fix",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "fix:deps": "rm -rf node_modules package-lock.json && npm cache clean --force && npm i"
   },
   "husky": {
     "hooks": {
