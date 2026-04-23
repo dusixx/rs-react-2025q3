@@ -8,7 +8,7 @@ export const EPISODES_COUNT = 10;
 export const CHARACTER_ID = 176450;
 
 const getEpisodesMock = (length: number = EPISODES_COUNT): string[] => {
-  return Array.from({ length }).map((_, idx) => `${Endpoint.Episode}${String(idx + 1)}`);
+  return Array.from({ length }).map((_, idx) => `${Endpoint.Episode}/${String(idx + 1)}`);
 };
 
 export const characterMock: Required<CharacterInfo> = {
