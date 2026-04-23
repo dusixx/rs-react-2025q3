@@ -1,0 +1,40 @@
+.paginator {
+  user-select: none;
+
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 1;
+}
+
+.btn {
+  @extend %btn-primary;
+
+  padding: 4px;
+  color: var(--color-accent);
+  background-color: transparent;
+}
+
+.counter {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+
+  width: 80px;
+
+  letter-spacing: -0.5px;
+}
+
+.btn-group {
+  display: flex;
+  align-items: center;
+}
+
+.btn-sec {
+  @extend %btn;
+
+  padding: 2px;
+  color: var(--color-text);
+}

@@ -1,15 +1,34 @@
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
-import type { CharacterInfo } from './api.types.ts';
-import { isLikeCharacterInfos, isLikeErrorResult, isLikeSearchResult } from './api.utils.ts';
+import type { CharacterInfo, SearchResult } from './api.types.ts';
+import { isLikeCharacterInfo, isLikeErrorResult, isLikeSearchResult } from './api.utils.ts';
 
 const BASE_URL = 'https://rickandmortyapi.com/api/';
+const ALL_INFOS = '';
 
-export const getCharactersByName = async (name: string = ''): Promise<CharacterInfo[]> => {
-  const response = await fetch(`${BASE_URL}character/?name=${name}`);
-  const infos: unknown = await response.json();
+export const Endpoint = {
+  Character: `${BASE_URL}character`,
+  Episode: `${BASE_URL}episode`,
+} as const;
 
-  if (isLikeSearchResult(infos) && isLikeCharacterInfos(infos.results)) {
-    return infos.results;
+export const getCharactersByName = async (
+  name: string = ALL_INFOS,
+  page: string | number = 1,
+): Promise<SearchResult> => {
+  const response = await fetch(`${Endpoint.Character}?name=${name}&page=${page.toString()}`);
+  const result: unknown = await response.json();
+
+  if (!isLikeSearchResult(result)) {
+    throw Error(isLikeErrorResult(result) ? result.error : ERR_SOMETHING_WRONG);
   }
-  throw Error(isLikeErrorResult(infos) ? infos.error : ERR_SOMETHING_WRONG);
+  return result;
+};
+
+export const getCharacterById = async (id: number | string): Promise<CharacterInfo> => {
+  const response = await fetch(`${Endpoint.Character}/${id.toString()}`);
+  const info: unknown = await response.json();
+
+  if (!isLikeCharacterInfo(info)) {
+    throw Error(isLikeErrorResult(info) ? info.error : ERR_SOMETHING_WRONG);
+  }
+  return info;
 };

@@ -1,7 +1,11 @@
 .list {
+  overflow: hidden;
   display: flex;
+  flex-shrink: 1;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 40px;
   align-items: center;
   justify-content: center;
+
+  width: 100%;
 }

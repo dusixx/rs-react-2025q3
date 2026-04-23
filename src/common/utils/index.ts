@@ -1,28 +1,15 @@
 import { ERR_SOMETHING_WRONG } from '@common/constants.ts';
+import { isError, isInteger, isPositiveInteger, isString } from './type-guards.ts';
 
-export const isObject = (obj: unknown): obj is object => {
-  return obj != null && typeof obj === 'object';
-};
-
-export const isString = (obj: unknown): obj is string => {
-  return typeof obj === 'string';
-};
-
-export const isError = (obj: unknown): obj is Error => {
-  return obj instanceof Error;
-};
-
-export const hasOwnKeys = <K extends string>(
-  obj: unknown,
-  ...keys: K[]
-): obj is object & { [key in K]: unknown } => {
-  return isObject(obj) && keys.every(key => Object.prototype.hasOwnProperty.call(obj, key));
-};
+export * from './type-guards.ts';
 
 export const areStringsEqual = (
   str1: string,
   str2: string,
-  { ignoreCase = true, locales }: { ignoreCase: boolean; locales: string },
+  { ignoreCase, locales }: { ignoreCase: boolean; locales: string } = {
+    locales: '',
+    ignoreCase: true,
+  },
 ): boolean => {
   return str1.localeCompare(str2, locales, ignoreCase ? { sensitivity: 'base' } : undefined) === 0;
 };
@@ -50,4 +37,17 @@ export const getErrorInstance = (
 
 export const getErrorMessage = (error: unknown, defaultMessage: string = ''): string => {
   return isString(error) ? error : isError(error) ? error.message : defaultMessage;
+};
+
+export const isNumeric = (v: string | number): boolean => {
+  const num = parseFloat(v.toString());
+  return !isNaN(num) && isFinite(num);
+};
+
+export const isNumericInteger = (v: string): boolean => {
+  return isNumeric(v) && isInteger(Number(v));
+};
+
+export const isNumericPositiveInteger = (v: number | string): boolean => {
+  return isNumeric(v) && isPositiveInteger(Number(v));
 };

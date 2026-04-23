@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { getNestedChild } from 'src/test-utils/index.ts';
-import { COPYRIGHT, Footer, IMAGE_PROPS, LINK_PROPS } from './Footer.tsx';
+import { COPYRIGHT, IMAGE_PROPS, LINK_PROPS } from './Footer.constants.ts';
+import { Footer } from './Footer.tsx';
 
 describe('Footer', () => {
   it(`Renders footer`, () => {

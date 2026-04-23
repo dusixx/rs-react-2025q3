@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+}
+
+.results {
+  position: relative;
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+  @media (width<=768px) {
+    gap: 0;
+  }
+}
+
+.list {
+  width: 100%;
+  @media (width<=500px) {
+    display: none;
+  }
+}
+
+.paginator {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}

@@ -10,5 +10,4 @@ export const localStorageMock = {
     return store[key];
   }),
 };
-
 vi.stubGlobal('localStorage', localStorageMock);

@@ -1,74 +1,69 @@
 import { IconClose, IconSearch } from '@common/constants.ts';
-import type { ChangeEvent } from 'react';
-import { Component, type JSX, type ReactNode, type SyntheticEvent } from 'react';
+import type { ChangeEvent, JSX } from 'react';
+import { type SyntheticEvent } from 'react';
 import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchBar.module.scss';
 
 const ICON_SIZE = 20;
 const INITIAL_VALUE = '';
 
-type InputAttributes = Pick<JSX.IntrinsicElements['input'], 'value' | 'className' | 'placeholder'>;
-
-type SearchBarProps = InputAttributes & {
+type SearchBarProps = {
+  value: string;
+  className?: string;
+  placeholder?: string;
   onChange?: (value: string) => void;
-  onQuery?: (value: string) => void;
+  onSubmit?: (value: string) => void;
 };
 
-export class SearchBar extends Component<SearchBarProps> {
-  public state = {
-    value: this.props.value?.toString() ?? INITIAL_VALUE,
+export const SearchBar = ({
+  className,
+  placeholder,
+  value,
+  onChange,
+  onSubmit,
+}: SearchBarProps): JSX.Element => {
+  const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>): void => {
+    onChange?.(value);
   };
 
-  private handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>): void => {
-    this.props.onChange?.(value);
-    this.setState({ value });
-  };
-
-  private handleSubmit = (event: SyntheticEvent): void => {
-    const value = this.state.value.trim();
-    this.setState({ value });
-    this.props.onQuery?.(value);
+  const handleSubmit = (event: SyntheticEvent): void => {
+    onSubmit?.(value.trim());
     event.preventDefault();
   };
 
-  private handleClearClick = (): void => {
-    this.setState({ value: INITIAL_VALUE });
-    this.props.onChange?.(INITIAL_VALUE);
+  const handleClearClick = (): void => {
+    onChange?.(INITIAL_VALUE);
   };
 
-  public render(): ReactNode {
-    const { className, placeholder } = this.props;
-
-    return (
-      <div data-testid={TestId.SearchBar} className={className}>
-        <form className={styles.form} onSubmit={this.handleSubmit}>
-          <input
-            data-testid={TestId.SearchBarInput}
-            className={styles.input}
-            value={this.state.value}
-            placeholder={placeholder}
-            onChange={this.handleChange}
-          />
-          {this.state.value && (
-            <button
-              data-testid={TestId.SearchBarClear}
-              className={styles.clearBtn}
-              type='button'
-              onClick={this.handleClearClick}
-            >
-              <IconClose data-testid={TestId.SearchBarClearIcon} size={ICON_SIZE} />
-            </button>
-          )}
+  return (
+    <div data-testid={TestId.SearchBar} className={className}>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <input
+          data-testid={TestId.SearchBarInput}
+          className={styles.input}
+          value={value}
+          placeholder={placeholder}
+          onChange={handleChange}
+        />
+        {value && (
           <button
-            data-testid={TestId.SearchBarBtn}
-            className={styles.btn}
-            type='submit'
-            disabled={!this.state.value}
+            data-testid={TestId.SearchBarClear}
+            className={styles.clearBtn}
+            type='button'
+            onClick={handleClearClick}
           >
-            <IconSearch data-testid={TestId.SearchBarBtnIcon} size={ICON_SIZE} />
+            <IconClose data-testid={TestId.SearchBarClearIcon} size={ICON_SIZE} />
           </button>
-        </form>
-      </div>
-    );
-  }
-}
+        )}
+        <button
+          data-testid={TestId.SearchBarBtn}
+          className={styles.btn}
+          type='submit'
+          disabled={!value}
+        >
+          <IconSearch data-testid={TestId.SearchBarBtnIcon} size={ICON_SIZE} />
+        </button>
+      </form>
+    </div>
+  );
+};

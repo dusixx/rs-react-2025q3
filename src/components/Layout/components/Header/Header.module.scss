@@ -3,8 +3,9 @@
   align-items: center;
   justify-content: space-between;
 
-  margin-bottom: 10px;
-  padding: 24px 0;
+  margin-bottom: 32px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgb(226 226 226);
 }
 
 .logo {
@@ -20,5 +21,17 @@
 [data-logo-text] {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+}
+
+.btn {
+  @extend %btn-primary;
+
+  width: 100px;
+  border: 1px solid var(--color-violet-light);
+
+  color: var(--color-violet-light);
+  text-transform: capitalize;
+
+  background-color: transparent;
 }

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "ignoreDeprecations": "6.0",
     "baseUrl": "./",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
@@ -27,7 +28,7 @@
       "@types/*": ["src/types/*"],
       "@pages/*": ["src/pages/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@utils/*": ["src/utils/*"],
+      "@utils/*": ["src/common/utils/*"],
       "@services/*": ["src/services/*"],
       "@assets/*": ["src/assets/*"],
       "@styles/*": ["src/styles/*"],
