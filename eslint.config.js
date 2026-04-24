@@ -13,7 +13,7 @@ import nextPlugin from './next-plugin.config.js';
 
 export default defineConfig([
   ...nextPlugin,
-  { ignores: ['dist', '**/*.test.ts', '**/*.test.js', '**/*.test.tsx'] },
+  { ignores: ['dist', '**/*.test.ts', '**/*.test.js', '**/*.test.tsx', '**/*.d.ts'] },
   {
     extends: [
       js.configs.recommended,
@@ -29,7 +29,6 @@ export default defineConfig([
         ecmaFeatures: { jsx: true },
         ecmaVersion: 2022,
         sourceType: 'module',
-        project: './tsconfig.json',
         globals: globals.browser,
         tsconfigRootDir: import.meta.dirname,
       },
