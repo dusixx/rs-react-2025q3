@@ -1,15 +1,19 @@
 import js from '@eslint/js';
+import eslintPluginNext from '@next/eslint-plugin-next';
 import tsParser from '@typescript-eslint/parser';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginReactCompiler from 'eslint-plugin-react-compiler';
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 import eslintPluginReactRefresh from 'eslint-plugin-react-refresh';
+import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import nextPlugin from './next-plugin.config.js';
 
-export default tseslint.config(
-  { ignores: ['dist', '**/*.test.ts', '**/*.test.js', '**/*.test.tsx'] },
+export default defineConfig([
+  ...nextPlugin,
+  { ignores: ['dist', '**/*.test.ts', '**/*.test.js', '**/*.test.tsx', '**/*.d.ts'] },
   {
     extends: [
       js.configs.recommended,
@@ -25,7 +29,6 @@ export default tseslint.config(
         ecmaFeatures: { jsx: true },
         ecmaVersion: 2022,
         sourceType: 'module',
-        project: './tsconfig.json',
         globals: globals.browser,
         tsconfigRootDir: import.meta.dirname,
       },
@@ -78,4 +81,4 @@ export default tseslint.config(
       },
     },
   },
-);
+]);

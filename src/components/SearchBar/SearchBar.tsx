@@ -1,8 +1,9 @@
+'use client';
+
 import { IconClose, IconSearch, INITIAL_PAGE } from '@common/constants';
 import { useAppCustomSearchParams, usePersistedSearchQuery } from '@hooks/index.ts';
 import type { ChangeEvent, ComponentPropsWithRef, JSX } from 'react';
 import { useCallback, useEffect, type SyntheticEvent } from 'react';
-import { TestId } from 'src/test-utils/constants.ts';
 import styles from './SearchBar.module.scss';
 
 const ICON_SIZE = 20;
@@ -15,12 +16,12 @@ const trimValue = (value: string = ''): string => {
   return value.trim();
 };
 
-export const SearchBar = ({
+export function SearchBar({
   className,
   placeholder,
   onSubmit,
   ...restProps
-}: SearchBarProps): JSX.Element => {
+}: SearchBarProps): JSX.Element {
   const { query, setQuery, persistQuery } = usePersistedSearchQuery();
   const { getParams, createParams } = useAppCustomSearchParams();
 
@@ -59,10 +60,9 @@ export const SearchBar = ({
   };
 
   return (
-    <div data-testid={TestId.SearchBar} className={className}>
+    <div className={className}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
-          data-testid={TestId.SearchBarInput}
           className={styles.input}
           value={query}
           placeholder={placeholder}
@@ -70,24 +70,14 @@ export const SearchBar = ({
           {...restProps}
         />
         {query && (
-          <button
-            data-testid={TestId.SearchBarClear}
-            className={styles.clearBtn}
-            type='button'
-            onClick={handleClearClick}
-          >
-            <IconClose data-testid={TestId.SearchBarClearIcon} size={ICON_SIZE} />
+          <button className={styles['clear-btn']} type='button' onClick={handleClearClick}>
+            <IconClose size={ICON_SIZE} />
           </button>
         )}
-        <button
-          data-testid={TestId.SearchBarBtn}
-          className={styles.btn}
-          type='submit'
-          disabled={!query}
-        >
-          <IconSearch data-testid={TestId.SearchBarBtnIcon} size={ICON_SIZE} />
+        <button className={styles.btn} type='submit' disabled={!query}>
+          <IconSearch size={ICON_SIZE} />
         </button>
       </form>
     </div>
   );
-};
+}

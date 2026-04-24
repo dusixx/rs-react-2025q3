@@ -1,0 +1,10 @@
+.btn {
+  @extend %btn;
+
+  aspect-ratio: 1;
+  width: 28px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+
+  color: var(--color-sec-btn-bg);
+}

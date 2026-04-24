@@ -24,3 +24,8 @@ dist-ssr
 *.sln
 *.sw?
 *.env
+*.bak
+
+.next
+next-env.d.ts
+dist

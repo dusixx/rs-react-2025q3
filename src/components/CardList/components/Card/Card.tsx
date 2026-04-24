@@ -1,9 +1,9 @@
+import { AddToFav } from '@/components/CardList/components/Card/components/AddToFav.tsx';
+import type { CharacterInfo } from '@/services/server-actions/api/api.types.ts';
 import { IconLocation, UNKNOWN } from '@common/constants/index.ts';
-import { AddToFav } from '@components/CardList/components/Card/components/AddToFav/AddToFav.tsx';
 import clsx from 'clsx';
-import { type JSX, type SyntheticEvent } from 'react';
-import type { CharacterInfo } from 'src/redux/api/api.types.ts';
-import { TestId } from 'src/test-utils/constants.ts';
+import Image from 'next/image';
+import type { ReactNode } from 'react';
 import styles from './Card.module.scss';
 import {
   getGenderIcon,
@@ -11,19 +11,20 @@ import {
   getStatusIndicatorStyle,
   getThumbStyle,
 } from './Card.utils.ts';
+import { CardWrapper } from './components/CardWrapper.tsx';
 
+export const ADD_TO_FAV_ID = 'add-to-fav-button';
 const ICON_PROPS = {
   size: 16,
   color: 'var(--color-green-gray)',
 };
-
 type CardProps = {
   info: CharacterInfo;
   onClick?: (id: number) => void;
   className?: string;
 };
 
-export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
+export const Card = ({ info, className }: CardProps): ReactNode => {
   const {
     id,
     image,
@@ -33,45 +34,43 @@ export const Card = ({ info, onClick, className }: CardProps): JSX.Element => {
     gender = UNKNOWN,
     species = UNKNOWN,
   } = info;
-
-  const handleCardClick = ({ target }: SyntheticEvent): void => {
-    if (target instanceof Element && target.closest('[data-name=addtofav]')) {
-      return;
-    }
-    onClick?.(id);
-  };
   const IconGender = getGenderIcon(gender);
 
   return (
-    <article className={clsx(styles.card, className)} onClick={handleCardClick}>
-      <div data-testid={TestId.CardThumb} className={styles.thumb} style={getThumbStyle(image)}>
+    <CardWrapper className={clsx(styles.card, className)} cardId={id}>
+      <div className={styles.thumb} style={getThumbStyle(image)}>
         {image && (
-          <img data-testid={TestId.CardImage} className={styles.image} src={image} alt={name} />
+          <Image
+            className={styles.image}
+            src={image}
+            alt={name}
+            width={0}
+            height={0}
+            sizes='100vw'
+            style={{ width: '100%', height: 'auto' }}
+          />
         )}
       </div>
       <ul className={styles.desc}>
         <li>
-          <AddToFav info={info} data-name='addtofav' />
+          <AddToFav info={info} id={ADD_TO_FAV_ID} />
         </li>
-        <li data-name>
-          <p data-testid={TestId.CardName}>{name}</p>
+        <li className={styles['name-item']}>
+          <p>{name}</p>
         </li>
-        <li data-status>
-          <div
-            data-testid={TestId.CardStatusIndicator}
-            style={getStatusIndicatorStyle(status)}
-          ></div>
-          <span data-testid={TestId.CardStatus}>{status}</span>
+        <li className={styles['status-item']}>
+          <div style={getStatusIndicatorStyle(status)}></div>
+          <span>{status}</span>
         </li>
-        <li data-species>
-          <IconGender data-testid={TestId.CardIconGender} {...ICON_PROPS} />
-          <span data-testid={TestId.CardSpecies}>{species}</span>
+        <li>
+          <IconGender {...ICON_PROPS} />
+          <span>{species}</span>
         </li>
-        <li data-location>
-          <IconLocation data-testid={TestId.CardIconLocation} {...ICON_PROPS} />
-          <p data-testid={TestId.CardLocation}>{getLocationName(location) || UNKNOWN}</p>
+        <li>
+          <IconLocation {...ICON_PROPS} />
+          <p>{getLocationName(location) || UNKNOWN}</p>
         </li>
       </ul>
-    </article>
+    </CardWrapper>
   );
 };

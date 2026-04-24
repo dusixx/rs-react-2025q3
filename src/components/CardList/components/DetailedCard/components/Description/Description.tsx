@@ -1,13 +1,11 @@
+import type { CharacterInfo } from '@/services/server-actions/api/api.types.ts';
 import type { ReactNode } from 'react';
-import type { CharacterInfo } from 'src/redux/api/api.types.ts';
-import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Description.module.scss';
 import { createDescription } from './Description.utils.ts';
 
 export const EPISODES_DATA_ATTR = 'data-episodes';
 const EPISODES_ATTRIBUTES = {
   [EPISODES_DATA_ATTR]: true,
-  'data-testid': TestId.DetailedCardEpisode,
 };
 
 export const Description = ({ info }: { info: CharacterInfo }): ReactNode => {
@@ -20,9 +18,5 @@ export const Description = ({ info }: { info: CharacterInfo }): ReactNode => {
       </li>
     );
   });
-  return (
-    <ul data-testid={TestId.DetailedCardDesc} className={styles.desc}>
-      {items}
-    </ul>
-  );
+  return <ul className={styles.desc}>{items}</ul>;
 };

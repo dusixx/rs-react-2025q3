@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
+
+import type { CharacterInfo } from '@/services/server-actions/api/api.types';
 import { UNKNOWN } from '@common/constants';
 import {
   getEpisodes,
   getLocationName,
   trimBracketsWithContent,
 } from '@components/CardList/components/Card/Card.utils.ts';
-import { isObject } from '@utils/type-guards.ts';
-import type { CharacterInfo } from 'src/redux/api/api.types';
+import { getObjectKeys, isObject } from '@utils/type-guards.ts';
 
 const EPISODES_SPLITTER = ', ';
 
@@ -19,11 +19,10 @@ export const createDescription = (
   info: CharacterInfo,
   episodesSplitter: string = EPISODES_SPLITTER,
 ): Record<string, string> => {
-  return Object.keys(info).reduce<Record<string, string>>((result, key) => {
-    const k = key as keyof CharacterInfo;
-    let stringifiedValue = stringifyValue(info[k]);
+  return getObjectKeys(info).reduce<Record<string, string>>((result, key) => {
+    let stringifiedValue = stringifyValue(info[key]);
 
-    switch (k) {
+    switch (key) {
       case 'created':
       case 'image':
       case 'url': {
@@ -31,16 +30,16 @@ export const createDescription = (
       }
       case 'location':
       case 'origin': {
-        stringifiedValue = getLocationName(info[k], UNKNOWN);
+        stringifiedValue = getLocationName(info[key], UNKNOWN);
         break;
       }
       case 'episode': {
-        if (info[k]) {
-          stringifiedValue = getEpisodes(info[k]).join(episodesSplitter);
+        if (info[key]) {
+          stringifiedValue = getEpisodes(info[key]).join(episodesSplitter);
         }
       }
     }
-    result[k] = stringifiedValue;
+    result[key] = stringifiedValue;
     return result;
   }, {});
 };

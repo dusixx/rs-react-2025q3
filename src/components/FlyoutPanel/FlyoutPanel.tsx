@@ -1,39 +1,44 @@
-import type { DownloadInit } from '@components/DownloadLink/DownloadLink.tsx';
-import { DownloadLink } from '@components/DownloadLink/DownloadLink.tsx';
-import { useCallback, type ReactNode } from 'react';
+'use client';
+
+import { IconDownload } from '@/common/constants/icons.ts';
+import { useTranslations } from 'next-intl';
+import { type ReactNode } from 'react';
 import { clearInfos } from 'src/redux/store/charactersSlice.ts';
 import { useAppDispatch, useSelectedInfos } from 'src/redux/store/hooks.ts';
-import { TestId } from 'src/test-utils/constants.ts';
 import styles from './FlyoutPanel.module.scss';
-import { getDownloadInitProps } from './FlyoutPanel.utils.ts';
+import { saveInfosToCSVFile } from './FlyoutPanel.utils.ts';
 
-export const BTN_UNSELECT_TEXT = 'Unselect All';
-export const ITEMS_COUNT_LABEl = 'Total selected';
+const ICON_SIZE = 16;
 
 export const FlyoutPanel = (): ReactNode => {
   const dispatch = useAppDispatch();
   const selectedInfos = Object.values(useSelectedInfos() ?? {});
+  const t = useTranslations();
 
-  const handleDownloadClick = useCallback(
-    (initDownload: DownloadInit): void => {
-      initDownload(getDownloadInitProps(selectedInfos));
-    },
-    [selectedInfos],
-  );
   if (!selectedInfos.length) {
     return;
   }
   return (
-    <div className={styles.panel} data-testid={TestId.FlyoutPanel}>
-      <div className={styles.innerWrapper}>
+    <div className={styles.panel}>
+      <div className={styles['inner-wrapper']}>
         <span>
-          {ITEMS_COUNT_LABEl}: <b>{selectedInfos.length}</b>
+          {t('FlyoutPanel.TotalSelected')}: <b>{selectedInfos.length}</b>
         </span>
         <div className={styles.group}>
           <button className={styles.btn} type='button' onClick={() => dispatch(clearInfos())}>
-            {BTN_UNSELECT_TEXT}
+            {t('Button.Unselect')}
           </button>
-          <DownloadLink onClick={handleDownloadClick} />
+          <button
+            className={styles.btn}
+            type='button'
+            style={{ backgroundColor: 'var(--color-accent)' }}
+            onClick={() => {
+              void saveInfosToCSVFile(selectedInfos);
+            }}
+          >
+            <IconDownload size={ICON_SIZE} role='img' />
+            {t('Button.Download')}
+          </button>
         </div>
       </div>
     </div>

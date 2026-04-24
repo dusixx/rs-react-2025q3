@@ -1,0 +1,29 @@
+{
+  "Button": {
+    "About": "Об авторе",
+    "Back": "Назад",
+    "Home": "На главную",
+    "Close": "Закрыть",
+    "Download": "Скачать",
+    "Unselect": "Отменить"
+  },
+  "AboutPage": {
+    "MadeBy": "Реализовано",
+    "AsPart": "в рамках курса по",
+    "ReactCourse": "React",
+    "AtRSSchool": "в RSSchool"
+  },
+  "ErrorPage": {
+    "NotFound": "Запрошенная страница не найдена"
+  },
+  "SearchPage": {
+    "InputPlaceholder": "Имя персонажа..."
+  },
+  "FlyoutPanel": {
+    "TotalSelected": "Выделено всего"
+  },
+  "Hint": {
+    "NoNeed": "Нет необходимости",
+    "Action": "переводить данные, поступающие от API"
+  }
+}

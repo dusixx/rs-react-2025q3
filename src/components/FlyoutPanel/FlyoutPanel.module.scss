@@ -24,10 +24,6 @@
   @extend %btn-primary;
 }
 
-[data-download] {
-  background-color: var(--color-accent);
-}
-
 .group {
   display: flex;
   gap: 24px;

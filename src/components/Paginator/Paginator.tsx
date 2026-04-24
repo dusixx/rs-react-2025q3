@@ -7,10 +7,9 @@ import {
 } from '@common/constants';
 import clsx from 'clsx';
 import { useEffect, useState, type JSX } from 'react';
-import { TestId } from 'src/test-utils/constants.ts';
 import styles from './Paginator.module.scss';
 
-type PaginatorProps = {
+export type PaginatorProps = {
   totalPages?: number;
   initialPage?: number;
   className?: string;
@@ -56,11 +55,10 @@ export const Paginator = ({
   };
 
   return (
-    <div data-testid={TestId.Paginator} className={clsx(styles.paginator, className)}>
-      <div className={styles.btnGroup}>
+    <div className={clsx(styles.paginator, className)}>
+      <div className={styles['btn-group']}>
         <button
-          data-testid={TestId.PaginatorFirstBtn}
-          className={styles.btnSec}
+          className={styles['btn-sec']}
           disabled={currentPage === INITIAL_PAGE}
           onClick={handleFirstClick}
           title={ButtonTitle.First}
@@ -68,7 +66,6 @@ export const Paginator = ({
           <IconArrowLeftDouble size={SEC_BTN_ICON_SIZE} />
         </button>
         <button
-          data-testid={TestId.PaginatorPrevBtn}
           className={styles.btn}
           disabled={currentPage === INITIAL_PAGE}
           onClick={handlePrevClick}
@@ -77,18 +74,13 @@ export const Paginator = ({
           <IconArrowLeft size={PRIM_BTN_ICON_SIZE} />
         </button>
       </div>
-      <div data-testid={TestId.PaginatorCounter} className={styles.counter}>
-        <span data-testid={TestId.PaginatorCounterCurrent} data-current>
-          {currentPage}
-        </span>
+      <div className={styles.counter}>
+        <span>{currentPage}</span>
         <span>/</span>
-        <span data-testid={TestId.PaginatorCounterTotal} data-total>
-          {totalPages}
-        </span>
+        <span>{totalPages}</span>
       </div>
-      <div className={styles.btnGroup}>
+      <div className={styles['btn-group']}>
         <button
-          data-testid={TestId.PaginatorNextBtn}
           className={styles.btn}
           disabled={currentPage === totalPages}
           onClick={handleNextClick}
@@ -97,8 +89,7 @@ export const Paginator = ({
           <IconArrowRight size={PRIM_BTN_ICON_SIZE} />
         </button>
         <button
-          data-testid={TestId.PaginatorLastBtn}
-          className={styles.btnSec}
+          className={styles['btn-sec']}
           disabled={currentPage === totalPages}
           onClick={handleLastClick}
           title={ButtonTitle.Last}

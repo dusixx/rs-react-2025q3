@@ -1,82 +1,56 @@
-import { ERR_SOMETHING_WRONG, IconRefresh } from '@common/constants/index.ts';
+import { getErrorMessage } from '@/common/utils/index.ts';
+import { getCharacterById } from '@/services/server-actions/api/api.ts';
+import { ERR_SOMETHING_WRONG } from '@common/constants/index.ts';
 import { ErrorInfo } from '@components/ErrorInfo/ErrorInfo.tsx';
-import { Loader } from '@components/Loader/Loader.tsx';
-import { useAppCustomSearchParams } from '@hooks/index.ts';
+import Image from 'next/image';
 import { type ReactNode } from 'react';
-import { useOutletContext } from 'react-router-dom';
-import { rickmortyApi, useGetCharacterByIdQuery } from 'src/redux/api/api.ts';
-import { getApiErrorMessage } from 'src/redux/api/api.utils.ts';
-import { useAppDispatch } from 'src/redux/store/hooks.ts';
-import { TestId } from 'src/test-utils/constants.ts';
+import { CloseBtn } from './components/CloseBtn.tsx';
 import { Description } from './components/Description/Description.tsx';
 import styles from './DetailedCard.module.scss';
 
-const CLOSE_BTN_TEXT = 'Close';
-const REFETCH_BTN_TEXT = 'Refetch';
-const INVALIDATE_BTN_TEXT = 'Invalidate';
-const ICON_SIZE = 14;
+type DetailedCardProps = {
+  id: number | string;
+};
 
-export const DetailedCard = (): ReactNode => {
-  const dispatch = useAppDispatch();
-  const { deleteParams } = useAppCustomSearchParams();
-  const { detailsId } = useOutletContext<{ detailsId: string }>();
-  const { data, error, isLoading, isFetching, refetch } = useGetCharacterByIdQuery(detailsId);
-
-  if (!detailsId) {
+export const DetailedCard = async ({ id }: DetailedCardProps): Promise<ReactNode> => {
+  if (!id) {
     return;
   }
-  const loading = isFetching || isLoading;
+  let data;
+  let fetchError = null;
 
+  try {
+    data = await getCharacterById(id);
+  } catch (error) {
+    fetchError = error;
+  }
   return (
-    <article data-testid={TestId.DetailedCard} className={styles.card}>
-      {loading && <Loader className={styles.loader} />}
-      {!loading && data && (
+    <article className={styles.card}>
+      {data && (
         <div className={styles.info}>
           <div className={styles.thumb}>
-            <img className={styles.image} src={data.image} alt={data.name} />
+            <Image
+              className={styles.image}
+              src={data.image ?? ''}
+              alt={data.name ?? ''}
+              width={0}
+              height={0}
+              sizes='100vw'
+              style={{ width: '100%', height: 'auto' }}
+            />
           </div>
           <Description info={data} />
         </div>
       )}
-      {!loading && !data && (
+      {!data && (
         <ErrorInfo
-          className={styles.errorInfo}
-          message={getApiErrorMessage(error, ERR_SOMETHING_WRONG)}
+          className={styles['error-info']}
+          message={getErrorMessage(fetchError, ERR_SOMETHING_WRONG)}
         />
       )}
-      {!loading && (
-        <div className={styles.group}>
-          <button
-            data-testid={TestId.RefreshBtn}
-            type='button'
-            className={styles.btn}
-            onClick={() => void refetch()}
-            data-refresh
-          >
-            <IconRefresh size={ICON_SIZE} />
-            {REFETCH_BTN_TEXT}
-          </button>
-          <button
-            data-testid={TestId.InvalidateBtn}
-            data-invalidate
-            type='button'
-            className={styles.btn}
-            onClick={() => dispatch(rickmortyApi.util.invalidateTags(['id']))}
-          >
-            {INVALIDATE_BTN_TEXT}
-          </button>
-          <button
-            data-testid={TestId.CloseBtn}
-            className={styles.btn}
-            type='button'
-            onClick={() => {
-              deleteParams('details');
-            }}
-          >
-            {CLOSE_BTN_TEXT}
-          </button>
-        </div>
-      )}
+      <div className={styles.group}>
+        <CloseBtn className={styles.btn} />
+      </div>
     </article>
   );
 };
